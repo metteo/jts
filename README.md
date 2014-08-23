@@ -24,7 +24,8 @@ Repository Structure
 * jts-app - Applications & tools for working with JTS
 * jts-example - Examples of working JTS code
 * jts-lab - Code which is experimental or under construction, provided for early access
-
+* jts-gwt - GWT specifc configuration files / classes
+* jts-android - Android specific files / classes
 * jts-jump - A JUMP plugin exposing some JTS functions (unmaintained - in original SVN)
 * jts-sde-adapter - an older driver for ArcSDE (unmaintained - in original SVN)
 * libjts - A wrapper for building JTS with GCJ (unmaintained - in original SVN)
@@ -56,8 +57,7 @@ Test JTS
 
 Deploy JTS
 ----------
-
-TODO: deploy snapshots after running on CI server, deploy releases ?
+Under construction...
 
 Configure JTS in Eclipse
 ------------------------
