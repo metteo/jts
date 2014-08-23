@@ -24,11 +24,10 @@ Repository Structure
 * jts-app - Applications & tools for working with JTS
 * jts-example - Examples of working JTS code
 * jts-lab - Code which is experimental or under construction, provided for early access
+
 * jts-jump - A JUMP plugin exposing some JTS functions (unmaintained - in original SVN)
 * jts-sde-adapter - an older driver for ArcSDE (unmaintained - in original SVN)
 * libjts - A wrapper for building JTS with GCJ (unmaintained - in original SVN)
-* bin - Scripts for running JTS tools on various platforms
-* LICENSE - license file
 
 Build JTS
 ---------
@@ -48,7 +47,6 @@ Test JTS
  
   mvn test
   
-TODO: update instructions after finalizng execution of xml tests
 * The XML test files can also be run, using the TestRunner application.
   This is invoked by the testrunner shell script, and may
   also be run from inside an IDE.
@@ -67,7 +65,7 @@ Configure JTS in Eclipse
 Use m2eclipse plugin to import projects to Eclipse. jts-io-* projects require additional jars which are not easily obtainable.
 
 Run Configurations 
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Useful JTS tools:
 
