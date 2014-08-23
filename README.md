@@ -1,7 +1,7 @@
 JTS Topology Suite
 ==================
 
-Fork (or rather mirror) of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
+Fork (or a mirror) of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
 
 Original project site: http://www.vividsolutions.com/jts/JTSHome.htm
      
