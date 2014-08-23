@@ -12,16 +12,16 @@
 	<url>http://sourceforge.net/projects/jts-topo-suite</url>
 	<description>The JTS Topology Suite is an API for modelling and manipulating 2-dimensional linear geometry. It provides numerous geometric predicates and functions. JTS conforms to the Simple Features Specification for SQL published by the Open GIS Consortium.</description>
 	<inceptionYear>2000</inceptionYear>
-	
+
 	<organization>
 		<name>Vivid Solutions Inc.</name>
 		<url>http://www.vividsolutions.com/</url>
 	</organization>
-	
+
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
-	
+
 	<properties>
 	</properties>
 
@@ -100,9 +100,28 @@
 		</plugins>
 	</build>
 
-	<profiles></profiles>
+	<profiles>
+		<profile>
+			<id>io</id>
 
-	<modules></modules>
+			<modules>
+				<module>../jts-io</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>lab</id>
+
+			<modules>
+				<module>../jts-lab</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>../jts-core</module>
+		<module>../jts-app</module>
+		<module>../jts-example</module>
+	</modules>
 
 	<dependencyManagement></dependencyManagement>
 

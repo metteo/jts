@@ -9,7 +9,9 @@
 	</parent>
 
 	<artifactId>jts-example</artifactId>
-	
+
+	<name>JTS Example</name>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
@@ -17,4 +19,5 @@
 			<version>1.14-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 </project>

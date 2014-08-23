@@ -11,4 +11,9 @@
   <packaging>pom</packaging>
   
   <name>JTS IO</name>
+  
+  <modules>
+  	<module>../jts-io-esri</module>
+  	<module>../jts-io-oracle</module>
+  </modules>
 </project>
