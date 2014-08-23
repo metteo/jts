@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.vividsolutions.jts</groupId>
+	<artifactId>jts</artifactId>
+	<packaging>pom</packaging>
+	<version>1.14-SNAPSHOT</version>
+
+	<name>JTS Topology Suite</name>
+	<url>http://sourceforge.net/projects/jts-topo-suite</url>
+	<description>The JTS Topology Suite is an API for modelling and manipulating 2-dimensional linear geometry. It provides numerous geometric predicates and functions. JTS conforms to the Simple Features Specification for SQL published by the Open GIS Consortium.</description>
+	<inceptionYear>2000</inceptionYear>
+	
+	<organization>
+		<name>Vivid Solutions Inc.</name>
+		<url>http://www.vividsolutions.com/</url>
+	</organization>
+	
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+	
+	<properties>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Lesser General Public License (LGPL)</name>
+			<url>http://www.gnu.org/copyleft/lesser.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>dr_jts</id>
+			<name>Martin Davis</name>
+			<organization>Tsusiat Software</organization>
+			<organizationUrl>http://tsusiatsoftware.net/</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<contributors></contributors>
+
+	<mailingLists>
+		<mailingList>
+			<name>jts-topo-suite-user</name>
+			<subscribe>https://lists.sourceforge.net/lists/listinfo/jts-topo-suite-user</subscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum_name=jts-topo-suite-user</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:svn:https://jts-topo-suite.svn.sourceforge.net/svnroot/jts-topo-suite/code</connection>
+		<url>http://jts-topo-suite.svn.sourceforge.net/viewvc/jts-topo-suite</url>
+	</scm>
+
+	<issueManagement>
+		<system>bugzilla</system>
+	</issueManagement>
+
+	<ciManagement>
+		<system>jenkins</system>
+	</ciManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles></profiles>
+
+	<modules></modules>
+
+	<dependencyManagement></dependencyManagement>
+
+	<reporting></reporting>
+
+	<distributionManagement></distributionManagement>
+
+	<dependencies></dependencies>
+</project>
