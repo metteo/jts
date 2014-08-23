@@ -6,6 +6,7 @@ import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.io.WKTFileReader;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.util.*;
+
 import test.jts.*;
 
 public class FileBufferPerfTest 
@@ -36,7 +37,7 @@ public class FileBufferPerfTest
   public void test()
   throws Exception
   {
-    test(TestFiles.DATA_DIR + "africa.wkt");
+    test(TestFiles.getFilePath(TestFiles.WKT_DIR + "africa.wkt"));
 //    test(TestFiles.DATA_DIR + "world.wkt");
 //    test(TestFiles.DATA_DIR + "bc-250k.wkt");
 //    test(TestFiles.DATA_DIR + "bc_20K.wkt");

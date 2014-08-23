@@ -12,12 +12,16 @@ import junit.framework.TestCase;
  * @author mbdavis
  *
  */
-public class GeometryTestCase extends TestCase{
+public class GeometryTestCase extends TestCase {
 
   WKTReader reader = new WKTReader();
 
   public GeometryTestCase(String name) {
     super(name);
+  }
+  
+  public void testDummy() {
+	  
   }
 
   protected void checkEqual(Geometry expected, Geometry actual) {

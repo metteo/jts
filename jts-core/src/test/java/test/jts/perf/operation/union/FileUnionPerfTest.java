@@ -1,13 +1,14 @@
 package test.jts.perf.operation.union;
 
-import java.util.*;
+import java.util.List;
 
-import com.vividsolutions.jts.geom.*;
+import test.jts.TestFiles;
+
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.io.WKTFileReader;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.io.WKTWriter;
-import com.vividsolutions.jts.util.GeometricShapeFactory;
-import test.jts.*;
 
 public class FileUnionPerfTest 
 {
@@ -46,7 +47,7 @@ public class FileUnionPerfTest
     
 //    test("C:\\data\\martin\\proj\\jts\\data\\veg.wkt");
 
-    test(TestFiles.DATA_DIR + "africa.wkt");
+    test(TestFiles.getFilePath(TestFiles.WKT_DIR + "africa.wkt"));
 //    test(TestFiles.DATA_DIR + "world.wkt");
 //    test("C:\\proj\\JTS\\test\\union\\npsa_albers.wkt");
 

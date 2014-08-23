@@ -33,21 +33,19 @@
  */
 package test.jts.perf.operation.buffer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collection;
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.util.*;
-import com.vividsolutions.jts.io.*;
-import com.vividsolutions.jts.operation.buffer.validate.*;
-
 import junit.framework.TestCase;
 import test.jts.TestFiles;
-import test.jts.junit.*;
+
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.WKTFileReader;
+import com.vividsolutions.jts.io.WKTReader;
+import com.vividsolutions.jts.io.WKTWriter;
+import com.vividsolutions.jts.operation.buffer.validate.BufferResultValidator;
+import com.vividsolutions.jts.util.Stopwatch;
 
 
 /**
@@ -68,14 +66,13 @@ public class FileBufferResultValidatorTest extends TestCase {
   public void testAfrica() throws Exception 
   {
 //    runTest(TestFiles.DATA_DIR + "world.wkt");
-    runTest("../../../../../data/africa.wkt");
+    runTest(TestFiles.getFilePath(TestFiles.WKT_DIR + "africa.wkt"));
   }
   
   void runTest(String resource) 
   throws Exception
   {
-    InputStream is = this.getClass().getResourceAsStream(resource);
-    runTest(new WKTFileReader(new InputStreamReader(is), rdr));
+    runTest(new WKTFileReader(new File(resource), rdr));
   }
 
   void runTest(WKTFileReader fileRdr)

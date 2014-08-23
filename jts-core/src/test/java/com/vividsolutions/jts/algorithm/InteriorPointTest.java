@@ -69,8 +69,8 @@ public class InteriorPointTest extends TestCase
 
   public void testAll() throws Exception
   {
-    checkInteriorPointFile(TestFiles.DATA_DIR + "world.wkt");
-    checkInteriorPointFile(TestFiles.DATA_DIR + "africa.wkt");
+    checkInteriorPointFile(TestFiles.getFilePath(TestFiles.WKT_DIR + "world.wkt"));
+    checkInteriorPointFile(TestFiles.getFilePath(TestFiles.WKT_DIR + "africa.wkt"));
     //checkInteriorPointFile("../../../../../data/africa.wkt");
   }
 
