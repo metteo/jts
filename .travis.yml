@@ -1,3 +1,6 @@
 language: java
-script: mvn clean install
+script:
+  cd jts
+  mvn clean install
+  
 //TODO: http://blog2.vorburger.ch/2013/08/deploying-github-hosted-maven-incl.html
