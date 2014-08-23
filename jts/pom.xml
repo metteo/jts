@@ -127,6 +127,8 @@
 
 	<modules>
 		<module>../jts-core</module>
+		<module>../jts-gwt</module>
+		<module>../jts-android</module>
 		<module>../jts-app</module>
 		<module>../jts-example</module>
 	</modules>
