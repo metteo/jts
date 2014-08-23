@@ -6,6 +6,7 @@
 		<groupId>com.vividsolutions.jts</groupId>
 		<artifactId>jts</artifactId>
 		<version>1.14-SNAPSHOT</version>
+		<relativePath>../jts/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>jts-app</artifactId>
