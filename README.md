@@ -1,10 +1,9 @@
 JTS Topology Suite
-
-Fork of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
-
-
-JTS Topology Suite
 ==================
+
+Fork (or a mirror) of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
+
+Original project site: http://www.vividsolutions.com/jts/JTSHome.htm
      
 Welcome to the repository for the JTS Topology Suite.
 JTS essentially consists of several Java modules,
