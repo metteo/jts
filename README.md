@@ -1,6 +1,8 @@
 JTS Topology Suite
 ==================
 
+[![Build Status](https://travis-ci.org/metteo/jts.svg?branch=master)](https://travis-ci.org/metteo/jts)
+
 Fork (or a mirror) of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
 
 Original project site: http://www.vividsolutions.com/jts/JTSHome.htm
