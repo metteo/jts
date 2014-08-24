@@ -7,7 +7,7 @@ before_script:
  - cd jts
  - "sh -e /etc/init.d/xvfb start"
  
-script: mvn clean install -P lab
+script: mvn install
 
 after_script:
  - cd ../jts-app

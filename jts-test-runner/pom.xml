@@ -12,5 +12,13 @@
 	<artifactId>jts-test-runner</artifactId>
 
 	<name>JTS Test Runner</name>
+	<description>Test Runner is a tool which can run xml tests created using Test Builder. It runs test fro jts-test-suite during integration test phase.</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-test-library</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

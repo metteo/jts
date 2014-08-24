@@ -12,4 +12,5 @@
 	<artifactId>jts-test-suite</artifactId>
 
 	<name>JTS Test Suite</name>
+	<description>Collection of xml tests for JTS in addition to regular unit tests</description>
 </project>

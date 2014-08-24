@@ -1,20 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>com.vividsolutions.jts</groupId>
-    <artifactId>jts</artifactId>
-    <version>1.14-SNAPSHOT</version>
-    <relativePath>../jts/pom.xml</relativePath>
-  </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <artifactId>jts-io</artifactId>
-  <packaging>pom</packaging>
-  
-  <name>JTS IO</name>
-  
-  <modules>
-  	<module>../jts-io-esri</module>
-  	<module>../jts-io-oracle</module>
-  </modules>
+	<parent>
+		<groupId>com.vividsolutions.jts</groupId>
+		<artifactId>jts</artifactId>
+		<version>1.14-SNAPSHOT</version>
+		<relativePath>../jts/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>jts-io</artifactId>
+	<packaging>pom</packaging>
+
+	<name>JTS IO</name>
+	<description>Parent project for I/O drivers for different formats (proprietary and incompatible with all supported platforms)</description>
+
+	<modules>
+		<module>../jts-io-ext</module>
+		<module>../jts-io-esri</module>
+		<module>../jts-io-oracle</module>
+	</modules>
 </project>

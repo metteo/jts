@@ -12,13 +12,12 @@
 	<artifactId>jts-example</artifactId>
 
 	<name>JTS Example</name>
+	<description>Examples of working JTS code. They can be useful when starting work with JTS. For more usage examples check unit tests of jts-core as well.</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
-			<version>1.14-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-
 </project>

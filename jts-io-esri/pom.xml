@@ -12,22 +12,15 @@
 	<artifactId>jts-io-esri</artifactId>
 	
 	<name>JTS IO Esri</name>
+	<description>I/O drivers for ESRI SDE format. Require additional dependencies not available in Maven Central</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
-			<version>1.14-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- http://help.arcgis.com/en/geodatabase/10.0/sdk/arcsde/api/japi/japi.htm -->
-		<!-- Or from SVN: jsde91_sdk.jar, jpe91_sdk.jar, concurrent.jar, sdejavautil.dll -->
+		<!-- Or from SVN: jtsio/lib/: jsde91_sdk.jar, jpe91_sdk.jar, concurrent.jar, sdejavautil.dll -->
 	</dependencies>
 </project>

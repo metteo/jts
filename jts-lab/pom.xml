@@ -10,19 +10,14 @@
 	</parent>
 
 	<artifactId>jts-lab</artifactId>
+	
 	<name>JTS Lab</name>
+	<description>Code which is experimental or under construction, provided for early access. It's API may change when released</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
-			<version>1.14-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

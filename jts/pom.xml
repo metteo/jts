@@ -9,7 +9,7 @@
 	<version>1.14-SNAPSHOT</version>
 
 	<name>JTS Topology Suite</name>
-	<url>http://sourceforge.net/projects/jts-topo-suite</url>
+	<url>${github.url}</url>
 	<description>The JTS Topology Suite is an API for modelling and manipulating 2-dimensional linear geometry. It provides numerous geometric predicates and functions. JTS conforms to the Simple Features Specification for SQL published by the Open GIS Consortium.</description>
 	<inceptionYear>2000</inceptionYear>
 
@@ -17,13 +17,6 @@
 		<name>Vivid Solutions Inc.</name>
 		<url>http://www.vividsolutions.com/</url>
 	</organization>
-
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-
-	<properties>
-	</properties>
 
 	<licenses>
 		<license>
@@ -56,18 +49,78 @@
 		</mailingList>
 	</mailingLists>
 
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<modules>
+		<module>../jts-core</module>
+		<module>../jts-gwt</module>
+		<module>../jts-android</module>
+		<module>../jts-example</module>
+		<module>../jts-lab</module>
+		<module>../jts-app</module>
+		<module>../jts-test</module>
+	</modules>
+
 	<scm>
-		<connection>scm:svn:https://jts-topo-suite.svn.sourceforge.net/svnroot/jts-topo-suite/code</connection>
-		<url>http://jts-topo-suite.svn.sourceforge.net/viewvc/jts-topo-suite</url>
+		<connection>scm:git:${github.url}.git</connection>
+		<url>${github.url}</url>
 	</scm>
 
 	<issueManagement>
-		<system>bugzilla</system>
+		<system>github</system>
+		<url>${github.url}/issues</url>
 	</issueManagement>
 
 	<ciManagement>
-		<system>jenkins</system>
+		<system>travis</system>
+		<url>https://travis-ci.org/metteo/jts</url>
 	</ciManagement>
+
+	<distributionManagement></distributionManagement>
+
+	<properties>
+		<github.url>https://github.com/metteo/jts</github.url>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.vividsolutions.jts</groupId>
+				<artifactId>jts-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.vividsolutions.jts</groupId>
+				<artifactId>jts-core</artifactId>
+				<version>${project.version}</version>
+				<classifier>sources</classifier>
+			</dependency>
+			<dependency>
+				<groupId>org.jdom</groupId>
+				<artifactId>jdom</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories></repositories>
+
+	<pluginRepositories></pluginRepositories>
 
 	<build>
 		<pluginManagement>
@@ -80,8 +133,22 @@
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>2.6</version>
 				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.17</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.3.2</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -91,6 +158,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
@@ -100,22 +168,17 @@
 
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
 				<configuration>
+					<!-- Temporary until tests are cleaned up from excessive logging -->
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>test</id>
+	<reporting></reporting>
 
-			<modules>
-				<module>../jts-test</module>
-			</modules>
-		</profile>
+	<profiles>
 		<profile>
 			<id>io</id>
 
@@ -123,28 +186,6 @@
 				<module>../jts-io</module>
 			</modules>
 		</profile>
-		<profile>
-			<id>lab</id>
-
-			<modules>
-				<module>../jts-lab</module>
-			</modules>
-		</profile>
 	</profiles>
 
-	<modules>
-		<module>../jts-core</module>
-		<module>../jts-gwt</module>
-		<module>../jts-android</module>
-		<module>../jts-app</module>
-		<module>../jts-example</module>
-	</modules>
-
-	<dependencyManagement></dependencyManagement>
-
-	<reporting></reporting>
-
-	<distributionManagement></distributionManagement>
-
-	<dependencies></dependencies>
 </project>

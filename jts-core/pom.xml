@@ -10,16 +10,25 @@
 	</parent>
 
 	<artifactId>jts-core</artifactId>
-	<packaging>jar</packaging>
-	
+
 	<name>JTS Core</name>
-	
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<description>Core library which contains code compatible with all supported platforms (that is the plan). Other modules depend on this one and add additional functionality (extensions, apps, testing tools), </description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

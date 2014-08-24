@@ -12,4 +12,13 @@
 	<artifactId>jts-test-builder</artifactId>
 
 	<name>JTS Test Builder</name>
+	<description>Test Builder is a tool which allows creating of xml test files which then can be run by TestRunner. Current set of tests can be found in jts-test-suite project.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-test-library</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

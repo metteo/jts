@@ -9,7 +9,15 @@
 		<relativePath>../jts-test/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jts-test-lib</artifactId>
+	<artifactId>jts-test-library</artifactId>
 
 	<name>JTS Test Library</name>
+	<description>Library project which contains code shared between builder and runner.</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-core</artifactId>
+		</dependency>
+	</dependencies>
 </project>
