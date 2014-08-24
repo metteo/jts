@@ -32,7 +32,7 @@ Test JTS
  
   mvn test
 
-* XML tests are run during integration-test phase of jts-app project:
+* XML tests are run during integration-test phase of jts-test-library project:
 
   mvn integration-test
   
