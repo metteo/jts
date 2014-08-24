@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.vividsolutions.jts</groupId>
+		<artifactId>jts-io</artifactId>
+		<version>1.14-SNAPSHOT</version>
+		<relativePath>../jts/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>jts-io-ext</artifactId>
+
+	<name>JTS IO Ext</name>
+	<description>Extensions for base IO which is not supported by GWT (File, Input/Output Streams etc)</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-core</artifactId>
+		</dependency>
+	</dependencies>
+</project>
