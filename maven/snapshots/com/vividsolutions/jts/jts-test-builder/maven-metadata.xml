@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.vividsolutions.jts</groupId>
+  <artifactId>jts-test-builder</artifactId>
+  <versioning>
+    <versions>
+      <version>1.14-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20140824164821</lastUpdated>
+  </versioning>
+</metadata>
