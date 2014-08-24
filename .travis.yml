@@ -4,6 +4,7 @@ env:
    global:
     - DISPLAY=:99.0
     - secure: iIQjYJMP3Cg+BIItvTxi/oUFvVLfAM/4mfpvwmXs09HQEl9CFwiRt0VW29tfUB8XSnTpLHjhCCtObVNxOU1us5+k8SEH1pq69v0R+agXDB/p16dfi069xER3bdur49s4Z6v+7G07q3NmvFpoJ6siN664gjpysMqilHBfv/yNRHA=
+    - secure: qLhd0zbCwsvSjeJfDbF9B8262HKdPrTQzxmXvjU5aoUixRzGqVaf0N0xqZmisCeBnuRQA5RPZ8+B/nNYWHOp6Qb0rvluHjaICEfIpUcNuhAR9BtFdOSXzXjazMHhB7ezmCFE3VsO84eeBrnXr1Ltdyo9LYfHRt93g5NDQSYfdlA=
 
 before_script:
  - cd jts
@@ -14,6 +15,10 @@ script: mvn deploy -P travis
 after_script:
  - cd ../jts-test-library
  - mvn exec:exec
+
+after_success:
+ - cd ../jts
+ - mvn cobertura:cobertura coveralls:cobertura
 
 notifications:
   email: false

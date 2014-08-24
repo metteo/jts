@@ -209,7 +209,9 @@
 						<version>0.8</version>
 						<configuration>
 							<!-- git commit message -->
-							<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
+							<message>Maven artifacts for
+								${project.groupId}:${project.artifactId}:${project.version}
+								~${maven.build.timestamp}</message>
 							<noJekyll>true</noJekyll>							<!-- disable webpage processing -->
 							<outputDirectory>${temp.repo}</outputDirectory>
 							<!-- This isn't perfect, because every old SNAPSHOT is kept.. -->
@@ -240,6 +242,25 @@
 								<phase>deploy</phase>
 							</execution>
 						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>2.6</version>
+						<configuration>
+							<format>xml</format>
+							<maxmem>256m</maxmem>
+							<!-- aggregated reports for multi-module projects -->
+							<aggregate>true</aggregate>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eluder.coveralls</groupId>
+						<artifactId>coveralls-maven-plugin</artifactId>
+						<version>2.2.0</version>
+						<configuration>
+							<repoToken>${env.TOKEN_COVERALLS}</repoToken>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
