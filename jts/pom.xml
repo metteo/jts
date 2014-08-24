@@ -215,7 +215,7 @@
 							<!-- This isn't perfect, because every old SNAPSHOT is kept.. -->
 							<merge>true</merge>
 
-							<dryRun>true</dryRun>
+							<!-- <dryRun>true</dryRun> -->
 							<repositoryOwner>metteo</repositoryOwner>			<!-- github username -->
 							<repositoryName>jts</repositoryName>	<!-- github repo name -->
 							<branch>refs/heads/gh-pages</branch>				<!-- remote branch name -->
