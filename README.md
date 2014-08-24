@@ -48,4 +48,5 @@ Deploy JTS
 JTS snapshot build is be deployed to GitHub pages based, Maven repository.
 
 [Maven Snapshots](http://metteo.github.io/jts/maven/snapshots)
+
 [Maven Releases](http://metteo.github.io/jts/maven/releases)
