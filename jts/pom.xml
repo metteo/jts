@@ -59,7 +59,6 @@
 		<module>../jts-android</module>
 		<module>../jts-example</module>
 		<module>../jts-lab</module>
-		<module>../jts-app</module>
 		<module>../jts-test</module>
 	</modules>
 
