@@ -10,7 +10,7 @@ before_script:
 script: mvn install
 
 after_script:
- - cd ../jts-app
+ - cd ../jts-test-library
  - mvn exec:exec
 
 notifications:
