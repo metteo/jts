@@ -110,6 +110,13 @@
 
 	<profiles>
 		<profile>
+			<id>test</id>
+
+			<modules>
+				<module>../jts-test</module>
+			</modules>
+		</profile>
+		<profile>
 			<id>io</id>
 
 			<modules>
