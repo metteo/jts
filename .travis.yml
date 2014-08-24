@@ -1,13 +1,15 @@
 language: java
 
 env:
- - DISPLAY=:99.0
+   global:
+    - DISPLAY=:99.0
+    - secure: iIQjYJMP3Cg+BIItvTxi/oUFvVLfAM/4mfpvwmXs09HQEl9CFwiRt0VW29tfUB8XSnTpLHjhCCtObVNxOU1us5+k8SEH1pq69v0R+agXDB/p16dfi069xER3bdur49s4Z6v+7G07q3NmvFpoJ6siN664gjpysMqilHBfv/yNRHA=
 
 before_script:
  - cd jts
  - "sh -e /etc/init.d/xvfb start"
  
-script: mvn install
+script: mvn install -P travis
 
 after_script:
  - cd ../jts-test-library
@@ -18,6 +20,4 @@ notifications:
 
 jdk:
  - openjdk6
- - openjdk7
- - oraclejdk7
 
