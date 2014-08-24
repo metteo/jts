@@ -1,9 +1,19 @@
 language: java
 
+env:
+ - DISPLAY=:99.0
+
 before_script:
  - cd jts
+ - "sh -e /etc/init.d/xvfb start"
  
 script: mvn clean install -P lab
   
 notifications:
   email: false
+
+jdk:
+ - openjdk6
+ - openjdk7
+ - oraclejdk7
+
