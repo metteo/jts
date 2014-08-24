@@ -14,12 +14,13 @@ Only jts-core is necessary to use the library in an application.
 The others are external tools or optional extensions. To
 read more about specific modules check pom.xml description.
 
+Develope JTS
+------------
+Java IDEs support Maven projects out of the box. Just import them, the rest should be automatically configured. Some jts-io-* projects require additional jars which are not easily obtainable. Check poms for more information.
+
 Build JTS
 ---------
-
-The JTS library is intended to be Java 1.5 compatible
-(to permit deployment on mobile platforms and some primitive databases).
-The tools are not subject to this limitation, so you can target Java 1.6 or higher.
+The JTS library is intended to be Java 1.5 compatible (to permit deployment on mobile platforms and some primitive databases). The tools are not subject to this limitation, so you can target Java 1.6 or higher.
 
 * In the root directory execute
 
@@ -27,7 +28,6 @@ The tools are not subject to this limitation, so you can target Java 1.6 or high
 
 Test JTS
 --------
-
 * Java unit tests can be executed using
  
   mvn test
@@ -43,11 +43,4 @@ test runner doesn't support such case use:
 
 Deploy JTS
 ----------
-Under construction...
-
-
-Configure JTS in Eclipse
-------------------------
-
-Use m2eclipse plugin to import projects to Eclipse. Some jts-io-* projects require additional jars which are not easily obtainable. Check poms for more information.
-
+JTS snapshot build will be deployed to GitHub pages based, Maven repository. Site generated from jts project will be also there.
