@@ -13,8 +13,12 @@
 
 	<name>JTS Test Library</name>
 	<description>Library project which contains code shared between builder and runner.</description>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
