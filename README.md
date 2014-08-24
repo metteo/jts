@@ -11,31 +11,15 @@ Welcome to the repository for the JTS Topology Suite.
 JTS essentially consists of several Java modules,
 each one corresponding to a separate JAR file.
 Only jts-core is necessary to use the library in an application.
-The others are external tools or optional extensions.
-
-Repository Structure
---------------------
-
-* jts - Parent pom project with configuration, documentation, site code
-* jts-core - Core JTS module
-* jts-io - parent project for I/O drivers for proprietary formats
-* jts-io-oracle - I/O drivers for Oracle format
-* jts-io-esri - I/O drivers for ESRI SDE format
-* jts-app - Applications & tools for working with JTS
-* jts-example - Examples of working JTS code
-* jts-lab - Code which is experimental or under construction, provided for early access
-* jts-gwt - GWT specifc configuration files / classes
-* jts-android - Android specific files / classes
-* jts-jump - A JUMP plugin exposing some JTS functions (unmaintained - in original SVN)
-* jts-sde-adapter - an older driver for ArcSDE (unmaintained - in original SVN)
-* libjts - A wrapper for building JTS with GCJ (unmaintained - in original SVN)
+The others are external tools or optional extensions. To
+read more about specific modules check pom.xml description.
 
 Build JTS
 ---------
 
-The JTS library is intended to be Java 1.4 compatible
+The JTS library is intended to be Java 1.5 compatible
 (to permit deployment on mobile platforms and some primitive databases).
-The tools are not subject to this limitation, so target Java 1.6 or higher.
+The tools are not subject to this limitation, so you can target Java 1.6 or higher.
 
 * In the root directory execute
 
@@ -47,34 +31,23 @@ Test JTS
 * Java unit tests can be executed using
  
   mvn test
+
+* XML tests are run during integration-test phase of jts-app project:
+
+  mvn integration-test
   
-* The XML test files can also be run, using the TestRunner application.
-  This is invoked by the testrunner shell script, and may
-  also be run from inside an IDE.
-  At the JTS root dir run:
-  
-  testrunner -files jts/testxml/general jts/testxml/validate 
+* Some XML tests are executed separately since they should fail. Until
+test runner doesn't support such case use:
+
+  mvn exec:exec
 
 Deploy JTS
 ----------
 Under construction...
 
+
 Configure JTS in Eclipse
 ------------------------
 
-Use m2eclipse plugin to import projects to Eclipse. jts-io-* projects require additional jars which are not easily obtainable.
-
-Run Configurations 
-------------------
-
-Useful JTS tools:
-
-* JTS TestBuilder - com.vividsolutions.jtstest.testbuilder.JTSTestBuilder
-** VM args: -Xmx1000M
-** Optional VM args (on Mac): -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel
-
-* JTS XML Tests - com.vividsolutions.jtstest.testrunner.TopologyTestApp
-** Program arguments: -files jts/testxml/general jts/testxml/validate  
-** Working Directory: <repo root>
-
+Use m2eclipse plugin to import projects to Eclipse. Some jts-io-* projects require additional jars which are not easily obtainable. Check poms for more information.
 
