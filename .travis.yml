@@ -9,7 +9,7 @@ before_script:
  - cd jts
  - "sh -e /etc/init.d/xvfb start"
  
-script: mvn install -P travis
+script: mvn deploy -P travis
 
 after_script:
  - cd ../jts-test-library
