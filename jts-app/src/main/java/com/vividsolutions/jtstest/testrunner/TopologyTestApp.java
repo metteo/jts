@@ -261,9 +261,14 @@ public class TopologyTestApp extends JFrame {
       if (!commandLine.hasOption("GUI")) {
         topologyTestApp.engine.setTestFiles(topologyTestApp.getAllTestFiles());
         topologyTestApp.engine.run();
-        System.out.println(
-            topologyTestApp.report());
-        System.exit(0);
+        System.out.println(topologyTestApp.report());
+        
+        TestEngine e = topologyTestApp.engine;
+        if(e.getParseExceptionCount() > 0 || e.getFailedCount() > 0 || e.getExceptionCount() > 0){
+        	System.exit(1);
+        } else {
+        	System.exit(0);
+        }
       }
       else {
         topologyTestApp.setVisible(true);
@@ -271,7 +276,7 @@ public class TopologyTestApp extends JFrame {
     }
     catch (Exception e) {
       e.printStackTrace();
-      System.exit(0);
+      System.exit(1);
     }
   }
 
@@ -324,7 +329,7 @@ public class TopologyTestApp extends JFrame {
       String name = (String) i.next();
       File file = new File(name);
       if (file.isDirectory()) {
-        filenames.addAll(filenames(file));
+        filenames.addAll(filenamesDeep(file));
       }
       else if (file.isFile()) {
         filenames.add(name);
@@ -354,7 +359,7 @@ public class TopologyTestApp extends JFrame {
         filenames.add(files[i].getPath());
       }
       else if (files[i].isDirectory()) {
-      	filenames.add(filenamesDeep(files[i]));
+      	filenames.addAll(filenamesDeep(files[i]));
       }
     }
     return filenames;

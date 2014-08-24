@@ -204,6 +204,14 @@ public class TestEngine
     int runIndex = 0;
     for (Iterator i = testFiles.iterator(); i.hasNext(); ) {
       File testFile = (File) i.next();
+      
+      //Skip files with ext different than xml
+      String name = testFile.getName();
+      String ext = name.substring(name.length() - 3, name.length());
+      if(!"xml".equalsIgnoreCase(ext)){
+    	  continue;
+      }
+      
       runIndex++;
       System.out.println("Reading test file " + testFile.getAbsolutePath());
       TestRun testRun = testReader.createTestRun(testFile, runIndex);
