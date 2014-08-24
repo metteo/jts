@@ -14,6 +14,8 @@ Only jts-core is necessary to use the library in an application.
 The others are external tools or optional extensions. To
 read more about specific modules check pom.xml description.
 
+[Project site](http://metteo.github.io/jts/web/index.html)
+
 Develope JTS
 ------------
 Java IDEs support Maven projects out of the box. Just import them, the rest should be automatically configured. Some jts-io-* projects require additional jars which are not easily obtainable. Check poms for more information.
@@ -43,4 +45,7 @@ test runner doesn't support such case use:
 
 Deploy JTS
 ----------
-JTS snapshot build will be deployed to GitHub pages based, Maven repository. Site generated from jts project will be also there.
+JTS snapshot build is be deployed to GitHub pages based, Maven repository.
+
+[Maven Snapshots](http://metteo.github.io/jts/maven/snapshots)
+[Maven Releases](http://metteo.github.io/jts/maven/releases)
