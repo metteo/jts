@@ -37,14 +37,15 @@ package com.vividsolutions.jtstest.testrunner;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.io.*;
 import com.vividsolutions.jtstest.*;
+
 import java.io.*;
 import java.util.*;
+
 import org.jdom.*;
 import org.jdom.input.*;
 
 import com.vividsolutions.jtstest.geomop.*;
 import com.vividsolutions.jtstest.util.*;
-import com.vividsolutions.jtstest.util.StringUtil;
 
 /**
  * @version 1.7
@@ -134,6 +135,17 @@ public class TestReader
         int testIndex = 0;
         for (Iterator i = testElements.iterator(); i.hasNext();) {
             Element testElement = (Element) i.next();
+            
+            String expectedExcClass = testElement.getAttributeValue("expect");
+            Class expectedException = null;
+            if(expectedExcClass != null && !expectedExcClass.isEmpty()){
+            	try {
+					expectedException = Class.forName(expectedExcClass);
+				} catch (ClassNotFoundException e) {
+					throw new TestParseException("Wrong exception class name in expect attr");
+				}
+            }
+            
             testIndex++;
             try {
                 Element descElement = testElement.getChild("desc");
@@ -185,6 +197,7 @@ public class TestReader
                 		arg1, 
                 		arguments, 
                 		result, 
+                		expectedException,
                 		tolerance);
 
                 tests.add(test);

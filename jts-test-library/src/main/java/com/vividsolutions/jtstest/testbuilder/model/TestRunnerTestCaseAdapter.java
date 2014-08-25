@@ -256,7 +256,7 @@ public class TestRunnerTestCaseAdapter
     if (testToReturn == null) {
       testToReturn = new Test(testCase, maxTestIndex(testCase) + 1, null, opName, "A",
           Arrays.asList(new String[]{"B"}), 
-          getDefaultResult(opName),
+          getDefaultResult(opName), null,
           0);
       testCase.add(testToReturn);
     }

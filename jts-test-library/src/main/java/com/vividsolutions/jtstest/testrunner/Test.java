@@ -51,6 +51,7 @@ public class Test implements Runnable
   private String description;
   private String operation;
   private Result expectedResult;
+  private Class expectedException;
   private int testIndex;
   private String geometryIndex;
   private ArrayList arguments;
@@ -70,11 +71,12 @@ public class Test implements Runnable
    *  "equals") will be performed, the expected result of which is <tt>expectedResult</tt>.
    */
   public Test(TestCase testCase, int testIndex, String description, String operation, String geometryIndex,
-      List arguments, Result expectedResult, double tolerance) {
+      List arguments, Result expectedResult, Class expectedException, double tolerance) {
     this.tolerance = tolerance;
     this.description = description;
     this.operation = operation;
     this.expectedResult = expectedResult;
+    this.expectedException = expectedException;
     this.testIndex = testIndex;
     this.geometryIndex = geometryIndex;
     this.arguments = new ArrayList(arguments);
@@ -140,9 +142,23 @@ public class Test implements Runnable
     try {
       exception = null;
       passed = computePassed();
+      
+      //we expected exception but it was not thrown
+      if(expectedException != null){
+    	  passed = false;
+    	  exception = new Exception("Expected exception: " + expectedException.getName());
+      }
     }
     catch (Exception e) {
       exception = e;
+      
+      //we expected exception don't report it
+      if(expectedException != null){
+    	  if(expectedException.equals(exception.getClass())){
+    		  passed = true;
+    		  exception = null;
+    	  }
+      }
     }
   }
 
