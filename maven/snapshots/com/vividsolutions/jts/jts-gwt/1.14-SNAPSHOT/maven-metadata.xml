@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.vividsolutions.jts</groupId>
+  <artifactId>jts-gwt</artifactId>
+  <version>1.14-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20140825.163525</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20140825163525</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.14-20140825.163525-1</value>
+        <updated>20140825163525</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.14-20140825.163525-1</value>
+        <updated>20140825163525</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
