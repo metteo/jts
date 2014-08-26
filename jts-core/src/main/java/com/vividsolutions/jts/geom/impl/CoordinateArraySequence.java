@@ -208,7 +208,7 @@ public class CoordinateArraySequence
   public Object clone() {
     Coordinate[] cloneCoordinates = new Coordinate[size()];
     for (int i = 0; i < coordinates.length; i++) {
-      cloneCoordinates[i] = (Coordinate) coordinates[i].clone();
+      cloneCoordinates[i] = (Coordinate) coordinates[i].copy();
     }
     return new CoordinateArraySequence(cloneCoordinates);
   }

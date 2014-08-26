@@ -36,9 +36,9 @@ public class GeometryVertexInserter
       Coordinate[] newPts = new Coordinate[coords.length + 1];
       for (int i = 0; i < coords.length; i++) {
         int actualIndex = i > segIndex ? i + 1 : i;
-        newPts[actualIndex] = (Coordinate) coords[i].clone();
+        newPts[actualIndex] = (Coordinate) coords[i].copy();
       }
-      newPts[segIndex + 1] = (Coordinate) newVertex.clone();
+      newPts[segIndex + 1] = (Coordinate) newVertex.copy();
       return newPts;
     }
   }

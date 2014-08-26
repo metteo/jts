@@ -203,7 +203,7 @@ public class GeometryEditModel
     Coordinate pn = (Coordinate) coordList.get(coordList.size() - 1);
     if (! p0.equals2D(pn)) {
       closedPts = new ArrayList(coordList);
-      closedPts.add(p0.clone()); 
+      closedPts.add(p0.copy()); 
     }
     Coordinate[] pts = CoordinateArrays.toCoordinateArray(closedPts);
     return pts;

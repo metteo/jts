@@ -184,7 +184,7 @@ numTests++;
           e1.addIntersections(li, segIndex1, 1);
         }
         if (li.isProper()) {
-          properIntersectionPoint = (Coordinate) li.getIntersection(0).clone();
+          properIntersectionPoint = (Coordinate) li.getIntersection(0).copy();
           hasProper = true;
           if (! isBoundaryPoint(li, bdyNodes))
             hasProperInterior = true;

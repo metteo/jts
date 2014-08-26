@@ -34,9 +34,7 @@ package com.vividsolutions.jts.geom;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import com.vividsolutions.jts.util.Assert;
 import com.vividsolutions.jts.util.NumberUtil;
-
 
 /**
  * A lightweight class used to store coordinates
@@ -55,9 +53,9 @@ import com.vividsolutions.jts.util.NumberUtil;
  * Apart from the basic accessor functions, JTS supports
  * only specific operations involving the Z-ordinate. 
  *
- *@version 1.7
+ * @version 1.14
  */
-public class Coordinate implements Comparable, Cloneable, Serializable {
+public class Coordinate implements Comparable<Coordinate>, Serializable {
   private static final long serialVersionUID = 6683108902428366910L;
   
   /**
@@ -279,8 +277,7 @@ public class Coordinate implements Comparable, Cloneable, Serializable {
    *@return    -1, zero, or 1 as this <code>Coordinate</code>
    *      is less than, equal to, or greater than the specified <code>Coordinate</code>
    */
-  public int compareTo(Object o) {
-    Coordinate other = (Coordinate) o;
+  public int compareTo(Coordinate other) {
 
     if (x < other.x) return -1;
     if (x > other.x) return 1;
@@ -298,17 +295,27 @@ public class Coordinate implements Comparable, Cloneable, Serializable {
     return "(" + x + ", " + y + ", " + z + ")";
   }
 
+  /**
+   * Performs a deep copy of the current object using copy constructor
+   * 
+   * @return deep copy
+   */
+  public Coordinate copy() {
+	  Coordinate copy = new Coordinate(this);
+	  return copy;
+  }
+  
+  /**
+   * Method deprecated because availability of {@link Object#clone()}
+   * is not guaranteed on all platforms/versions.
+   * <br><br>
+   * Use {@link #copy()} instead
+   * 
+   * @deprecated Since 1.14, Will be removed in 1.15
+   */
+  @Deprecated
   public Object clone() {
-    try {
-      Coordinate coord = (Coordinate) super.clone();
-
-      return coord; // return the clone
-    } catch (CloneNotSupportedException e) {
-      Assert.shouldNeverReachHere(
-          "this shouldn't happen because this class is Cloneable");
-
-      return null;
-    }
+    return copy();
   }
 
   /**
@@ -367,7 +374,7 @@ public class Coordinate implements Comparable, Cloneable, Serializable {
    * or 3-dimensional comparison, and handling NaN values correctly.
    */
   public static class DimensionalComparator
-      implements Comparator
+      implements Comparator<Coordinate>
   {
     /**
      * Compare two <code>double</code>s, allowing for NaN values.
@@ -424,11 +431,8 @@ public class Coordinate implements Comparable, Cloneable, Serializable {
      * equal to, or greater than 02
      *
      */
-    public int compare(Object o1, Object o2)
+    public int compare(Coordinate c1, Coordinate c2)
     {
-      Coordinate c1 = (Coordinate) o1;
-      Coordinate c2 = (Coordinate) o2;
-
       int compX = compare(c1.x, c2.x);
       if (compX != 0) return compX;
 

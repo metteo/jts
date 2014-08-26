@@ -179,7 +179,7 @@ public class ExtendedCoordinateSequence
   public Object clone() {
     ExtendedCoordinate[] cloneCoordinates = new ExtendedCoordinate[size()];
     for (int i = 0; i < coordinates.length; i++) {
-      cloneCoordinates[i] = (ExtendedCoordinate) coordinates[i].clone();
+      cloneCoordinates[i] = (ExtendedCoordinate) coordinates[i].copy();
     }
 
     return new ExtendedCoordinateSequence(cloneCoordinates);

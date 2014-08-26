@@ -61,7 +61,7 @@ public class GeometryVerticesMover
     	Coordinate newLoc = (Coordinate) moves.get(orig);
     	if (newLoc == null) 
     		return orig;
-    	Coordinate mod = (Coordinate) newLoc.clone();
+    	Coordinate mod = (Coordinate) newLoc.copy();
     	modifiedCoords.add(mod);
     	return mod;
     }

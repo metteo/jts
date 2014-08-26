@@ -1,18 +1,9 @@
 package com.vividsolutions.jts.geom;
 
 import junit.framework.TestCase;
-import junit.textui.TestRunner;
 
 public class CoordinateTest extends TestCase
 {
-  public CoordinateTest(String name)
-  {
-    super(name);
-  }
-
-  public static void main(String args[]) {
-    TestRunner.run(CoordinateTest.class);
-  }
   
   public void testConstructor3D() 
   {
@@ -74,13 +65,19 @@ public class CoordinateTest extends TestCase
   {
     Coordinate c1 = new Coordinate(1,2,3);
     String s = "Not a coordinate";
-    assertTrue(! c1.equals(s));
+    assertFalse(c1.equals(s));
     
     Coordinate c2 = new Coordinate(1,2,3);
     assertTrue(c1.equals2D(c2));
 
     Coordinate c3 = new Coordinate(1,22,3);
-    assertTrue(! c1.equals2D(c3));
+    assertFalse(c1.equals2D(c3));
+    
+    Coordinate c4 = new Coordinate(-1,2,3);
+    assertFalse(c1.equals2D(c4));
+    
+    Coordinate c5 = new Coordinate(1,2,4);
+    assertTrue(c1.equals2D(c5));
   }
   public void testEquals2D()
   {
@@ -89,7 +86,10 @@ public class CoordinateTest extends TestCase
     assertTrue(c1.equals2D(c2));
     
     Coordinate c3 = new Coordinate(1,22,3);
-    assertTrue(! c1.equals2D(c3));
+    assertFalse(c1.equals2D(c3));
+    
+    Coordinate c4 = new Coordinate(1,22);
+    assertTrue(c3.equals2D(c4));
   }
   public void testEquals3D()
   {
@@ -98,20 +98,28 @@ public class CoordinateTest extends TestCase
     assertTrue(c1.equals3D(c2));
     
     Coordinate c3 = new Coordinate(1,22,3);
-    assertTrue(! c1.equals3D(c3));
+    assertFalse(c1.equals3D(c3));
+    
+    Coordinate c4 = new Coordinate(1,2,33);
+    assertFalse(c1.equals3D(c4));
   }
   public void testEquals2DWithinTolerance() 
   {
     Coordinate c = new Coordinate(100.0, 200.0, 50.0);
     Coordinate aBitOff = new Coordinate(100.1, 200.1, 50.0);
     assertTrue(c.equals2D(aBitOff, 0.2));
+    
+    Coordinate c1 = new Coordinate(100.0, 200.0, -50.0);
+    Coordinate aBitOff1 = new Coordinate(100.1, 200.1);
+    assertTrue(c1.equals2D(aBitOff1, 0.2));
   }
 
-  public void testEqualsInZ() {
+  public void testEqualInZ() {
     
     Coordinate c = new Coordinate(100.0, 200.0, 50.0);
     Coordinate withSameZ = new Coordinate(100.1, 200.1, 50.1);
     assertTrue(c.equalInZ(withSameZ, 0.2));
+    assertFalse(c.equalInZ(withSameZ, 0.01));
   }
 
   public void testCompareTo() 
@@ -131,12 +139,23 @@ public class CoordinateTest extends TestCase
     String expectedResult = "(100.0, 200.0, 50.0)";
     String actualResult = new Coordinate(100.0, 200.0, 50.0).toString();
     assertEquals(expectedResult, actualResult);
+    
+    expectedResult = "(-100.1, -200.1, NaN)";
+    actualResult = new Coordinate(-100.1, -200.1).toString();
+    assertEquals(expectedResult, actualResult);
   }
 
+  @SuppressWarnings("deprecation")
   public void testClone() {
     Coordinate c = new Coordinate(100.0, 200.0, 50.0);
     Coordinate clone = (Coordinate) c.clone();
     assertTrue(c.equals3D(clone));
+  }
+  
+  public void testCopy() {
+    Coordinate c = new Coordinate(100.0, 200.0, 50.0);
+    Coordinate copy = c.copy();
+    assertTrue(c.equals3D(copy));
   }
 
   public void testDistance() {

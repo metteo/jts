@@ -31,8 +31,8 @@ public class GeometryVertexMover
       for (int i = 0; i < coords.length; i++) {
         newPts[i] = 
           (coords[i].equals2D(fromLoc)) 
-            ? (Coordinate) toLoc.clone()
-                : (Coordinate) coords[i].clone();
+            ? (Coordinate) toLoc.copy()
+                : (Coordinate) coords[i].copy();
                    
       }
       return newPts;
