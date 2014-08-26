@@ -52,4 +52,4 @@ JTS snapshot build is be deployed to GitHub pages based, Maven repository.
 
 [Maven Releases](http://metteo.github.io/jts/maven/releases)
 
-\*Currently covarage is calculated on whole project, not only jts-core (which is most relevant)
+\*Currently coverage is calculated on whole project, not only jts-core (which is most relevant)
