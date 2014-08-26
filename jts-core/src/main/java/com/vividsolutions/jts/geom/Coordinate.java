@@ -34,6 +34,8 @@ package com.vividsolutions.jts.geom;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import com.vividsolutions.jts.util.Assert;
 import com.vividsolutions.jts.util.NumberUtil;
 
 /**
@@ -55,7 +57,7 @@ import com.vividsolutions.jts.util.NumberUtil;
  *
  * @version 1.14
  */
-public class Coordinate implements Comparable<Coordinate>, Serializable {
+public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializable {
   private static final long serialVersionUID = 6683108902428366910L;
   
   /**
@@ -315,7 +317,16 @@ public class Coordinate implements Comparable<Coordinate>, Serializable {
    */
   @Deprecated
   public Object clone() {
-    return copy();
+    try {
+        Coordinate coord = (Coordinate) super.clone();
+
+        return coord; // return the clone
+    } catch (CloneNotSupportedException e) {
+        Assert.shouldNeverReachHere(
+            "this shouldn't happen because this class is Cloneable");
+
+        return null;
+    }
   }
 
   /**
