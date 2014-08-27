@@ -4,7 +4,7 @@ JTS Topology Suite
 [![Build Status](https://travis-ci.org/metteo/jts.svg?branch=master)](https://travis-ci.org/metteo/jts)
 [![Coverage Status](https://coveralls.io/repos/metteo/jts/badge.png)](https://coveralls.io/r/metteo/jts)*
 
-Fork (or a mirror) of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
+Fork of original project from: svn://svn.code.sf.net/p/jts-topo-suite/code
 
 Original project site: http://tsusiatsoftware.net/jts/main.html (previous: http://www.vividsolutions.com/jts/JTSHome.htm)
      
