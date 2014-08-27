@@ -60,8 +60,7 @@ package com.vividsolutions.jts.geom;
  *
  * @version 1.7
  */
-public interface CoordinateSequence
-    extends Cloneable
+public interface CoordinateSequence extends Cloneable
 {
   /**
    * Standard ordinate index values
@@ -177,11 +176,28 @@ public interface CoordinateSequence
    */
   Envelope expandEnvelope(Envelope env);
 
+  //#if CLONE
+  
   /**
-   * Returns a deep copy of this collection.
-   * Called by Geometry#clone.
-   *
-   * @return a copy of the coordinate sequence containing copies of all points
+   * Method deprecated because availability of {@link Object#clone()}
+   * is not guaranteed on all platforms/versions.
+   * <br><br>
+   * Use {@link #copy()} instead
+   * 
+   * @deprecated Since 1.14, Will be removed in future
    */
+  @Deprecated
   Object clone();
+  
+  //#else
+  
+  //$/**
+  //$ * Returns a deep copy of this collection.
+  //$ * Called by Geometry#clone.
+  //$ *
+  //$ * @return a copy of the coordinate sequence containing copies of all points
+  //$ */
+  //$CoordinateSequence copy();
+
+  //#endif
 }

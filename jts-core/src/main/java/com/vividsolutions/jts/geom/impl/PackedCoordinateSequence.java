@@ -189,10 +189,14 @@ public abstract class PackedCoordinateSequence
    */
   protected abstract Coordinate getCoordinateInternal(int index);
 
+  //#if CLONE
+
   /**
    * @see java.lang.Object#clone()
    */
   public abstract Object clone();
+  
+  //#endif
 
   /**
    * Sets the ordinate of a coordinate in this sequence.
@@ -316,6 +320,8 @@ public abstract class PackedCoordinateSequence
       return coords.length / dimension;
     }
 
+    //#if CLONE
+    
     /**
      * @see java.lang.Object#clone()
      */
@@ -324,6 +330,8 @@ public abstract class PackedCoordinateSequence
       System.arraycopy(coords, 0, clone, 0, coords.length);
       return new Double(clone, dimension);
     }
+    
+    //#endif
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getOrdinate(int, int)
@@ -452,6 +460,8 @@ public abstract class PackedCoordinateSequence
       return coords.length / dimension;
     }
 
+    //#if CLONE
+    
     /**
      * @see java.lang.Object#clone()
      */
@@ -460,6 +470,8 @@ public abstract class PackedCoordinateSequence
       System.arraycopy(coords, 0, clone, 0, coords.length);
       return new Float(clone, dimension);
     }
+    
+    //#endif
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getOrdinate(int, int)

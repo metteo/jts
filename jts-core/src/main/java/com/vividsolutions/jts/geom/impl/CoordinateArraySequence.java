@@ -48,9 +48,8 @@ import com.vividsolutions.jts.geom.*;
  *
  * @version 1.7
  */
-public class CoordinateArraySequence
-    implements CoordinateSequence, Serializable
-{
+public class CoordinateArraySequence implements CoordinateSequence, Serializable {
+
   //With contributions from Markus Schaber [schabios@logi-track.com] 2004-03-26
   private static final long serialVersionUID = -915438501601840650L;
 
@@ -137,6 +136,27 @@ public class CoordinateArraySequence
       coordinates[i] = coordSeq.getCoordinateCopy(i);
     }
   }
+  
+  /**
+   * Creates a new sequence based on a deep copy of the given 
+   * {@link CoordinateArraySequence}.
+   * 
+   * The coordinate dimension is set to equal the dimension of the input.
+   *
+   * @param coordSeq the coordinate sequence that will be copied.
+   */
+  public CoordinateArraySequence(CoordinateArraySequence cas)
+  {
+    dimension = cas.dimension;
+    coordinates = new Coordinate[cas.coordinates.length];
+
+    for (int i = 0; i < coordinates.length; i++) {
+      Coordinate c = cas.coordinates[i];
+      if(c != null) {
+    	  coordinates[i] = c.copy();
+      }
+    }
+  }
 
   /**
    * @see com.vividsolutions.jts.geom.CoordinateSequence#getDimension()
@@ -200,6 +220,8 @@ public class CoordinateArraySequence
     return Double.NaN;
   }
 
+  //#if CLONE
+  
   /**
    * Creates a deep copy of the Object
    *
@@ -212,6 +234,13 @@ public class CoordinateArraySequence
     }
     return new CoordinateArraySequence(cloneCoordinates);
   }
+
+  //#endif
+  
+  public CoordinateArraySequence copy() {
+	  return new CoordinateArraySequence(this);
+  };
+  
   /**
    * Returns the size of the coordinate sequence
    *
