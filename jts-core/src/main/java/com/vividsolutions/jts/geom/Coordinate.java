@@ -57,7 +57,7 @@ import com.vividsolutions.jts.util.NumberUtil;
  *
  * @version 1.14
  */
-public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializable {
+public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
   private static final long serialVersionUID = 6683108902428366910L;
   
   /**
@@ -279,8 +279,9 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@return    -1, zero, or 1 as this <code>Coordinate</code>
    *      is less than, equal to, or greater than the specified <code>Coordinate</code>
    */
-  public int compareTo(Coordinate other) {
-
+  public int compareTo(Object o) {
+	Coordinate other = (Coordinate) o;
+	  
     if (x < other.x) return -1;
     if (x > other.x) return 1;
     if (y < other.y) return -1;
@@ -307,13 +308,15 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
 	  return copy;
   }
   
+  //#if CLONE
+  
   /**
    * Method deprecated because availability of {@link Object#clone()}
    * is not guaranteed on all platforms/versions.
    * <br><br>
    * Use {@link #copy()} instead
    * 
-   * @deprecated Since 1.14, Will be removed in 1.15
+   * @deprecated Since 1.14, Will be removed in future
    */
   @Deprecated
   public Object clone() {
@@ -328,6 +331,8 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
         return null;
     }
   }
+  
+  //#endif
 
   /**
    * Computes the 2-dimensional Euclidean distance to another location.

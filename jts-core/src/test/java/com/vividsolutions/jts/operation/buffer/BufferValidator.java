@@ -229,7 +229,7 @@ public class BufferValidator
       buffer = getOriginal().buffer(bufferDistance, QUADRANT_SEGMENTS_1);
       if (getBuffer().getClass() == GeometryCollection.class && getBuffer().isEmpty()) {
         try {
-          //#contains doesn't work with GeometryCollections [Jon Aquino
+          //contains doesn't work with GeometryCollections [Jon Aquino
           // 10/29/2003]
           buffer = wktReader.read("POINT EMPTY");
         } catch (ParseException e) {

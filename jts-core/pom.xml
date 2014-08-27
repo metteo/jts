@@ -31,4 +31,53 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>gwt</id>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.igormaznitsa</groupId>
+						<artifactId>jcp</artifactId>
+						<version>5.3.3</version>
+						<executions>
+							<execution>
+								<id>preprocess-sources</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>preprocess</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>preprocess-test-sources</id>
+								<phase>generate-test-sources</phase>
+								<goals>
+									<goal>preprocess</goal>
+								</goals>
+								<configuration>
+									<testSource>${project.build.testSourceDirectory}</testSource>
+									<testDestination>${project.build.directory}/generated-test-sources/preprocessed</testDestination>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<keepLines>true</keepLines>
+							<globalVars>
+								<property>
+									<name>CLONE</name>
+									<value>false</value>
+								</property>
+								<property>
+									<name>DBL_LNG_BTS</name>
+									<value>false</value>
+								</property>
+							</globalVars>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
