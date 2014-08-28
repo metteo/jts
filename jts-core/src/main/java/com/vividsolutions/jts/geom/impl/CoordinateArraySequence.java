@@ -220,7 +220,7 @@ public class CoordinateArraySequence implements CoordinateSequence, Serializable
     return Double.NaN;
   }
 
-  //#if CLONE
+//#if CLONE
   
   /**
    * Creates a deep copy of the Object
@@ -235,7 +235,7 @@ public class CoordinateArraySequence implements CoordinateSequence, Serializable
     return new CoordinateArraySequence(cloneCoordinates);
   }
 
-  //#endif
+//#endif
   
   public CoordinateArraySequence copy() {
 	  return new CoordinateArraySequence(this);

@@ -308,7 +308,7 @@ public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
 	  return copy;
   }
   
-  //#if CLONE
+//#if CLONE
   
   /**
    * Method deprecated because availability of {@link Object#clone()}
@@ -332,7 +332,7 @@ public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
     }
   }
   
-  //#endif
+//#endif
 
   /**
    * Computes the 2-dimensional Euclidean distance to another location.

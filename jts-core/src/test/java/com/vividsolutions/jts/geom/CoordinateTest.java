@@ -145,7 +145,7 @@ public class CoordinateTest extends TestCase
     assertEquals(expectedResult, actualResult);
   }
 
-  //#if CLONE
+//#if CLONE
   
   @SuppressWarnings("deprecation")
   public void testClone() {
@@ -154,7 +154,7 @@ public class CoordinateTest extends TestCase
     assertTrue(c.equals3D(clone));
   }
   
-  //#endif
+//#endif
   
   public void testCopy() {
     Coordinate c = new Coordinate(100.0, 200.0, 50.0);

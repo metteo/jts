@@ -34,14 +34,21 @@
 
 	<profiles>
 		<profile>
-			<id>gwt</id>
+			<id>light</id>
 
 			<build>
 				<plugins>
 					<plugin>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>2.5</version>
+						<configuration>
+							<classifier>light</classifier>
+						</configuration>
+					</plugin>
+					<plugin>
 						<groupId>com.igormaznitsa</groupId>
 						<artifactId>jcp</artifactId>
-						<version>5.3.3</version>
+						<version>5.3.4-SNAPSHOT</version>
 						<executions>
 							<execution>
 								<id>preprocess-sources</id>
@@ -57,8 +64,7 @@
 									<goal>preprocess</goal>
 								</goals>
 								<configuration>
-									<testSource>${project.build.testSourceDirectory}</testSource>
-									<testDestination>${project.build.directory}/generated-test-sources/preprocessed</testDestination>
+									<useTestSources>true</useTestSources>
 								</configuration>
 							</execution>
 						</executions>

@@ -176,7 +176,7 @@ public interface CoordinateSequence extends Cloneable
    */
   Envelope expandEnvelope(Envelope env);
 
-  //#if CLONE
+//#if CLONE
   
   /**
    * Method deprecated because availability of {@link Object#clone()}
@@ -189,7 +189,7 @@ public interface CoordinateSequence extends Cloneable
   @Deprecated
   Object clone();
   
-  //#else
+//#else
   
   //$/**
   //$ * Returns a deep copy of this collection.
@@ -199,5 +199,6 @@ public interface CoordinateSequence extends Cloneable
   //$ */
   //$CoordinateSequence copy();
 
-  //#endif
+//#endif
+
 }
