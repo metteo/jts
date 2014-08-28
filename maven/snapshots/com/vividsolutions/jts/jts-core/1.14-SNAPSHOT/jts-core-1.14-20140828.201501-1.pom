@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.vividsolutions.jts</groupId>
+		<artifactId>jts</artifactId>
+		<version>1.14-SNAPSHOT</version>
+		<relativePath>../jts/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>jts-core</artifactId>
+
+	<name>JTS Core</name>
+	<description>Core library which contains code compatible with all supported platforms (that is the plan). Other modules depend on this one and add additional functionality (extensions, apps, testing tools), </description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>light</id>
+
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>2.5</version>
+						<configuration>
+							<classifier>light</classifier>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.igormaznitsa</groupId>
+						<artifactId>jcp</artifactId>
+						<version>5.3.4-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<id>preprocess-sources</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>preprocess</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>preprocess-test-sources</id>
+								<phase>generate-test-sources</phase>
+								<goals>
+									<goal>preprocess</goal>
+								</goals>
+								<configuration>
+									<useTestSources>true</useTestSources>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<keepLines>true</keepLines>
+							<globalVars>
+								<property>
+									<name>CLONE</name>
+									<value>false</value>
+								</property>
+							</globalVars>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
