@@ -1,11 +1,11 @@
 package com.vividsolutions.jtsexample.client;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jtsexample.shared.Feature;
@@ -27,14 +27,16 @@ public class JTSExampleEntry implements EntryPoint {
 		feature.properties = new HashMap<String, String>();
 		feature.properties.put("name", "JTS!");
 		
+		sLogger.info("Original feature: " + feature);
+		
 		features.echo(feature, new AsyncCallback<Feature>() {
 			
 			public void onSuccess(Feature result) {
-				Window.alert(result.toString());
+				sLogger.info("Echoed feature: " + result);
 			}
 			
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
+				sLogger.log(Level.WARNING, "Unable to make GWT-RPC request", caught);
 			}
 		});
 	}

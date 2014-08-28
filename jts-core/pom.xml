@@ -75,10 +75,6 @@
 									<name>CLONE</name>
 									<value>false</value>
 								</property>
-								<property>
-									<name>DBL_LNG_BTS</name>
-									<value>false</value>
-								</property>
 							</globalVars>
 						</configuration>
 					</plugin>
