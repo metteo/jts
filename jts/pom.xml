@@ -55,8 +55,8 @@
 
 	<modules>
 		<module>../jts-core</module>
-		<module>../jts-gwt</module>
 		<!-- TODO: run 2 builds: regular and 'light' -->
+		<!-- <module>../jts-gwt</module> -->
 		<!-- <module>../jts-gwt-example</module> -->
 		<module>../jts-android</module>
 		<module>../jts-example</module>
