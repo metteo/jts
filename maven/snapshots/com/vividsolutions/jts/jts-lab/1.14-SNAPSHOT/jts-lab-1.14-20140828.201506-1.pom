@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.vividsolutions.jts</groupId>
+		<artifactId>jts</artifactId>
+		<version>1.14-SNAPSHOT</version>
+		<relativePath>../jts/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>jts-lab</artifactId>
+	
+	<name>JTS Lab</name>
+	<description>Code which is experimental or under construction, provided for early access. It's API may change when released</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>
