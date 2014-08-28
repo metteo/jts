@@ -241,4 +241,18 @@ public class CoordinateSequences {
     buf.append(')');
     return buf.toString();
   }
+  
+  public static CoordinateSequence copy(CoordinateSequence cs){
+	  
+//#if CLONE
+	  
+    return (CoordinateSequence) cs.clone();
+	  
+//#else
+	  
+    //$return cs.copy();
+	  
+//#endif
+	  
+  }
 }

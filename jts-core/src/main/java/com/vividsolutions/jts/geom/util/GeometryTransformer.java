@@ -156,13 +156,13 @@ public class GeometryTransformer
   }
 
   /**
-   * Convenience method which provides statndard way of copying {@link CoordinateSequence}s
+   * Convenience method which provides standard way of copying {@link CoordinateSequence}s
    * @param seq the sequence to copy
    * @return a deep copy of the sequence
    */
   protected final CoordinateSequence copy(CoordinateSequence seq)
   {
-    return (CoordinateSequence) seq.clone();
+    return CoordinateSequences.copy(seq);
   }
 
   /**

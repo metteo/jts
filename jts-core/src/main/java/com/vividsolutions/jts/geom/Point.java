@@ -205,7 +205,7 @@ public class Point
    */
   public Object clone() {
     Point p = (Point) super.clone();
-    p.coordinates = (CoordinateSequence) coordinates.clone();
+    p.coordinates = CoordinateSequences.copy(coordinates);
     return p;// return the clone
   }
 

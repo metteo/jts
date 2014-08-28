@@ -74,6 +74,19 @@ class DefaultCoordinateSequence
       coordinates[i] = coordSeq.getCoordinateCopy(i);
     }
   }
+  
+  /**
+   * Creates a new sequence based on a deep copy of the given 
+   * {@link DefaultCoordinateSequence}.
+   *
+   * @param coordSeq the coordinate sequence that will be copied.
+   */
+  public DefaultCoordinateSequence(DefaultCoordinateSequence dcs) {
+    coordinates = new Coordinate[dcs.coordinates.length];
+    for(int i = 0; i < coordinates.length; i++){
+    	coordinates[i] = dcs.coordinates[i].copy();
+    }
+  }
 
   /**
    * Constructs a sequence of a given size, populated
@@ -158,6 +171,9 @@ class DefaultCoordinateSequence
       case CoordinateSequence.Z:  coordinates[index].z = value; break;
     }
   }
+  
+//#if CLONE
+  
   /**
    * Creates a deep copy of the Object
    *
@@ -170,6 +186,13 @@ class DefaultCoordinateSequence
     }
     return new DefaultCoordinateSequence(cloneCoordinates);
   }
+  
+//#endif
+  
+  public DefaultCoordinateSequence copy() {
+	return new DefaultCoordinateSequence(this);
+  }
+  
   /**
    * Returns the size of the coordinate sequence
    *

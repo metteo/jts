@@ -90,4 +90,8 @@ public class ExtendedCoordinate
     String stringRep = x + " " + y + " m=" + m;
     return stringRep;
   }
+  
+  public ExtendedCoordinate copy() {
+	  return new ExtendedCoordinate(this);
+  }
 }

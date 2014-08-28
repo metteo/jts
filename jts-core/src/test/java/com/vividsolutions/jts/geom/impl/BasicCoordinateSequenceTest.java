@@ -37,6 +37,7 @@ import junit.framework.TestCase;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.CoordinateSequences;
 
 
 /**
@@ -49,10 +50,11 @@ public class BasicCoordinateSequenceTest extends TestCase {
     public static void main(String[] args) {
         junit.textui.TestRunner.run(BasicCoordinateSequenceTest.class);
     }
-    public void testClone() {
+
+    public void testCopy() {
         CoordinateSequence s1 = CoordinateArraySequenceFactory.instance().create(
             new Coordinate[] { new Coordinate(1, 2), new Coordinate(3, 4)});
-        CoordinateSequence s2 = (CoordinateSequence) s1.clone();
+        CoordinateSequence s2 = CoordinateSequences.copy(s1);
         assertTrue(s1.getCoordinate(0).equals(s2.getCoordinate(0)));
         assertTrue(s1.getCoordinate(0) != s2.getCoordinate(0));
     }

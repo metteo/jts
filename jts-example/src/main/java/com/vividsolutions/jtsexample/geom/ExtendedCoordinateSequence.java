@@ -44,8 +44,7 @@ import com.vividsolutions.jts.geom.*;
  *
  * @version 1.7
  */
-public class ExtendedCoordinateSequence
-    implements CoordinateSequence
+public class ExtendedCoordinateSequence implements CoordinateSequence
 {
   public static ExtendedCoordinate[] copy(Coordinate[] coordinates)
   {
@@ -88,6 +87,16 @@ public class ExtendedCoordinateSequence
    */
   public ExtendedCoordinateSequence(CoordinateSequence coordSeq) {
     coordinates = copy(coordSeq);
+  }
+  
+  /**
+   * Constructor that makes a copy of a ExtendedCoordinateSequence.
+   */
+  public ExtendedCoordinateSequence(ExtendedCoordinateSequence c) {
+    coordinates = new ExtendedCoordinate[c.coordinates.length];
+    for(int i = 0; i < coordinates.length; i++) {
+    	coordinates[i] = c.coordinates[i].copy();
+    }
   }
 
   /**
@@ -176,6 +185,8 @@ public class ExtendedCoordinateSequence
     }
   }
 
+//#if CLONE
+  
   public Object clone() {
     ExtendedCoordinate[] cloneCoordinates = new ExtendedCoordinate[size()];
     for (int i = 0; i < coordinates.length; i++) {
@@ -183,6 +194,12 @@ public class ExtendedCoordinateSequence
     }
 
     return new ExtendedCoordinateSequence(cloneCoordinates);
+  }
+  
+//#endif
+  
+  public ExtendedCoordinateSequence copy() {
+	  return new ExtendedCoordinateSequence(this);
   }
 
   public int size() {

@@ -203,7 +203,7 @@ public class LineString
    */
   public Geometry reverse()
   {
-    CoordinateSequence seq = (CoordinateSequence) points.clone();
+    CoordinateSequence seq = CoordinateSequences.copy(points);
     CoordinateSequences.reverse(seq);
     LineString revLine = getFactory().createLineString(seq);
     return revLine;
@@ -283,7 +283,7 @@ public class LineString
    */
   public Object clone() {
     LineString ls = (LineString) super.clone();
-    ls.points = (CoordinateSequence) points.clone();
+    ls.points = CoordinateSequences.copy(points);
     return ls;
   }
 

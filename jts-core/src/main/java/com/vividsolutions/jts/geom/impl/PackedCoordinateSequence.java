@@ -49,8 +49,7 @@ import java.lang.ref.SoftReference;
  *
  * @version 1.7
  */
-public abstract class PackedCoordinateSequence
-    implements CoordinateSequence
+public abstract class PackedCoordinateSequence implements CoordinateSequence
 {
   /**
    * The dimensions of the coordinates hold in the packed array
@@ -63,6 +62,14 @@ public abstract class PackedCoordinateSequence
    */
   protected SoftReference coordRef;
 
+  public PackedCoordinateSequence() {
+	  
+  }
+  
+  public PackedCoordinateSequence(PackedCoordinateSequence c) {
+	  dimension = c.dimension;
+  }
+  
   /**
    * @see com.vividsolutions.jts.geom.CoordinateSequence#getDimension()
    */
@@ -292,6 +299,13 @@ public abstract class PackedCoordinateSequence
       this.dimension = dimension;
       coords = new double[size * this.dimension];
     }
+    
+    public Double(Double c){
+    	super(c);
+    	
+    	coords = new double[c.coords.length];
+    	System.arraycopy(c.coords, 0, coords, 0, coords.length);
+    }
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getCoordinate(int)
@@ -332,6 +346,10 @@ public abstract class PackedCoordinateSequence
     }
     
 //#endif
+    
+    public Double copy() {
+    	return new Double(this);
+    }
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getOrdinate(int, int)
@@ -432,6 +450,13 @@ public abstract class PackedCoordinateSequence
       this.dimension = dimension;
       coords = new float[size * this.dimension];
     }
+    
+    public Float(Float c){
+    	super(c);
+    	
+    	coords = new float[c.coords.length];
+    	System.arraycopy(c.coords, 0, coords, 0, coords.length);
+    }
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getCoordinate(int)
@@ -472,6 +497,10 @@ public abstract class PackedCoordinateSequence
     }
     
 //#endif
+    
+    public Float copy() {
+    	return new Float(this);
+    }
 
     /**
      * @see com.vividsolutions.jts.geom.CoordinateSequence#getOrdinate(int, int)

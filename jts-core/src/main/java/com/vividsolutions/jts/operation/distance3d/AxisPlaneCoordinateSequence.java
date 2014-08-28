@@ -155,5 +155,9 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 	{
 		throw new UnsupportedOperationException();		
 	}
+	
+	public AxisPlaneCoordinateSequence copy() {
+		throw new UnsupportedOperationException();
+	}
 
 }

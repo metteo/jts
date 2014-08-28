@@ -184,7 +184,7 @@ public interface CoordinateSequence extends Cloneable
    * <br><br>
    * Use {@link #copy()} instead
    * 
-   * @deprecated Since 1.14, Will be removed in future
+   * @deprecated Since 1.14, Will be removed in the future
    */
   @Deprecated
   Object clone();
@@ -200,5 +200,4 @@ public interface CoordinateSequence extends Cloneable
   //$CoordinateSequence copy();
 
 //#endif
-
 }
