@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google, Inc.//DTD GWT Module Descriptor//EN" "https://github.com/gwtproject/gwt/raw/2.6.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to="JTS">
+	<inherits name="com.google.gwt.core.Core" />
+	
+	<entry-point class="com.vividsolutions.jts.JTSEntry" />
+
+	<source path="jts" />
+</module>

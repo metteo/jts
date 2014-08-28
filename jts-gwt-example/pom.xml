@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.vividsolutions.jts</groupId>
+		<artifactId>jts</artifactId>
+		<version>1.14-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jts-gwt-example</artifactId>
+	<packaging>war</packaging>
+
+	<name>JTS GWT Example</name>
+	<description>Example of working JTS code in GWT environment. It may be useful when starting work with JTS under GWT.</description>
+
+	<properties>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+		<gwt.module>com.vividsolutions.jtsexample.JTSExample</gwt.module>
+		<gwt.version>2.6.1</gwt.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-gwt</artifactId>
+			<version>1.14-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-gwt</artifactId>
+			<version>1.14-SNAPSHOT</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${gwt.version}</version>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<runTarget>index.html</runTarget>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<extra>${webappDirectory}/WEB-INF/deploy</extra>
+					<extraParam>true</extraParam>
+					<module>${gwt.module}</module>
+					<draftCompile>true</draftCompile>
+					<!-- <compileReport>true</compileReport> -->
+					<style>PRETTY</style>
+					<!-- <logLevel>DEBUG</logLevel> -->
+					<!-- <localWorkers>1</localWorkers> -->
+					<!-- <strict>true</strict> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<webappDirectory>${webappDirectory}</webappDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
