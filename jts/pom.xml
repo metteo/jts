@@ -56,6 +56,7 @@
 	<modules>
 		<module>../jts-core</module>
 		<module>../jts-gwt</module>
+		<module>../jts-gwt-example</module>
 		<module>../jts-android</module>
 		<module>../jts-example</module>
 		<module>../jts-lab</module>
@@ -87,20 +88,14 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.vividsolutions.jts</groupId>
-				<artifactId>jts-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.vividsolutions.jts</groupId>
-				<artifactId>jts-core</artifactId>
-				<version>${project.version}</version>
-				<classifier>sources</classifier>
-			</dependency>
-			<dependency>
 				<groupId>org.jdom</groupId>
 				<artifactId>jdom</artifactId>
 				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-user</artifactId>
+				<version>2.6.1</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

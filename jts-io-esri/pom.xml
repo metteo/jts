@@ -18,6 +18,7 @@
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- http://help.arcgis.com/en/geodatabase/10.0/sdk/arcsde/api/japi/japi.htm -->
