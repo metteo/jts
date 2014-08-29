@@ -12,6 +12,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.CoordinateSequences;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import com.vividsolutions.jtsexample.shared.Feature;
 import com.vividsolutions.jtsexample.shared.FeatureService;
@@ -69,6 +70,6 @@ public class JTSExampleEntry implements EntryPoint, UncaughtExceptionHandler,
 				new Coordinate(1, 2, 3), new Coordinate(4, 5) });
 
 		sLogger.info("CoordinateSequence: " + cs);
-		sLogger.info("Copied CS: " + cs.copy());
+		sLogger.info("Copied CS: " + CoordinateSequences.copy(cs));
 	}
 }

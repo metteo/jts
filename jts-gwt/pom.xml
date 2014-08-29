@@ -24,7 +24,7 @@
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
 			<version>${project.version}</version>
-			<classifier>light</classifier>
+			<classifier>gwt</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>

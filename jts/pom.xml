@@ -55,9 +55,6 @@
 
 	<modules>
 		<module>../jts-core</module>
-		<!-- TODO: run 2 builds: regular and 'light' -->
-		<!-- <module>../jts-gwt</module> -->
-		<!-- <module>../jts-gwt-example</module> -->
 		<module>../jts-android</module>
 		<module>../jts-example</module>
 		<module>../jts-lab</module>
@@ -84,6 +81,9 @@
 	<properties>
 		<github.url>https://github.com/metteo/jts</github.url>
 		<temp.repo>${project.build.directory}/repo</temp.repo>
+		
+		<!-- empty if regular build, 'gwt' if gwt specific build -->
+		<core.classifier></core.classifier>
 	</properties>
 
 	<dependencyManagement>
@@ -184,6 +184,26 @@
 
 			<modules>
 				<module>../jts-io</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>gwt</id>
+			
+			<activation>
+				<property>
+					<name>env.GWT</name>
+					<value>true</value>
+				</property>
+			</activation>
+			
+			<properties>
+				<core.classifier></core.classifier>
+			</properties>
+			
+			<modules>
+				<module>../jts-gwt</module>
+				<module>../jts-gwt-example</module>
 			</modules>
 		</profile>
 
