@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://appengine.google.com/ns/1.0"
+	xsi:schemaLocation="http://appengine.google.com/ns/1.0 https://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
+	<application>jts-webapp</application>
+	<version>1</version>
+	<threadsafe>true</threadsafe>
+
+	<module>default</module>
+	<!--vm>true</vm> <manual-scaling> <instances>1</instances> </manual-scaling -->
+
+	<system-properties>
+		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+	</system-properties>
+</appengine-web-app>

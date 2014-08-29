@@ -19,9 +19,15 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<gwt.module>com.vividsolutions.jtsexample.JTSExample</gwt.module>
 		<gwt.version>2.6.1</gwt.version>
+		<appengine.version>1.9.9</appengine.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-gwt</artifactId>
@@ -49,6 +55,31 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- test deps -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${appengine.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${appengine.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -95,6 +126,23 @@
 				</executions>
 				<configuration>
 					<webappDirectory>${webappDirectory}</webappDirectory>
+					<archiveClasses>true</archiveClasses>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>${appengine.version}</version>
+				<configuration>
+					<fullScanSeconds>1</fullScanSeconds>
+					<server>preview.appengine.google.com</server>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>
