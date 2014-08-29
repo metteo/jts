@@ -35,6 +35,13 @@
 	<profiles>
 		<profile>
 			<id>gwt</id>
+			
+			<activation>
+				<property>
+					<name>env.GWT</name>
+					<value>true</value>
+				</property>
+			</activation>
 
 			<build>
 				<plugins>

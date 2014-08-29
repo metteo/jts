@@ -79,6 +79,8 @@
 	<distributionManagement></distributionManagement>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	
 		<github.url>https://github.com/metteo/jts</github.url>
 		<temp.repo>${project.build.directory}/repo</temp.repo>
 		
@@ -119,6 +121,7 @@
 	<pluginRepositories></pluginRepositories>
 
 	<build>
+	
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -198,7 +201,7 @@
 			</activation>
 			
 			<properties>
-				<core.classifier></core.classifier>
+				<core.classifier>gwt</core.classifier>
 			</properties>
 			
 			<modules>
