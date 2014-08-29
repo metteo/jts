@@ -19,7 +19,7 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<gwt.module>com.vividsolutions.jtsexample.JTSExample</gwt.module>
 		<gwt.version>2.6.1</gwt.version>
-		<appengine.version>1.9.9</appengine.version>
+		<appengine.version>1.9.10</appengine.version>
 	</properties>
 
 	<dependencies>
@@ -134,8 +134,8 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${appengine.version}</version>
 				<configuration>
-					<fullScanSeconds>1</fullScanSeconds>
-					<server>preview.appengine.google.com</server>
+					<server>appengine.google.com</server>
+					<version>1</version>
 				</configuration>
 			</plugin>
 			<plugin>
