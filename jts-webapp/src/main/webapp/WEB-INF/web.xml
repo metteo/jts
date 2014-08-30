@@ -8,10 +8,10 @@
     <description></description>
     <display-name>Feature Service</display-name>
     <servlet-name>FeatureServiceServlet</servlet-name>
-    <servlet-class>com.vividsolutions.jtsexample.server.FeatureServiceServlet</servlet-class>
+    <servlet-class>com.vividsolutions.jtswebapp.server.FeatureServiceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FeatureServiceServlet</servlet-name>
-    <url-pattern>/JTSExample/features</url-pattern>
+    <url-pattern>/JTSWebApp/features</url-pattern>
   </servlet-mapping>
 </web-app>

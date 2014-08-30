@@ -1,4 +1,4 @@
-package com.vividsolutions.jtsexample.shared;
+package com.vividsolutions.jtswebapp.shared;
 
 import java.io.Serializable;
 import java.util.Map;

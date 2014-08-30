@@ -1,10 +1,10 @@
-package com.vividsolutions.jtsexample.server;
+package com.vividsolutions.jtswebapp.server;
 
 import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.vividsolutions.jtsexample.shared.Feature;
-import com.vividsolutions.jtsexample.shared.FeatureService;
+import com.vividsolutions.jtswebapp.shared.Feature;
+import com.vividsolutions.jtswebapp.shared.FeatureService;
 
 /**
  * Servlet implementation class FeatureServiceServlet

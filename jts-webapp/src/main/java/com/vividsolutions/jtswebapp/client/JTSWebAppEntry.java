@@ -1,4 +1,4 @@
-package com.vividsolutions.jtsexample.client;
+package com.vividsolutions.jtswebapp.client;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -6,19 +6,19 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateSequence;
 import com.vividsolutions.jts.geom.CoordinateSequences;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
-import com.vividsolutions.jtsexample.shared.Feature;
-import com.vividsolutions.jtsexample.shared.FeatureService;
-import com.vividsolutions.jtsexample.shared.FeatureServiceAsync;
+import com.vividsolutions.jtswebapp.shared.Feature;
+import com.vividsolutions.jtswebapp.shared.FeatureService;
+import com.vividsolutions.jtswebapp.shared.FeatureServiceAsync;
 
-public class JTSExampleEntry implements EntryPoint, UncaughtExceptionHandler,
+public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 		ScheduledCommand {
 
 	private static final Logger sLogger = Logger.getLogger("JTSExampleEntry");

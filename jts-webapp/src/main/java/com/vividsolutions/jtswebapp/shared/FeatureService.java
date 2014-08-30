@@ -1,4 +1,4 @@
-package com.vividsolutions.jtsexample.shared;
+package com.vividsolutions.jtswebapp.shared;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

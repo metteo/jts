@@ -5,4 +5,4 @@
  * @author
  *
  */
-package com.vividsolutions.jtsexample;
+package com.vividsolutions.jtswebapp;
