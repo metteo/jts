@@ -49,8 +49,7 @@ import java.io.Serializable;
  *
  *@version 1.7
  */
-public class Envelope
-    implements Serializable
+public class Envelope implements Serializable
 {
     private static final long serialVersionUID = 5873921885273102420L;
 
@@ -743,6 +742,10 @@ public class Envelope
   public String toString()
   {
     return "Env[" + minx + " : " + maxx + ", " + miny + " : " + maxy + "]";
+  }
+  
+  public Envelope copy() {
+	  return new Envelope(this);
   }
 }
 

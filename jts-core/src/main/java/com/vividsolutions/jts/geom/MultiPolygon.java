@@ -86,6 +86,10 @@ public class MultiPolygon
   public MultiPolygon(Polygon[] polygons, GeometryFactory factory) {
     super(polygons, factory);
   }
+  
+  public MultiPolygon(MultiPolygon c) {
+	  super(c);
+  }
 
   public int getDimension() {
     return 2;
@@ -149,6 +153,10 @@ public class MultiPolygon
       revGeoms[i] = (Polygon) geometries[i].reverse();
     }
     return getFactory().createMultiPolygon(revGeoms);
+  }
+  
+  public MultiPolygon copy() {
+	  return new MultiPolygon(this);
   }
 }
 

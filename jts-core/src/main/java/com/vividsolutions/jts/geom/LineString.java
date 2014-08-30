@@ -92,6 +92,12 @@ public class LineString
     super(factory);
     init(points);
   }
+  
+  public LineString(LineString c) {
+	  super(c);
+	  
+	  points = CoordinateSequences.copy(c.points);
+  }
 
   private void init(CoordinateSequence points)
   {
@@ -275,6 +281,8 @@ public class LineString
     filter.filter(this);
   }
 
+//#if CLONE
+  
   /**
    * Creates and returns a full copy of this {@link LineString} object.
    * (including all coordinates contained by it).
@@ -285,6 +293,12 @@ public class LineString
     LineString ls = (LineString) super.clone();
     ls.points = CoordinateSequences.copy(points);
     return ls;
+  }
+  
+//#endif
+  
+  public LineString copy() {
+	  return new LineString(this);
   }
 
   /**

@@ -58,8 +58,8 @@ public class GeometryResult implements Result {
     GeometryResult otherGeometryResult = (GeometryResult) other;
     Geometry otherGeometry = otherGeometryResult.geometry;
 
-    Geometry thisGeometryClone = (Geometry)geometry.clone();
-    Geometry otherGeometryClone =(Geometry) otherGeometry.clone();
+    Geometry thisGeometryClone = geometry.copy();
+    Geometry otherGeometryClone = otherGeometry.copy();
     thisGeometryClone.normalize();
     otherGeometryClone.normalize();
     return thisGeometryClone.equalsExact(otherGeometryClone, tolerance);

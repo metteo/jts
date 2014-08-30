@@ -167,8 +167,7 @@ import com.vividsolutions.jts.util.Assert;
  *
  *@version 1.7
  */
-public abstract class Geometry
-    implements Cloneable, Comparable, Serializable
+public abstract class Geometry implements Cloneable, Comparable, Serializable
 {
   private static final long serialVersionUID = 8763622679187376702L;
     
@@ -217,6 +216,18 @@ public abstract class Geometry
   public Geometry(GeometryFactory factory) {
     this.factory = factory;
     this.SRID = factory.getSRID();
+  }
+  
+  public Geometry(Geometry c){
+	  this.factory = c.factory;
+	  Envelope e = c.envelope;
+	  
+	  if(e != null){
+		  this.envelope = e.copy();
+	  }
+	  
+	  this.SRID = c.SRID;
+	  this.userData = c.userData;
   }
 
   /**
@@ -1380,8 +1391,8 @@ public abstract class Geometry
         return OverlayOp.createEmptyResult(OverlayOp.UNION, this, other, factory);
         
     // special case: if either input is empty ==> other input
-      if (this.isEmpty()) return (Geometry) other.clone();
-      if (other.isEmpty()) return (Geometry) clone();
+      if (this.isEmpty()) return other.copy();
+      if (other.isEmpty()) return copy();
     }
     
     // TODO: optimize if envelopes of geometries do not intersect
@@ -1412,7 +1423,7 @@ public abstract class Geometry
   {
     // special case: if A.isEmpty ==> empty; if B.isEmpty ==> A
     if (this.isEmpty()) return OverlayOp.createEmptyResult(OverlayOp.DIFFERENCE, this, other, factory);
-    if (other.isEmpty()) return (Geometry) clone();
+    if (other.isEmpty()) return copy();
 
     checkNotGeometryCollection(this);
     checkNotGeometryCollection(other);
@@ -1446,8 +1457,8 @@ public abstract class Geometry
         return OverlayOp.createEmptyResult(OverlayOp.SYMDIFFERENCE, this, other, factory);
         
     // special case: if either input is empty ==> result = other arg
-      if (this.isEmpty()) return (Geometry) other.clone();
-      if (other.isEmpty()) return (Geometry) clone();
+      if (this.isEmpty()) return other.copy();
+      if (other.isEmpty()) return copy();
     }
 
     checkNotGeometryCollection(this);
@@ -1607,6 +1618,8 @@ public abstract class Geometry
    */
   public abstract void apply(GeometryComponentFilter filter);
 
+//#if CLONE
+  
   /**
    * Creates and returns a full copy of this {@link Geometry} object
    * (including all coordinates contained by it).
@@ -1614,7 +1627,9 @@ public abstract class Geometry
    * their internal data.  Overrides should call this method first.
    *
    * @return a clone of this instance
+   * @deprecated Use {@link #copy()} instead
    */
+  @Deprecated
   public Object clone() {
     try {
       Geometry clone = (Geometry) super.clone();
@@ -1625,6 +1640,24 @@ public abstract class Geometry
       Assert.shouldNeverReachHere();
       return null;
     }
+  }
+  
+//#endif
+  
+  /**
+   * Copies whole geometry using copy constructor. Subclasses should create proper
+   * copy constructor and call it from overridden version of this method.
+   * 
+   * GeometryFactory reference is copied so copy stays in the same context.
+   * User data is not copied (reference is), since it may be of an arbitrary type.
+   * 
+   * @return
+   */
+  public Geometry copy() {
+	//It's not possible to copy abstract class since there is no way to call
+	//copy constructor. The method is here so it's possible to override it
+	//in subclasses (without calling to super implementation)
+    throw new UnsupportedOperationException("Not possible.");
   }
 
   /**
@@ -1653,7 +1686,7 @@ public abstract class Geometry
    */
   public Geometry norm()
   {
-    Geometry copy = (Geometry) clone();
+    Geometry copy = copy();
     copy.normalize();
     return copy;
   }

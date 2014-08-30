@@ -75,6 +75,10 @@ public class MultiLineString
   public MultiLineString(LineString[] lineStrings, GeometryFactory factory) {
     super(lineStrings, factory);
   }
+  
+  public MultiLineString(MultiLineString c) {
+	  super(c);
+  }
 
   public int getDimension() {
     return 1;
@@ -139,6 +143,10 @@ public class MultiLineString
       return false;
     }
     return super.equalsExact(other, tolerance);
+  }
+  
+  public MultiLineString copy() {
+	  return new MultiLineString(this);
   }
 
 }

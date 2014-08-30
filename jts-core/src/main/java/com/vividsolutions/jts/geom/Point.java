@@ -83,6 +83,16 @@ public class Point
     super(factory);
     init(coordinates);
   }
+  
+  /**
+   * Copy constructor
+   * @param c
+   */
+  public Point(Point c) {
+	  super(c);
+	  
+	  coordinates = CoordinateSequences.copy(c.coordinates);
+  }
 
   private void init(CoordinateSequence coordinates)
   {
@@ -197,6 +207,8 @@ public class Point
     filter.filter(this);
   }
 
+//#if CLONE
+  
   /**
    * Creates and returns a full copy of this {@link Point} object.
    * (including all coordinates contained by it).
@@ -208,10 +220,16 @@ public class Point
     p.coordinates = CoordinateSequences.copy(coordinates);
     return p;// return the clone
   }
+  
+//#endif
+  
+  public Point copy() {
+	  return new Point(this);
+  }
 
   public Geometry reverse()
   {
-    return (Geometry) clone();
+    return copy();
   }
   
   public void normalize() 

@@ -80,7 +80,7 @@ public class CascadedPolygonUnionTester
       Geometry geom = (Geometry) i.next();
       
       if (unionAll == null) {
-      	unionAll = (Geometry) geom.clone();
+      	unionAll = geom.copy();
       }
       else {
       	unionAll = unionAll.union(geom);

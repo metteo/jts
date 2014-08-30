@@ -148,6 +148,17 @@ public class Polygon
     this.shell = shell;
     this.holes = holes;
   }
+  
+  public Polygon(Polygon c) {
+	  super(c);
+	  
+	  shell = c.shell.copy();
+	  
+	  holes = new LinearRing[c.holes.length];
+	  for(int i = 0; i < holes.length; i++){
+		  holes[i] = c.holes[i].copy();
+	  }
+  }
 
   public Coordinate getCoordinate() {
     return shell.getCoordinate();
@@ -364,6 +375,8 @@ public class Polygon
     }
   }
 
+//#if CLONE
+  
   /**
    * Creates and returns a full copy of this {@link Polygon} object.
    * (including all coordinates contained by it).
@@ -378,6 +391,12 @@ public class Polygon
       poly.holes[i] = (LinearRing) holes[i].clone();
     }
     return poly;// return the clone
+  }
+  
+//#endif
+  
+  public Polygon copy() {
+	  return new Polygon(this);
   }
 
   public Geometry convexHull() {
@@ -436,14 +455,16 @@ public class Polygon
     }
   }
 
+  //TODO: reverse makes works on copy already?
   public Geometry reverse()
   {
-    Polygon poly = (Polygon) super.clone();
-    poly.shell = (LinearRing) ((LinearRing) shell.clone()).reverse();
-    poly.holes = new LinearRing[holes.length];
-    for (int i = 0; i < holes.length; i++) {
-      poly.holes[i] = (LinearRing) ((LinearRing) holes[i].clone()).reverse();
+    Polygon poly = copy();
+    
+    poly.shell.reverse();
+    for(int i = 0; i < poly.holes.length; i++){
+    	poly.holes[i].reverse();
     }
+    
     return poly;// return the clone
   }
 }

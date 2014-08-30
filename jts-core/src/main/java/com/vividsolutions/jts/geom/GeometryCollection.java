@@ -77,6 +77,15 @@ public class GeometryCollection extends Geometry {
     }
     this.geometries = geometries;
   }
+  
+  public GeometryCollection(GeometryCollection c) {
+	  super(c);
+	  
+	  geometries = new Geometry[c.geometries.length];
+	  for(int i = 0; i < geometries.length; i++){
+		  geometries[i] = c.geometries[i].copy();
+	  }
+  }
 
   public Coordinate getCoordinate() {
     if (isEmpty()) return null;
@@ -228,6 +237,8 @@ public class GeometryCollection extends Geometry {
     }
   }
 
+//#if CLONE
+  
   /**
    * Creates and returns a full copy of this {@link GeometryCollection} object.
    * (including all coordinates contained by it).
@@ -241,6 +252,12 @@ public class GeometryCollection extends Geometry {
       gc.geometries[i] = (Geometry) geometries[i].clone();
     }
     return gc;// return the clone
+  }
+  
+//#endif
+  
+  public GeometryCollection copy() {
+	  return new GeometryCollection(this);
   }
 
   public void normalize() {

@@ -55,7 +55,7 @@ public class GeometryUtils
   
   public static Geometry normalize(Geometry g)
   {
-  	Geometry g2 = (Geometry) g.clone();
+  	Geometry g2 = g.copy();
   	g2.normalize();
   	return g2;
   }

@@ -105,6 +105,10 @@ public class LinearRing extends LineString
     super(points, factory);
     validateConstruction();
   }
+  
+  public LinearRing(LinearRing c) {
+	  super(c);
+  }
 
   private void validateConstruction() {
     if (!isEmpty() && ! super.isClosed()) {
@@ -151,5 +155,9 @@ public class LinearRing extends LineString
     CoordinateSequences.reverse(seq);
     LinearRing rev = getFactory().createLinearRing(seq);
     return rev;
+  }
+  
+  public LinearRing copy() {
+	  return new LinearRing(this);
   }
 }

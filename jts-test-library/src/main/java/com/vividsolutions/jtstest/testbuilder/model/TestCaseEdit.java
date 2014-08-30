@@ -88,7 +88,7 @@ public class TestCaseEdit implements Testable {
   private static Geometry cloneGeometry(Geometry geom)
   {
     if (geom == null) return null;
-    return (Geometry) geom.clone();
+    return geom.copy();
   }
   
   public void setGeometry(int i, Geometry geom) {

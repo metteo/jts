@@ -73,7 +73,7 @@ public class MiscellaneousTest extends TestCase {
       Geometry a = reader.read("LINESTRING(0 0, 10 10)");
       //Envelope is lazily initialized [Jon Aquino]
       a.getEnvelopeInternal();
-      Geometry b = (Geometry)a.clone();
+      Geometry b = a.copy();
       assertTrue(a.getEnvelopeInternal() != b.getEnvelopeInternal());
   }
 

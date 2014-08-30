@@ -20,8 +20,8 @@ implements GeometryMatcher
 	
 	public boolean match(Geometry a, Geometry b)
 	{
-    Geometry aClone = (Geometry)a.clone();
-    Geometry bClone =(Geometry) b.clone();
+    Geometry aClone = a.copy();
+    Geometry bClone = b.copy();
     aClone.normalize();
     bClone.normalize();
     return aClone.equalsExact(bClone, tolerance);

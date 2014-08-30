@@ -999,7 +999,7 @@ public class AffineTransformation
    */
   public Geometry transform(Geometry g)
   {
-    Geometry g2 = (Geometry) g.clone();
+    Geometry g2 = g.copy();
     g2.apply(this);
     return g2;    
   }

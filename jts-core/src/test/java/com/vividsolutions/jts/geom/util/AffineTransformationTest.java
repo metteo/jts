@@ -227,7 +227,7 @@ public class AffineTransformationTest
     AffineTransformation trans = AffineTransformation
         .rotationInstance(Math.PI / 2);
     AffineTransformation inv = trans.getInverse();
-    Geometry transGeom = (Geometry) geom.clone();
+    Geometry transGeom = geom.copy();
     transGeom.apply(trans);
     // System.out.println(transGeom);
     transGeom.apply(inv);

@@ -354,8 +354,8 @@ public class TestCase implements Testable {
   }
 
   void assertEqualsExact(Geometry g1, Geometry g2, String msg) {
-    Geometry g1Clone = (Geometry) g1.clone();
-    Geometry g2Clone = (Geometry) g2.clone();
+    Geometry g1Clone = g1.copy();
+    Geometry g2Clone = g2.copy();
     g1Clone.normalize();
     g2Clone.normalize();
     assertTrue(g1Clone.equalsExact(g2Clone), msg);

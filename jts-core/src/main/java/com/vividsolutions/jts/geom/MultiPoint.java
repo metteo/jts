@@ -72,6 +72,10 @@ public class MultiPoint
   public MultiPoint(Point[] points, GeometryFactory factory) {
     super(points, factory);
   }
+  
+  public MultiPoint(MultiPoint c) {
+	  super(c);
+  }
 
   public int getDimension() {
     return 0;
@@ -117,6 +121,10 @@ public class MultiPoint
    */
   protected Coordinate getCoordinate(int n) {
     return ((Point) geometries[n]).getCoordinate();
+  }
+  
+  public MultiPoint copy() {
+	  return new MultiPoint(this);
   }
 
 }

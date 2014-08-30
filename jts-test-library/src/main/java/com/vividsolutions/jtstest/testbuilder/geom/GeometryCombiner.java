@@ -77,7 +77,7 @@ public class GeometryCombiner
     
     if (origList.size() == 0) {
       // return a clone of the orig geometry
-      return (Geometry) orig.clone();
+      return orig.copy();
     }
     // return the "simplest possible" geometry
     return geomFactory.buildGeometry(origList);
