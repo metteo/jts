@@ -10,10 +10,10 @@ env:
     - env.GWT=true
 
 install:
-  - hg clone https://code.google.com/p/java-comment-preprocessor/
-  - cd java-comment-preprocessor
-  - mvn install -DskipITs
-  - cd ..
+ - hg clone https://code.google.com/p/java-comment-preprocessor/
+ - cd java-comment-preprocessor
+ - mvn install -DskipITs
+ - cd ..
 
 before_script:
  - cd jts
