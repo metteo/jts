@@ -80,10 +80,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	
+
 		<github.url>https://github.com/metteo/jts</github.url>
 		<temp.repo>${project.build.directory}/repo</temp.repo>
-		
+
 		<!-- empty if regular build, 'gwt' if gwt specific build -->
 		<core.classifier></core.classifier>
 	</properties>
@@ -118,10 +118,22 @@
 
 	<repositories></repositories>
 
-	<pluginRepositories></pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
-	
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -192,18 +204,18 @@
 
 		<profile>
 			<id>gwt</id>
-			
+
 			<activation>
 				<property>
 					<name>env.GWT</name>
 					<value>true</value>
 				</property>
 			</activation>
-			
+
 			<properties>
 				<core.classifier>gwt</core.classifier>
 			</properties>
-			
+
 			<modules>
 				<module>../jts-gwt</module>
 				<module>../jts-gwt-example</module>
@@ -276,7 +288,7 @@
 					<plugin>
 						<groupId>org.eluder.coveralls</groupId>
 						<artifactId>coveralls-maven-plugin</artifactId>
-						<version>2.2.0</version>
+						<version>3.0.0-multi-module-SNAPSHOT</version>
 						<configuration>
 							<sourceEncoding>UTF-8</sourceEncoding>
 							<repoToken>${env.TOKEN_COVERALLS}</repoToken>

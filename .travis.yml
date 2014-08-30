@@ -27,8 +27,7 @@ after_script:
 
 after_success:
  - cd ../jts
- - mvn cobertura:cobertura
- - mvn org.eluder.coveralls:coveralls-maven-plugin:cobertura
+ - mvn cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report
 
 notifications:
   email: false
