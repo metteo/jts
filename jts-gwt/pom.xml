@@ -26,12 +26,6 @@
 			<version>${project.version}</version>
 			<classifier>gwt</classifier>
 		</dependency>
-		<dependency>
-			<groupId>com.vividsolutions.jts</groupId>
-			<artifactId>jts-core</artifactId>
-			<version>${project.version}</version>
-			<classifier>sources</classifier>
-		</dependency>
 	</dependencies>
 
 	<build>

@@ -1,7 +1,7 @@
 package com.vividsolutions.jtswebapp.shared;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.HashMap;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
@@ -11,7 +11,7 @@ public class Feature implements Serializable {
 	
 	public String fid;
 	public Coordinate geometry;
-	public Map<String, String> properties;
+	public HashMap<String, String> properties;
 	
 	@Override
 	public String toString() {

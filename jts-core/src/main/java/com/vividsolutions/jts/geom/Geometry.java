@@ -170,16 +170,6 @@ import com.vividsolutions.jts.util.Assert;
 public abstract class Geometry implements Cloneable, Comparable, Serializable
 {
   private static final long serialVersionUID = 8763622679187376702L;
-    
-  private static final Class[] sortedClasses = new Class[] { 
-    Point.class, 
-    MultiPoint.class,
-    LineString.class, 
-    LinearRing.class, 
-    MultiLineString.class,
-    Polygon.class, 
-    MultiPolygon.class, 
-    GeometryCollection.class };  
   
   private final static GeometryComponentFilter geometryChangedFilter = new GeometryComponentFilter() {
     public void filter(Geometry geom) {
@@ -1900,20 +1890,22 @@ public abstract class Geometry implements Cloneable, Comparable, Serializable
   }
 
   private int getClassSortIndex() {
-		for (int i = 0; i < sortedClasses.length; i++) {
-			if (sortedClasses[i].isInstance(this))
-				return i;
-		}
-		Assert.shouldNeverReachHere("Class not supported: " + this.getClass());
-		return -1;
-	}
+    if (this instanceof Point)				return 0;
+    if (this instanceof MultiPoint)			return 1;
+    if (this instanceof LineString) 		return 2;
+    if (this instanceof LinearRing) 		return 3;
+    if (this instanceof MultiLineString) 	return 4;
+    if (this instanceof Polygon) 			return 5;
+    if (this instanceof MultiPolygon) 		return 6;
+    if (this instanceof GeometryCollection)	return 7;
+
+    return -1;
+  }
 
   private Point createPointFromInternalCoord(Coordinate coord, Geometry exemplar)
   {
     exemplar.getPrecisionModel().makePrecise(coord);
     return exemplar.getFactory().createPoint(coord);
   }
-
-
 }
 
