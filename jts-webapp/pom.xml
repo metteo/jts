@@ -9,15 +9,15 @@
 		<relativePath>../jts/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jts-gwt-example</artifactId>
+	<artifactId>jts-webapp</artifactId>
 	<packaging>war</packaging>
 
-	<name>JTS GWT Example</name>
-	<description>Example of working JTS code in GWT environment. It may be useful when starting work with JTS under GWT.</description>
+	<name>JTS WebApp</name>
+	<description>Example of working JTS code in GWT environment.</description>
 
 	<properties>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-		<gwt.module>com.vividsolutions.jtsexample.JTSExample</gwt.module>
+		<gwt.module>com.vividsolutions.jtswebapp.JTSWebApp</gwt.module>
 		<gwt.version>2.6.1</gwt.version>
 		<appengine.version>1.9.10</appengine.version>
 	</properties>
