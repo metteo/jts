@@ -59,9 +59,18 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 	private void onLoad() {
 		FeatureServiceAsync features = GWT.create(FeatureService.class);
 
+		CoordinateSequence cs = new CoordinateArraySequence(new Coordinate[] {
+				new Coordinate(1, 2, 3), new Coordinate(4, 5) });
+
+		sLogger.info("CoordinateSequence: " + cs);
+		sLogger.info("Copied CS: " + CoordinateSequences.copy(cs));
+
+		final Geometry g = demonstrateGeometryAndWktWriter();
+		demonstrateWkb();
+		
 		Feature feature = new Feature();
 		feature.fid = "feature.1";
-		feature.geometry = new Coordinate(1, 2);
+		feature.geometry = g;
 		feature.properties = new HashMap<String, String>();
 		feature.properties.put("name", "JTS!");
 
@@ -78,18 +87,9 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 						caught);
 			}
 		});
-
-		CoordinateSequence cs = new CoordinateArraySequence(new Coordinate[] {
-				new Coordinate(1, 2, 3), new Coordinate(4, 5) });
-
-		sLogger.info("CoordinateSequence: " + cs);
-		sLogger.info("Copied CS: " + CoordinateSequences.copy(cs));
-
-		demonstrateGeometryAndWktWriter();
-		demonstrateWkb();
 	}
 
-	private void demonstrateGeometryAndWktWriter() {
+	private Geometry demonstrateGeometryAndWktWriter() {
 		GeometryFactory gf = new GeometryFactory();
 
 		WKTWriter wkt2 = new WKTWriter();
@@ -144,6 +144,8 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 
 		sLogger.info("Point WKT: " + wkt2.write(gc));
 		sLogger.info("Point WKT3: " + wkt3.write(gc));
+		
+		return gc;
 	}
 
 	private void demonstrateWkb() {
@@ -178,7 +180,7 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 			byte[] freshWkb = wkbWriter.write(g);
 			String freshWkbHex = WKBWriter.toHex(freshWkb);
 
-			sLogger.info("Hexes are equal?   "
+			sLogger.warning("Hexes are equal?   "
 					+ hexEncodedWkb.equals(freshWkbHex));
 		} catch (ParseException e) {
 			sLogger.log(Level.WARNING, "Unable to parse hex wkb", e);

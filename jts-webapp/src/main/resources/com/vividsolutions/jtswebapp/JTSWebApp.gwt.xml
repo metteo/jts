@@ -10,6 +10,9 @@
 		
 	<entry-point class="com.vividsolutions.jtswebapp.client.JTSWebAppEntry" />
 	
+	<!-- Default warning for non-static, final fields enabled -->
+	<set-property name="gwt.suppressNonStaticFinalFieldWarnings" value="true" />
+	
 	<add-linker name="xsiframe"/>
 	
 	<source path="client" />
