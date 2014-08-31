@@ -32,12 +32,24 @@
  */
 package com.vividsolutions.jts.io;
 
-import com.vividsolutions.jts.geom.*;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 
-import com.vividsolutions.jts.util.*;
-import java.io.*;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.util.Assert;
+import com.vividsolutions.jts.util.NumberFormat;
 
 /**
  * Writes the Well-Known Text representation of a {@link Geometry}.
@@ -115,29 +127,24 @@ public class WKTWriter
     return "LINESTRING ( " + p0.x + " " + p0.y + ", " + p1.x + " " + p1.y + " )";
   }
 
-  private static final int INDENT = 2;
-
   /**
    *  Creates the <code>DecimalFormat</code> used to write <code>double</code>s
    *  with a sufficient number of decimal places.
    *
    *@param  precisionModel  the <code>PrecisionModel</code> used to determine
    *      the number of decimal places to write.
-   *@return                 a <code>DecimalFormat</code> that write <code>double</code>
+   *@return                 a <code>NumberFormat</code> that write <code>double</code>
    *      s without scientific notation.
    */
-  private static DecimalFormat createFormatter(PrecisionModel precisionModel) {
+  private static NumberFormat createFormatter(PrecisionModel precisionModel) {
     // the default number of decimal places is 16, which is sufficient
     // to accomodate the maximum precision of a double.
     int decimalPlaces = precisionModel.getMaximumSignificantDigits();
-    // specify decimal separator explicitly to avoid problems in other locales
-    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-    symbols.setDecimalSeparator('.');
     String fmtString = "0" + (decimalPlaces > 0 ? "." : "")
                  +  stringOfChar('#', decimalPlaces);
-    return new DecimalFormat(fmtString, symbols);
+    return NumberFormat.getFormat(fmtString);
   }
-
+  
   /**
    *  Returns a <code>String</code> of repeated characters.
    *
@@ -154,10 +161,9 @@ public class WKTWriter
   }
 
   private int outputDimension = 2;
-  private DecimalFormat formatter;
+  private NumberFormat formatter;
   private boolean isFormatted = false;
   private boolean useFormatting = false;
-  private int level = 0;
   private int coordsPerLine = -1;
   private String indentTabStr = "  ";
 
@@ -478,26 +484,6 @@ public class WKTWriter
   }
 
   /**
-   * Appends the i'th coordinate from the sequence to the writer
-   *
-   * @param  seq  the <code>CoordinateSequence</code> to process
-   * @param i     the index of the coordinate to write
-   * @param  writer the output writer to append to
-   */
-  private void appendCoordinate(CoordinateSequence seq, int i, Writer writer)
-      throws IOException
-  {
-    writer.write(writeNumber(seq.getX(i)) + " " + writeNumber(seq.getY(i)));
-    if (outputDimension >= 3 && seq.getDimension() >= 3) {
-      double z = seq.getOrdinate(i, 3);
-      if (! Double.isNaN(z)) {
-        writer.write(" ");
-        writer.write(writeNumber(z));
-      }
-    }
-  }
-
-  /**
    *  Converts a <code>Coordinate</code> to <code>&lt;Point&gt;</code> format,
    *  then appends it to the writer.
    *
@@ -524,36 +510,6 @@ public class WKTWriter
    */
   private String writeNumber(double d) {
     return formatter.format(d);
-  }
-
-  /**
-   *  Converts a <code>LineString</code> to &lt;LineString Text&gt; format, then
-   *  appends it to the writer.
-   *
-   *@param  lineString  the <code>LineString</code> to process
-   *@param  writer      the output writer to append to
-   */
-  private void appendSequenceText(CoordinateSequence seq, int level, boolean doIndent, Writer writer)
-    throws IOException
-  {
-    if (seq.size() == 0) {
-      writer.write("EMPTY");
-    }
-    else {
-      if (doIndent) indent(level, writer);
-      writer.write("(");
-      for (int i = 0; i < seq.size(); i++) {
-        if (i > 0) {
-          writer.write(", ");
-          if (coordsPerLine > 0
-              && i % coordsPerLine == 0) {
-            indent(level + 1, writer);
-          }
-        }
-        appendCoordinate(seq, i, writer);
-      }
-      writer.write(")");
-    }
   }
 
   /**

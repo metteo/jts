@@ -6,4 +6,5 @@
 	<entry-point class="com.vividsolutions.jts.JTSEntry" />
 
 	<source path="jts" />
+	<super-source path="jtsemul" />
 </module>

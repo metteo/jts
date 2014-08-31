@@ -98,6 +98,9 @@
 						<version>2.5</version>
 						<configuration>
 							<classifier>gwt</classifier>
+							<excludes>
+								<exclude>**/NumberFormat.java</exclude>
+							</excludes>
 						</configuration>
 					</plugin>
 				</plugins>
