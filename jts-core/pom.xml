@@ -65,6 +65,10 @@
 									<name>CLONE</name>
 									<value>false</value>
 								</property>
+								<property>
+									<name>IO</name>
+									<value>false</value>
+								</property>
 							</globalVars>
 						</configuration>
 					</plugin>

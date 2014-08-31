@@ -32,8 +32,25 @@
  */
 package com.vividsolutions.jts.io;
 
-import java.io.*;
-import com.vividsolutions.jts.geom.*;
+//#if IO
+
+import java.io.ByteArrayOutputStream;
+
+//#endif
+
+import java.io.IOException;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateSequence;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.util.Assert;
 
 /**
@@ -209,8 +226,19 @@ public class WKBWriter
   private int outputDimension = 2;
   private int byteOrder;
   private boolean includeSRID = false;
+  
+//#if IO
+  
   private ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
   private OutStream byteArrayOutStream = new OutputStreamOutStream(byteArrayOS);
+  
+//#else
+  
+  //$private ByteArrayOutStream byteArrayOS = new ByteArrayOutStream();
+  //$private OutStream byteArrayOutStream = byteArrayOS;
+  
+//#endif
+  
   // holds output data values
   private byte[] buf = new byte[8];
 

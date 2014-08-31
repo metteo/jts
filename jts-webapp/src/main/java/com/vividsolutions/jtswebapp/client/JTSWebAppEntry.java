@@ -23,6 +23,9 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKBReader;
+import com.vividsolutions.jts.io.WKBWriter;
 import com.vividsolutions.jts.io.WKTWriter;
 import com.vividsolutions.jtswebapp.shared.Feature;
 import com.vividsolutions.jtswebapp.shared.FeatureService;
@@ -83,6 +86,7 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 		sLogger.info("Copied CS: " + CoordinateSequences.copy(cs));
 
 		demonstrateGeometryAndWktWriter();
+		demonstrateWkb();
 	}
 
 	private void demonstrateGeometryAndWktWriter() {
@@ -128,15 +132,56 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler,
 
 		sLogger.info("Point WKT: " + wkt2.write(poly));
 		sLogger.info("Point WKT3: " + wkt3.write(poly));
-		
-		MultiPolygon mpoly = gf.createMultiPolygon(new Polygon[]{poly, poly});
-		
+
+		MultiPolygon mpoly = gf
+				.createMultiPolygon(new Polygon[] { poly, poly });
+
 		sLogger.info("Point WKT: " + wkt2.write(mpoly));
 		sLogger.info("Point WKT3: " + wkt3.write(mpoly));
-		
-		GeometryCollection gc = gf.createGeometryCollection(new Geometry[]{p, mp, ls, mls, poly, mpoly});
-		
+
+		GeometryCollection gc = gf.createGeometryCollection(new Geometry[] { p,
+				mp, ls, mls, poly, mpoly });
+
 		sLogger.info("Point WKT: " + wkt2.write(gc));
 		sLogger.info("Point WKT3: " + wkt3.write(gc));
+	}
+
+	private void demonstrateWkb() {
+		GeometryFactory gf = new GeometryFactory();
+
+		WKBReader wkbReader = new WKBReader(gf);
+		WKBWriter wkbWriter = new WKBWriter();
+
+		//geometry collection from above
+		String hexEncodedWkb = "00000000070000000600000000014132D53A3BC2DADC414"
+				+ "10BBD1DFB613500000000040000000200000000014132D53A3BC2DADC414"
+				+ "10BBD1DFB61350000000001415026FE8EF0B6B74153F78BCEFDB09A00000"
+				+ "00002000000024132D53A3BC2DADC41410BBD1DFB6135415026FE8EF0B6B"
+				+ "74153F78BCEFDB09A0000000005000000020000000002000000024132D53"
+				+ "A3BC2DADC41410BBD1DFB6135415026FE8EF0B6B74153F78BCEFDB09A000"
+				+ "0000002000000024132D53A3BC2DADC41410BBD1DFB6135415026FE8EF0B"
+				+ "6B74153F78BCEFDB09A000000000300000001000000044132D53A3BC2DAD"
+				+ "C41410BBD1DFB6135415026FE8EF0B6B74153F78BCEFDB09A4157C81E8EF"
+				+ "0B6B7415F693E8EFDB09A4132D53A3BC2DADC41410BBD1DFB61350000000"
+				+ "00600000002000000000300000001000000044132D53A3BC2DADC41410BB"
+				+ "D1DFB6135415026FE8EF0B6B74153F78BCEFDB09A4157C81E8EF0B6B7415"
+				+ "F693E8EFDB09A4132D53A3BC2DADC41410BBD1DFB6135000000000300000"
+				+ "001000000044132D53A3BC2DADC41410BBD1DFB6135415026FE8EF0B6B74"
+				+ "153F78BCEFDB09A4157C81E8EF0B6B7415F693E8EFDB09A4132D53A3BC2D"
+				+ "ADC41410BBD1DFB6135";
+
+		try {
+			Geometry g = wkbReader.read(WKBReader.hexToBytes(hexEncodedWkb));
+
+			sLogger.info("Geom from WKB: " + g);
+
+			byte[] freshWkb = wkbWriter.write(g);
+			String freshWkbHex = WKBWriter.toHex(freshWkb);
+
+			sLogger.info("Hexes are equal?   "
+					+ hexEncodedWkb.equals(freshWkbHex));
+		} catch (ParseException e) {
+			sLogger.log(Level.WARNING, "Unable to parse hex wkb", e);
+		}
 	}
 }
