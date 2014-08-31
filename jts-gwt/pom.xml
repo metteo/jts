@@ -56,13 +56,19 @@
 							</artifactItems>
 							<excludes>
 								**/util/NumberFormat.*,
+								**/util/Memory.*,
+								**/util/StringUtil.*,
+								**/util/Debug.*,
 								**/io/InputStreamInStream.*,
 								**/io/OutputStreamOutStream.*,
 								**/io/WKBHexFileReader.*,
 								**/io/WKTFileReader.*,
+								**/io/WKTReader.*,
 								**/awt/*.*,
 								**/gml2/*.*,
 								**/kml/*.*,
+								**/geom/impl/PackedCoordinateSequence.*,
+								**/geom/impl/PackedCoordinateSequenceFactory.*
 							</excludes>
 						</configuration>
 					</execution>

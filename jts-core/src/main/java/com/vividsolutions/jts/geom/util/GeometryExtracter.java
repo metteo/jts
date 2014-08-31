@@ -47,8 +47,47 @@ public class GeometryExtracter
 	
 	protected static boolean isOfClass(Object o, Class clz)
 	{
+		
+//#if REFLECT
+		
 		return clz.isAssignableFrom(o.getClass());
-//		return o.getClass() == clz;
+		
+//#else
+		
+		//$return isOfClassNoReflect((Geometry) o, clz);
+		
+//#endif
+		
+	}
+	
+	private static Map<Class<?>, List<Class<?>>> mGeomClassMap;
+	
+	private static void initGeomClassMap() {
+		if(mGeomClassMap != null){
+			return;
+		}
+		
+		mGeomClassMap = new HashMap<Class<?>, List<Class<?>>>();
+		
+		mGeomClassMap.put(Point.class, 
+				Arrays.asList(new Class<?>[]{Point.class}));
+		
+		mGeomClassMap.put(LineString.class, 
+				Arrays.asList(new Class<?>[]{LineString.class, LinearRing.class}));
+		
+		mGeomClassMap.put(Polygon.class, 
+				Arrays.asList(new Class<?>[]{Polygon.class}));
+		
+		mGeomClassMap.put(GeometryCollection.class, 
+				Arrays.asList(new Class<?>[]{MultiPoint.class, MultiLineString.class, 
+						MultiPolygon.class, GeometryCollection.class}));
+	}
+	
+	@SuppressWarnings("unused")
+	private static boolean isOfClassNoReflect(Geometry g, Class<?> clazz) {
+		initGeomClassMap();
+		
+		return mGeomClassMap.get(clazz).contains(g.getClass());
 	}
 	
   /**

@@ -731,7 +731,7 @@ public class QuadEdgeSubdivision {
 		private List triList = new ArrayList();
 
 		public void visit(QuadEdge[] triEdges) {
-			triList.add(triEdges.clone());
+			triList.add(QuadEdges.inNewArray(triEdges));
 		}
 
 		public List getTriangleEdges() {

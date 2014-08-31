@@ -69,6 +69,10 @@
 									<name>IO</name>
 									<value>false</value>
 								</property>
+								<property>
+									<name>REFLECT</name>
+									<value>false</value>
+								</property>
 							</globalVars>
 						</configuration>
 					</plugin>

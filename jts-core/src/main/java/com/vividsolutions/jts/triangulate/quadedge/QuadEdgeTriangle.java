@@ -152,7 +152,7 @@ public class QuadEdgeTriangle
 	 * @param edge an array of the edges of the triangle in CCW order
 	 */
 	public QuadEdgeTriangle(QuadEdge[] edge) {
-		this.edge = (QuadEdge[]) edge.clone();
+		this.edge = QuadEdges.inNewArray(edge);
 		// link the quadedges back to this triangle
     for (int i = 0; i < 3; i++) {
       edge[i].setData(this);

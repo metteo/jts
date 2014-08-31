@@ -110,7 +110,7 @@
 					<style>PRETTY</style>
 					<!-- <logLevel>DEBUG</logLevel> -->
 					<!-- <localWorkers>1</localWorkers> -->
-					<!-- <strict>true</strict> -->
+					<strict>true</strict>
 				</configuration>
 			</plugin>
 			<plugin>
