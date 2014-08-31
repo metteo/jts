@@ -103,7 +103,17 @@
 						<configuration>
 							<classifier>gwt</classifier>
 							<excludes>
-								<exclude>**/NumberFormat.java</exclude>
+								<!-- source excludes -->
+								<exclude>**/util/NumberFormat.java</exclude>
+								
+								<!-- class & source excludes -->
+								<!-- <exclude>**/io/InputStreamInStream.*</exclude> -->
+								<!-- <exclude>**/io/OutputStreamOutStream.*</exclude> -->
+								<!-- <exclude>**/io/WKBHexFileReader.*</exclude> -->
+								<!-- <exclude>**/io/WKTFileReader.*</exclude> -->
+								<!-- <exclude>**/awt/*.*</exclude> -->
+								<!-- <exclude>**/gml2/*.*</exclude> -->
+								<!-- <exclude>**/kml/*.*</exclude> -->
 							</excludes>
 						</configuration>
 					</plugin>

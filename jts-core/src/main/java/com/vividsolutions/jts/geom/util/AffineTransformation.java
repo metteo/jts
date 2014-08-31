@@ -1098,6 +1098,12 @@ public class AffineTransformation
     + m10 + ", " + m11 + ", " + m12 + "]]";
   }
   
+  public AffineTransformation copy() {
+	  return new AffineTransformation(this);
+  }
+  
+//#if CLONE
+  
   /**
    * Clones this transformation
    * 
@@ -1112,4 +1118,7 @@ public class AffineTransformation
   	}
   	return null;
   }
+  
+//#endif
+  
 }

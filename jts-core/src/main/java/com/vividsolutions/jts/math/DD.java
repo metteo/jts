@@ -256,6 +256,18 @@ public strictfp final class DD
   }
   
   /**
+   * Creates a copy of this DoubleDouble.
+   * 
+   * @return a copy of this
+   */
+  public DD copy()
+  {
+    return copy(this);
+  }
+  
+//#if CLONE
+  
+  /**
    * Creates and returns a copy of this value.
    * 
    * @return a copy of this value
@@ -270,6 +282,8 @@ public strictfp final class DD
       return null;
     }
   }
+  
+//#endif
   
   private final void init(double x)
   {
@@ -1305,6 +1319,21 @@ public strictfp final class DD
    *------------------------------------------------------------
    */
 
+  static boolean isWhitespace(char ch) {
+//TODO: maybe create another flag  
+//#if IO
+	  
+	  return Character.isWhitespace(ch);
+	  
+//#else
+	  
+	  //$@SuppressWarnings("deprecation")
+	  //$boolean isSpace = Character.isSpace(ch);
+	  //$return isSpace;
+	  
+//#endif
+  }
+  
   /**
    * Converts a string representation of a real number into a DoubleDouble value.
    * The format accepted is similar to the standard Java real number syntax.  
@@ -1324,7 +1353,7 @@ public strictfp final class DD
     int strlen = str.length();
     
     // skip leading whitespace
-    while (Character.isWhitespace(str.charAt(i)))
+    while (isWhitespace(str.charAt(i)))
       i++;
     
     // check for sign
