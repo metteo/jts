@@ -288,7 +288,7 @@
 					<plugin>
 						<groupId>org.eluder.coveralls</groupId>
 						<artifactId>coveralls-maven-plugin</artifactId>
-						<version>3.0.0-multi-module-SNAPSHOT</version>
+						<version>3.0.1</version>
 						<configuration>
 							<sourceEncoding>UTF-8</sourceEncoding>
 							<repoToken>${env.TOKEN_COVERALLS}</repoToken>
