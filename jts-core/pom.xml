@@ -35,7 +35,6 @@
 					<plugin>
 						<groupId>com.igormaznitsa</groupId>
 						<artifactId>jcp</artifactId>
-						<version>5.3.4-SNAPSHOT</version>
 						<executions>
 							<execution>
 								<id>preprocess-sources</id>
