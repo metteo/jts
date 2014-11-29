@@ -46,7 +46,7 @@ test runner doesn't support such case use:
 
 Deploy JTS
 ----------
-JTS snapshot build is be deployed to GitHub pages based, Maven repository.
+JTS snapshot build will be deployed to GitHub pages based, Maven repository.
 
 [Maven Snapshots](http://metteo.github.io/jts/maven/snapshots)
 
