@@ -9,12 +9,6 @@ env:
     - env.GWT=false
     - env.GWT=true
 
-install:
- - hg clone https://code.google.com/p/java-comment-preprocessor/
- - cd java-comment-preprocessor
- - mvn install -DskipITs
- - cd ..
-
 before_script:
  - cd jts
  - "sh -e /etc/init.d/xvfb start"
