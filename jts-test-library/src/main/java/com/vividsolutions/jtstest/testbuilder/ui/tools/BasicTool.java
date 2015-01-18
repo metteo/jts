@@ -1,9 +1,11 @@
 package com.vividsolutions.jtstest.testbuilder.ui.tools;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
 
 import com.vividsolutions.jts.awt.FontGlyphReader;
@@ -22,9 +24,16 @@ public abstract class BasicTool implements Tool
   protected Cursor cursor = Cursor.getDefaultCursor();
 
   private PrecisionModel gridPM;
+
+  private GeometryEditPanel panel;
   
   public BasicTool() {
     super();
+  }
+
+  public BasicTool(Cursor cursor) {
+    super();
+    this.cursor = cursor;
   }
 
   protected Graphics2D getGraphics2D() {
@@ -37,25 +46,18 @@ public abstract class BasicTool implements Tool
     return g;
   }
 
-//  protected void gestureFinished() throws Exception;
-
   public void mouseClicked(MouseEvent e) {}
-
   public void mousePressed(MouseEvent e) {}
-
   public void mouseReleased(MouseEvent e) {}
-
   public void mouseEntered(MouseEvent e) {}
-
   public void mouseExited(MouseEvent e) {}
-
-  public void mouseDragged(MouseEvent e) 
-  {
-  }
-
-  public void mouseMoved(MouseEvent e) {
-  }
-
+  public void mouseDragged(MouseEvent e)   {  }
+  public void keyPressed(KeyEvent e)  { }
+  public void keyReleased(KeyEvent e)  { }
+  public void keyTyped(KeyEvent e)  {  }
+  public void mouseMoved(MouseEvent e) {  }
+  public void mouseWheelMoved(MouseWheelEvent e) {  }
+  
   public Cursor getCursor()
   {
     return cursor;
@@ -66,15 +68,28 @@ public abstract class BasicTool implements Tool
    * 
    * If subclasses override this method they must call <tt>super.activate()</tt>.
    */
-  public void activate() 
+  public void activate(GeometryEditPanel panel) 
   {
+    this.panel = panel;
   	gridPM = getViewport().getGridPrecisionModel();
+    this.panel.setCursor(getCursor());
+    this.panel.addMouseListener(this);
+    this.panel.addMouseMotionListener(this);
+    this.panel.addMouseWheelListener(this);
   }
-  
+ 
+  public void deactivate() 
+  {
+    this.panel.removeMouseListener(this);
+    this.panel.removeMouseMotionListener(this);
+    this.panel.removeMouseWheelListener(this);
+  }
+
   protected GeometryEditPanel panel()
   {
     // this should probably be passed in during setup
-    return JTSTestBuilderFrame.instance().getTestCasePanel().getGeometryEditPanel();
+    //return JTSTestBuilderFrame.instance().getTestCasePanel().getGeometryEditPanel();
+    return panel;
   }
   
   protected GeometryEditModel geomModel()

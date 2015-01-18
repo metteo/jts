@@ -64,11 +64,12 @@ import com.vividsolutions.jtstest.testbuilder.ui.render.GeometryPainter;
 /**
  * Panel which displays rendered geometries.
  * 
+ * Zoom methods take arguments in model space.
+ * 
  * @version 1.7
  */
 public class GeometryEditPanel extends JPanel 
-{
-	
+{	
 	/*
   private static Color[] selectedPointColor = { new Color(0, 64, 128, 255),
       new Color(170, 64, 0, 255) };
@@ -456,7 +457,7 @@ public class GeometryEditPanel extends JPanel
 
   void this_componentResized(ComponentEvent e) {
   	renderMgr.componentResized();
-    viewport.update();
+    viewport.update(this.getSize());
   }
 
   /**
@@ -464,16 +465,9 @@ public class GeometryEditPanel extends JPanel
    * @param newTool tool to set, or null to clear tool
    */
   public void setCurrentTool(Tool newTool) {
-    removeMouseListener(currentTool);
-    removeMouseMotionListener(currentTool);
+    if (currentTool != null) currentTool.deactivate();
     currentTool = newTool;
-    // tool cleared
-    if (newTool == null) return;
-    
-    currentTool.activate();
-    setCursor(currentTool.getCursor());
-    addMouseListener(currentTool);
-    addMouseMotionListener(currentTool);
+    if (currentTool != null) currentTool.activate(this);
   }
 
   public void zoomToGeometry(int i) {
@@ -493,61 +487,51 @@ public class GeometryEditPanel extends JPanel
   public void zoomToFullExtent() {
     zoom(getGeomModel().getEnvelopeAll());
   }
-
+  
   public void zoom(Geometry geom) 
   {
     if (geom == null) return;
     zoom(geom.getEnvelopeInternal());
   }
   
-  public void zoom(Envelope zoomEnv) 
+  public void zoom(Point2D zoomBox1, Point2D zoomBox2) 
   {
-    if (zoomEnv == null) return;
-    
-  	renderMgr.setDirty(true);
-  	
+    Envelope zoomEnv = new Envelope();
+    zoomEnv.expandToInclude(zoomBox1.getX(), zoomBox1.getY());
+    zoomEnv.expandToInclude(zoomBox2.getX(), zoomBox2.getY());
+    zoom(zoomEnv);
+  }
+  
+  public void zoom(Envelope zoomEnv) {
+    if (zoomEnv == null)
+      return;
+
     if (zoomEnv.isNull()) {
       viewport.zoomToInitialExtent();
       return;
     }
-
     double averageExtent = (zoomEnv.getWidth() + zoomEnv.getHeight()) / 2d;
     // fix to allow zooming to points
     if (averageExtent == 0.0)
       averageExtent = 1.0;
     double buffer = averageExtent * 0.03;
-    
-    zoomEnv.expandToInclude(zoomEnv.getMaxX() + buffer,
-    		zoomEnv.getMaxY() + buffer);
-    zoomEnv.expandToInclude(zoomEnv.getMinX() - buffer,
-    		zoomEnv.getMinY() - buffer);
+    zoomEnv.expandBy(buffer);
     viewport.zoom(zoomEnv);
   }
 
-  public void zoom(Point center,
-			double realZoomFactor) {
-
-  	renderMgr.setDirty(true);
-
-		double width = getSize().width / realZoomFactor;
-		double height = getSize().height / realZoomFactor;
-		double bottomOfNewViewAsPerceivedByOldView = center.y
-				+ (height / 2d);
-		double leftOfNewViewAsPerceivedByOldView = center.x
-				- (width / 2d);
-		Point bottomLeftOfNewViewAsPerceivedByOldView = new Point(
-				(int) leftOfNewViewAsPerceivedByOldView,
-				(int) bottomOfNewViewAsPerceivedByOldView);
-		Point2D bottomLeftOfNewViewAsPerceivedByModel = viewport.toModel(bottomLeftOfNewViewAsPerceivedByOldView);
-		viewport.setScale(getViewport().getScale() * realZoomFactor);
-		viewport.setViewOrigin(bottomLeftOfNewViewAsPerceivedByModel.getX(), bottomLeftOfNewViewAsPerceivedByModel.getY());
-	}
-
-  public void zoomPan(double xDisplacement, double yDisplacement) 
-  {
-  	renderMgr.setDirty(true);
-    getViewport().setViewOrigin(getViewport().getViewOriginX() - xDisplacement,
-        getViewport().getViewOriginY() - yDisplacement);
+  /**
+   * Zoom to a point, ensuring that the zoom point remains in the same screen location.
+   * 
+   * @param zoomPt
+   * @param zoomFactor
+   */
+  public void zoom(Point2D zoomPt, double zoomFactor) {
+    double zoomScale = getViewport().getScale() * zoomFactor;
+    viewport.zoom(zoomPt, zoomScale);
+  }
+  
+  public void zoomPan(double dx, double dy) {
+    getViewport().zoomPan(dx, dy);
   }
 
   public String cursorLocationString(Point2D pView)
@@ -557,18 +541,6 @@ public class GeometryEditPanel extends JPanel
     return format.format(p.getX()) 
     + ", " 
     + format.format(p.getY());
-  
-    /*
-    double width = getViewport().getWidthInModel();
-    double height = getViewport().getHeightInModel();
-    double extent = Math.min(width, height);
-    double precisionDigits = -Math.floor(Math.log(extent)/Math.log(10.0)) + 3;
-    double precisionScale = Math.pow(10.0, precisionDigits);
-    double xRound = Math.round(p.getX() * precisionScale) / precisionScale;
-    double yRound = Math.round(p.getY() * precisionScale) / precisionScale;
-  //    System.out.println(precisionScale);
-    //return xRound + ", " + yRound;
-  */
   }
 
   public Renderer getRenderer()
@@ -703,7 +675,7 @@ public class GeometryEditPanel extends JPanel
     public void renderMagnifyWarning(Graphics2D g)
     {
       if (stretchView == null) return;
-      
+
       float maxx = (float) viewport.getWidthInView();
       float maxy = (float) viewport.getHeightInView();
       GeneralPath path = new GeneralPath();
