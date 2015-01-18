@@ -61,6 +61,7 @@
 				<li>Added <code>DD.setValue()</code> methods
 				<li>Added <code>getGeometry()</code> methods to <code>LinearComponentExtracter</code>
 					and <code>LineStringExtracter</code>
+				<li>Added <code>BufferParameters</code> </code>simplifyFactor</code> setting
 			</ul>
 
 			<h4>Performance Improvements</h4>
@@ -71,6 +72,7 @@
 					by avoiding retaining input collection
 				<li>Fix <code>Point.isEmpty()</code> to avoid allocating a coordinate
 				<li>Fix <code>Geometry.equalsExact()</code> to short-circuit when the inputs are identical objects
+				<li>Add short-circuit to <code>PointExtracter</code> to improve performance for Points
 			</ul>
 
 			<h4>Bug Fixes</h4>
@@ -149,6 +151,8 @@
 				<li>Added Oracle text output
 				<li>Added more function sets
 				<li>Removed dependency on Acme GIF encoder library
+				<li>Improved zooming logic
+				<li>Added mouse wheel zooming
 			</ul>
 
 			<h4>UI Changes</h4>
