@@ -18,7 +18,7 @@
 	<properties>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<gwt.module>com.vividsolutions.jtswebapp.JTSWebApp</gwt.module>
-		<gwt.version>2.6.1</gwt.version>
+		<gwt.version>2.7.0</gwt.version>
 		<appengine.version>1.9.15</appengine.version>
 	</properties>
 
