@@ -48,12 +48,56 @@ import com.vividsolutions.jts.algorithm.LineIntersector;
 public class InteriorIntersectionFinder
     implements SegmentIntersector
 {
-	private boolean findAllIntersections = false;
-	private boolean isCheckEndSegmentsOnly = false;
+	/**
+	 * Creates an intersection finder which tests if there is at least one interior intersection.
+	 * Uses short-circuiting for efficient performance.
+	 * The intersection found is recorded.
+	 * 
+	 * @param li a line intersector
+	 * @return a intersection finder which tests if there is at least one interior intersection.
+	 */
+	public static InteriorIntersectionFinder createAnyIntersectionFinder(LineIntersector li)
+	{
+		return new InteriorIntersectionFinder(li);
+	}
+	
+	/**
+	 * Creates an intersection finder which finds all interior intersections.
+	 * The intersections are recorded for later inspection.
+	 * 
+	 * @param li a line intersector
+	 * @return a intersection finder which finds all interior intersections.
+	 */
+	public static InteriorIntersectionFinder createAllIntersectionsFinder(LineIntersector li)
+	{
+		InteriorIntersectionFinder finder = new InteriorIntersectionFinder(li);
+		finder.setFindAllIntersections(true);
+		return finder;
+	}
+	
+	/**
+	 * Creates an intersection finder which counts all interior intersections.
+	 * The intersections are note recorded to reduce memory usage.
+	 * 
+	 * @param li a line intersector
+	 * @return a intersection finder which counts all interior intersections.
+	 */
+	public static InteriorIntersectionFinder createIntersectionCounter(LineIntersector li)
+	{
+		InteriorIntersectionFinder finder = new InteriorIntersectionFinder(li);
+		finder.setFindAllIntersections(true);
+		finder.setKeepIntersections(false);
+		return finder;
+	}
+	
+  private boolean findAllIntersections = false;
+  private boolean isCheckEndSegmentsOnly = false;
   private LineIntersector li;
   private Coordinate interiorIntersection = null;
   private Coordinate[] intSegments = null;
   private List intersections = new ArrayList();
+  private int intersectionCount = 0;
+  private boolean keepIntersections = true;
 
   /**
    * Creates an intersection finder which finds an interior intersection
@@ -67,14 +111,51 @@ public class InteriorIntersectionFinder
     interiorIntersection = null;
   }
 
+  /**
+   * Sets whether all intersections should be computed.
+   * When this is <code>false</code> (the default value)
+   * the value of {@link #isDone()} is <code>true</code> after the first intersection is found.
+   * <p>
+   * Default is <code>false</code>.
+   * 
+   * @param findAllIntersections whether all intersections should be computed
+   */
   public void setFindAllIntersections(boolean findAllIntersections)
   {
     this.findAllIntersections = findAllIntersections;
   }
   
+  /**
+   * Sets whether intersection points are recorded.
+   * If the only need is to count intersection points, this can be set to <code>false</code>.
+   * <p>
+   * Default is <code>true</code>.
+   * 
+   * @param keepIntersections indicates whether intersections should be recorded
+   */
+  public void setKeepIntersections(boolean keepIntersections)
+  {
+    this.keepIntersections = keepIntersections;
+  }
+  
+  /**
+   * Gets the intersections found.
+   * 
+   * @return a List of {@link Coordinate)
+   */
   public List getIntersections()
   {
     return intersections;
+  }
+  
+  /**
+   * Gets the count of intersections found.
+   * 
+   * @return the intersection count
+   */
+  public int count()
+  {
+    return intersectionCount;
   }
   
   /**
@@ -136,7 +217,7 @@ public class InteriorIntersectionFinder
       )
   {
   	// short-circuit if intersection already found
-  	if (hasIntersection())
+  	if (! findAllIntersections && hasIntersection())
   		return;
   	
     // don't bother intersecting a segment with itself
@@ -169,7 +250,8 @@ public class InteriorIntersectionFinder
       	intSegments[3] = p11;
       	
       	interiorIntersection = li.getIntersection(0);
-      	intersections.add(interiorIntersection);
+      	if (keepIntersections) intersections.add(interiorIntersection);
+      	intersectionCount++;
       }
     }
   }
@@ -194,4 +276,5 @@ public class InteriorIntersectionFinder
   	if (findAllIntersections) return false;
   	return interiorIntersection != null;
   }
+
 }

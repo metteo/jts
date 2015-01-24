@@ -61,6 +61,14 @@ import com.vividsolutions.jts.io.*;
  */
 public class FastNodingValidator 
 {
+  public static List computeIntersections(Collection segStrings)
+  {
+    FastNodingValidator nv = new FastNodingValidator(segStrings);
+    nv.setFindAllIntersections(true);
+    nv.isValid();
+    return nv.getIntersections();
+  }
+	  
   private LineIntersector li = new RobustLineIntersector();
 
   private Collection segStrings;
@@ -83,6 +91,13 @@ public class FastNodingValidator
     this.findAllIntersections = findAllIntersections;
   }
   
+  /**
+   * Gets a list of all intersections found.
+   * Intersections are represented as {@link Coordinate}s.
+   * List is empty if none were found.
+   * 
+   * @return a list of Coordinate
+   */
   public List getIntersections()
   {
     return segInt.getIntersections();
