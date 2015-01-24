@@ -62,6 +62,7 @@
 				<li>Added <code>getGeometry()</code> methods to <code>LinearComponentExtracter</code>
 					and <code>LineStringExtracter</code>
 				<li>Added <code>BufferParameters</code> </code>simplifyFactor</code> setting
+				<li>Added node counting and ability to not keep intersection points to <code>InteriorIntersectionFinder</code>
 			</ul>
 
 			<h4>Performance Improvements</h4>
@@ -91,6 +92,7 @@
 					to handle zero-area geometries
 				<li>Fixed <code>STRtree</code> classes to be thread-safe (by
 					synchronizing the <code>AbstractSTRtree.build()</code> method)
+				<li>Fixed <code>STRtree.remove()</code> method to avoid a NPE
 				<li>Fixed <code>DouglasPeuckerSimplifier</code> and <code>TopologyPreservingSimplifier</code>
 					to handle empty geometry components in the input
 				<li>Fixed <code>ConvexHull</code> to handle input of array of
@@ -102,6 +104,7 @@
 					to handle offsets from endpoints correctly.
 				<li>Fixed <code>GeometryCollectionIterator</code> to correctly
 					handle atomic geometries
+				<li>Fixed <code>InteriorIntersectionFinder</code> to not short-circuit when finding all nodes
 			</ul>
 
 			<h4>API Changes</h4>
@@ -153,6 +156,7 @@
 				<li>Removed dependency on Acme GIF encoder library
 				<li>Improved zooming logic
 				<li>Added mouse wheel zooming
+				<li>Improved UI for editing A/B geometries
 			</ul>
 
 			<h4>UI Changes</h4>
