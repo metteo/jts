@@ -1,5 +1,11 @@
 language: java
 
+sudo: false
+
+cache:
+  directories:
+  - $HOME/.m2
+
 env:
    global:
     - DISPLAY=:99.0
