@@ -55,6 +55,7 @@
 
 	<modules>
 		<module>../jts-core</module>
+		<module>../jts-jvm</module>
 		<module>../jts-android</module>
 		<module>../jts-example</module>
 		<module>../jts-lab</module>

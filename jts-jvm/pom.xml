@@ -4,21 +4,22 @@
 
 	<parent>
 		<groupId>com.vividsolutions.jts</groupId>
-		<artifactId>jts-io</artifactId>
+		<artifactId>jts</artifactId>
 		<version>1.14-SNAPSHOT</version>
-		<relativePath>../jts-io/pom.xml</relativePath>
+		<relativePath>../jts/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jts-io-ext</artifactId>
-
-	<name>JTS IO Ext</name>
-	<description>Extensions for base IO which is not supported by GWT (File, Input/Output Streams etc)</description>
+	<artifactId>jts-jvm</artifactId>
+	
+	<name>JTS JVM</name>
+	<description>Code which requires JVM to run</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
-			<artifactId>jts-jvm</artifactId>
+			<artifactId>jts-core</artifactId>
 			<version>${project.version}</version>
+			<classifier>${core.classifier}</classifier>
 		</dependency>
 	</dependencies>
 </project>

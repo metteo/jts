@@ -12,7 +12,7 @@
 	<artifactId>jts-gwt</artifactId>
 
 	<name>JTS GWT</name>
-	<description>Contains GWT specific files and extentions. Depends on 'sources' package of jts-core for convenience</description>
+	<description>Contains GWT specific files and extensions. Depends on 'sources' package of jts-core for convenience</description>
 
 	<dependencies>
 		<dependency>
@@ -64,7 +64,6 @@
 								**/io/WKBHexFileReader.*,
 								**/io/WKTFileReader.*,
 								**/io/WKTReader.*,
-								**/awt/*.*,
 								**/gml2/*.*,
 								**/kml/*.*,
 								**/geom/impl/PackedCoordinateSequence.*,

@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
-			<artifactId>jts-core</artifactId>
+			<artifactId>jts-jvm</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
