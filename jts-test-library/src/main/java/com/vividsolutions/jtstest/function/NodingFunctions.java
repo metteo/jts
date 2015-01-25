@@ -95,7 +95,7 @@ public class NodingFunctions
    * @param segStrings a collection of SegmentStrings
    * @return a LineString or MultiLineString
    */
-  public static Geometry toGeometry(Collection segStrings)
+  private static Geometry toGeometry(Collection segStrings)
   {
     LineString[] lines = new LineString[segStrings.size()];
     int index = 0;
