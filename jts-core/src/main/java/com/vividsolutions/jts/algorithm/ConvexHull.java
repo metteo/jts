@@ -1,5 +1,3 @@
-
-
 /*
 * The JTS Topology Suite is a collection of Java classes that
 * implement the fundamental operations required to validate a given
@@ -110,7 +108,7 @@ public class ConvexHull
     Coordinate[] sortedPts = preSort(reducedPts);
 
     // Use Graham scan to find convex hull.
-    Stack cHS = grahamScan(sortedPts);
+    Stack<Coordinate> cHS = grahamScan(sortedPts);
 
     // Convert stack to an array.
     Coordinate[] cH = toCoordinateArray(cHS);
@@ -123,10 +121,10 @@ public class ConvexHull
    * An alternative to Stack.toArray, which is not present in earlier versions
    * of Java.
    */
-  protected Coordinate[] toCoordinateArray(Stack stack) {
+  protected Coordinate[] toCoordinateArray(Stack<Coordinate> stack) {
     Coordinate[] coordinates = new Coordinate[stack.size()];
     for (int i = 0; i < stack.size(); i++) {
-      Coordinate coordinate = (Coordinate) stack.get(i);
+      Coordinate coordinate = stack.get(i);
       coordinates[i] = coordinate;
     }
     return coordinates;
@@ -165,7 +163,7 @@ public class ConvexHull
 //    System.out.println(ring);
 
     // add points defining polygon
-    TreeSet reducedSet = new TreeSet();
+    TreeSet<Coordinate> reducedSet = new TreeSet<Coordinate>();
     for (int i = 0; i < polyPts.length; i++) {
       reducedSet.add(polyPts[i]);
     }
@@ -228,24 +226,24 @@ public class ConvexHull
    * @param c a list of points, with at least 3 entries
    * @return a Stack containing the ordered points of the convex hull ring
    */
-  private Stack grahamScan(Coordinate[] c) {
+  private Stack<Coordinate> grahamScan(Coordinate[] c) {
     Coordinate p;
-    Stack ps = new Stack();
-    p = (Coordinate) ps.push(c[0]);
-    p = (Coordinate) ps.push(c[1]);
-    p = (Coordinate) ps.push(c[2]);
+    Stack<Coordinate> ps = new Stack<Coordinate>();
+    p = ps.push(c[0]);
+    p = ps.push(c[1]);
+    p = ps.push(c[2]);
     for (int i = 3; i < c.length; i++) {
-      p = (Coordinate) ps.pop();
+      p = ps.pop();
       // check for empty stack to guard against robustness problems
       while (
           ! ps.empty() && 
-          CGAlgorithms.computeOrientation((Coordinate) ps.peek(), p, c[i]) > 0) {
-        p = (Coordinate) ps.pop();
+          CGAlgorithms.computeOrientation(ps.peek(), p, c[i]) > 0) {
+        p = ps.pop();
       }
-      p = (Coordinate) ps.push(p);
-      p = (Coordinate) ps.push(c[i]);
+      p = ps.push(p);
+      p = ps.push(c[i]);
     }
-    p = (Coordinate) ps.push(c[0]);
+    p = ps.push(c[0]);
     return ps;
   }
 
@@ -412,7 +410,7 @@ public class ConvexHull
    */
   private Coordinate[] cleanRing(Coordinate[] original) {
     Assert.equals(original[0], original[original.length - 1]);
-    ArrayList cleanedRing = new ArrayList();
+    ArrayList<Coordinate> cleanedRing = new ArrayList<Coordinate>();
     Coordinate previousDistinctCoordinate = null;
     for (int i = 0; i <= original.length - 2; i++) {
       Coordinate currentCoordinate = original[i];
@@ -429,7 +427,7 @@ public class ConvexHull
     }
     cleanedRing.add(original[original.length - 1]);
     Coordinate[] cleanedRingCoordinates = new Coordinate[cleanedRing.size()];
-    return (Coordinate[]) cleanedRing.toArray(cleanedRingCoordinates);
+    return cleanedRing.toArray(cleanedRingCoordinates);
   }
 
 
@@ -441,7 +439,7 @@ public class ConvexHull
    * @version 1.7
    */
   private static class RadialComparator
-      implements Comparator
+      implements Comparator<Coordinate>
   {
     private Coordinate origin;
 
@@ -449,10 +447,8 @@ public class ConvexHull
     {
       this.origin = origin;
     }
-    public int compare(Object o1, Object o2)
+    public int compare(Coordinate p1, Coordinate p2)
     {
-      Coordinate p1 = (Coordinate) o1;
-      Coordinate p2 = (Coordinate) o2;
       return polarCompare(origin, p1, p2);
     }
 

@@ -76,6 +76,7 @@ public class CentralEndpointIntersector
 		compute();
 	}
 
+	@SuppressWarnings("unused")
 	private void Ocompute() 
 	{
 		Coordinate centroid = average(pts);

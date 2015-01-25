@@ -1,6 +1,3 @@
-
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -43,6 +40,8 @@ package com.vividsolutions.jts.algorithm;
  * @see HCoordinate
  */
 public class NotRepresentableException extends Exception {
+
+  private static final long serialVersionUID = -1530821539931495186L;
 
   public NotRepresentableException() {
     super("Projective point not representable on the Cartesian plane.");

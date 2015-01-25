@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -39,7 +37,6 @@ package com.vividsolutions.jts.algorithm;
  */
 
 import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.util.Assert;
 
 /**
  * A robust version of {@link LineIntersector}.
@@ -262,6 +259,7 @@ public class RobustLineIntersector
     return intPt;
   }
 
+  @SuppressWarnings("unused")
   private void checkDD(Coordinate p1, Coordinate p2, Coordinate q1,
       Coordinate q2, Coordinate intPt)
   {
@@ -331,6 +329,7 @@ public class RobustLineIntersector
    * @param n4
    * @param normPt
    */
+  @SuppressWarnings("unused")
   private void normalizeToMinimum(
     Coordinate n1,
     Coordinate n2,
