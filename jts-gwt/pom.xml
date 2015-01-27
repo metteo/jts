@@ -32,13 +32,32 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+						  <goal>add-source</goal>
+						</goals>
+						<configuration>
+						  <sources>
+						    <source>${project.build.directory}/generated-sources/unpacked</source>
+						  </sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.8</version>
 				<executions>
 					<execution>
 						<id>unpack-core</id>
-						<phase>prepare-package</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>unpack</goal>
 						</goals>
@@ -50,10 +69,12 @@
 									<version>${project.version}</version>
 									<type>jar</type>
 									<classifier>gwt</classifier>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+									<outputDirectory>${project.build.directory}/generated-sources/unpacked</outputDirectory>
 								</artifactItem>
 							</artifactItems>
+							<includes>
+								**/*.java
+							</includes>
 							<excludes>
 								**/util/NumberFormat.*,
 								**/util/Memory.*,
