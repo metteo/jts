@@ -50,12 +50,12 @@ public class JTSVersion {
   /**
    * The major version number.
    */
-  public static final int MAJOR = 1;
+  public static final int MAJOR = 2;
 
   /**
    * The minor version number.
    */
-  public static final int MINOR = 14;
+  public static final int MINOR = 0;
 
   /**
    * The patch version number.
