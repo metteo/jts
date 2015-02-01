@@ -24,10 +24,16 @@
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
 			<version>${project.version}</version>
-			<classifier>gwt</classifier>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	
+	<properties>
+		<sources.unpacked.dir>${project.build.directory}/generated-sources/unpacked</sources.unpacked.dir>
+		<sources.preprocessed.dir>${project.build.directory}/generated-sources/preprocessed</sources.preprocessed.dir>
+		<test-sources.unpacked.dir>${project.build.directory}/generated-test-sources/unpacked</test-sources.unpacked.dir>
+		<test-sources.preprocessed.dir>${project.build.directory}/generated-test-sources/preprocessed</test-sources.preprocessed.dir>
+	</properties>
 
 	<build>
 		<plugins>
@@ -44,7 +50,19 @@
 						</goals>
 						<configuration>
 						  <sources>
-						    <source>${project.build.directory}/generated-sources/unpacked</source>
+						    <source>${sources.preprocessed.dir}</source>
+						  </sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+						  <goal>add-test-source</goal>
+						</goals>
+						<configuration>
+						  <sources>
+						    <source>${test-sources.preprocessed.dir}</source>
 						  </sources>
 						</configuration>
 					</execution>
@@ -56,7 +74,7 @@
 				<version>2.8</version>
 				<executions>
 					<execution>
-						<id>unpack-core</id>
+						<id>unpack-sources</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -67,9 +85,9 @@
 									<groupId>${project.groupId}</groupId>
 									<artifactId>jts-core</artifactId>
 									<version>${project.version}</version>
+									<classifier>sources</classifier>
 									<type>jar</type>
-									<classifier>gwt</classifier>
-									<outputDirectory>${project.build.directory}/generated-sources/unpacked</outputDirectory>
+									<outputDirectory>${sources.unpacked.dir}</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 							<includes>
@@ -90,8 +108,74 @@
 							</excludes>
 						</configuration>
 					</execution>
+					<execution>
+						<id>unpack-test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>jts-core</artifactId>
+									<version>${project.version}</version>
+									<classifier>test-sources</classifier>
+									<type>jar</type>
+									<outputDirectory>${test-sources.unpacked.dir}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
+					<plugin>
+						<groupId>com.igormaznitsa</groupId>
+						<artifactId>jcp</artifactId>
+						<executions>
+							<execution>
+								<id>preprocess-sources</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>preprocess</goal>
+								</goals>
+								<configuration>
+									<source>${sources.unpacked.dir}</source>
+									<destination>${sources.preprocessed.dir}</destination>
+								</configuration>
+							</execution>
+<!-- 							<execution> -->
+<!-- 								<id>preprocess-test-sources</id> -->
+<!-- 								<phase>generate-test-sources</phase> -->
+<!-- 								<goals> -->
+<!-- 									<goal>preprocess</goal> -->
+<!-- 								</goals> -->
+<!-- 								<configuration> -->
+<!-- 									<useTestSources>true</useTestSources> -->
+										
+<!-- 									<source>${test-sources.unpacked.dir}</source> -->
+<!-- 									<destination>${test-sources.preprocessed.dir}</destination> -->
+<!-- 								</configuration> -->
+<!-- 							</execution> -->
+						</executions>
+						<configuration>
+							<keepLines>true</keepLines>
+							<globalVars>
+								<property>
+									<name>CLONE</name>
+									<value>false</value>
+								</property>
+								<property>
+									<name>IO</name>
+									<value>false</value>
+								</property>
+								<property>
+									<name>REFLECT</name>
+									<value>false</value>
+								</property>
+							</globalVars>
+						</configuration>
+					</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>

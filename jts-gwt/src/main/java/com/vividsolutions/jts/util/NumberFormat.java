@@ -5,8 +5,7 @@ import com.google.gwt.i18n.client.constants.NumberConstants;
 
 /**
  * Abstracts away access to formatting classes. In JVM compiled class is used
- * which uses j.t.DecimalFormat. In GWT this implementation is used by means of
- * super source.
+ * which uses j.t.DecimalFormat. In GWT this implementation is used
  *
  */
 public class NumberFormat {

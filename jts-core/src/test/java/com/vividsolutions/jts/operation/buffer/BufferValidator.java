@@ -129,8 +129,7 @@ public class BufferValidator
         test.test();
       }
     } catch (Exception e) {
-      throw new Exception(
-        supplement(e.toString()) + StringUtil.getStackTrace(e));
+      throw new Exception(supplement(e.toString()), e);
     }
   }
   private String supplement(String message) throws ParseException {

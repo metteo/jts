@@ -11,9 +11,6 @@ env:
     - DISPLAY=:99.0
     - secure: iIQjYJMP3Cg+BIItvTxi/oUFvVLfAM/4mfpvwmXs09HQEl9CFwiRt0VW29tfUB8XSnTpLHjhCCtObVNxOU1us5+k8SEH1pq69v0R+agXDB/p16dfi069xER3bdur49s4Z6v+7G07q3NmvFpoJ6siN664gjpysMqilHBfv/yNRHA=
     - secure: jiINz0t4VsECItqflWxKz+sq+39Lno/aO2r4KHN/hlgcDAqFmMr4n0wtwPYUKWHWP1g4YxxPPIwb6pzz8oMLl/zU352frnp9fS9Nh1Y2KbG4b0o+EEAK+czflQJoX4bXmBWBZ9kXD1Z36POPqSR31M1MEfdRqhZT9y0YiwEgWLE=
-   matrix:
-    - env.GWT=false
-    - env.GWT=true
 
 before_script:
  - cd jts

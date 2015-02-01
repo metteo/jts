@@ -19,7 +19,6 @@
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
 			<version>${project.version}</version>
-			<classifier>${core.classifier}</classifier>
 		</dependency>
 	</dependencies>
 </project>

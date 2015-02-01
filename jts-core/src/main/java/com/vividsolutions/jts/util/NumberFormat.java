@@ -5,7 +5,7 @@ import java.text.DecimalFormatSymbols;
 
 /**
  * Abstracts away access to formatting classes. In JVM this implementation is
- * used. In GWT super source implementation which uses c.g.g.i.c.NumberFormat
+ * used. In GWT alternative implementation which uses c.g.g.i.c.NumberFormat
  * 
  */
 public class NumberFormat {

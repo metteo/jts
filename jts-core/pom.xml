@@ -29,103 +29,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>attach-test-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>test-jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>gwt</id>
-
-			<activation>
-				<property>
-					<name>env.GWT</name>
-					<value>true</value>
-				</property>
-			</activation>
-
-			<properties>
-				<jcp.directory>${project.build.directory}/generated-sources/preprocessed</jcp.directory>
-			</properties>
-
-			<build>
-
-				<plugins>
-					<plugin>
-						<groupId>com.igormaznitsa</groupId>
-						<artifactId>jcp</artifactId>
-						<executions>
-							<execution>
-								<id>preprocess-sources</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>preprocess</goal>
-								</goals>
-								<configuration>
-									<destination>${jcp.directory}</destination>
-								</configuration>
-							</execution>
-							<execution>
-								<id>preprocess-test-sources</id>
-								<phase>generate-test-sources</phase>
-								<goals>
-									<goal>preprocess</goal>
-								</goals>
-								<configuration>
-									<useTestSources>true</useTestSources>
-								</configuration>
-							</execution>
-						</executions>
-						<configuration>
-							<keepLines>true</keepLines>
-							<globalVars>
-								<property>
-									<name>CLONE</name>
-									<value>false</value>
-								</property>
-								<property>
-									<name>IO</name>
-									<value>false</value>
-								</property>
-								<property>
-									<name>REFLECT</name>
-									<value>false</value>
-								</property>
-							</globalVars>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-resources-plugin</artifactId>
-						<version>2.6</version>
-						<executions>
-							<execution>
-								<!-- Sources are included in gwt jar instead of sources jar. It's 
-									not possible to attach artifact to an attachment artifact -->
-								<id>copy-sources</id>
-								<phase>process-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.outputDirectory}</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${jcp.directory}</directory>
-											<filtering>false</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>2.5</version>
-						<configuration>
-							<classifier>gwt</classifier>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

@@ -61,6 +61,8 @@
 		<module>../jts-example</module>
 		<module>../jts-lab</module>
 		<module>../jts-test</module>
+		<module>../jts-gwt</module>
+		<module>../jts-webapp</module>
 	</modules>
 
 	<scm>
@@ -85,9 +87,6 @@
 
 		<github.url>https://github.com/metteo/jts</github.url>
 		<temp.repo>${project.build.directory}/repo</temp.repo>
-
-		<!-- empty if regular build, 'gwt' if gwt specific build -->
-		<core.classifier></core.classifier>
 	</properties>
 
 	<dependencyManagement>
@@ -100,6 +99,11 @@
 			<dependency>
 				<groupId>com.google.gwt</groupId>
 				<artifactId>gwt-user</artifactId>
+				<version>2.7.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-servlet</artifactId>
 				<version>2.7.0</version>
 			</dependency>
 			<dependency>
@@ -201,26 +205,6 @@
 	<reporting></reporting>
 
 	<profiles>
-		<profile>
-			<id>gwt</id>
-
-			<activation>
-				<property>
-					<name>env.GWT</name>
-					<value>true</value>
-				</property>
-			</activation>
-
-			<properties>
-				<core.classifier>gwt</core.classifier>
-			</properties>
-
-			<modules>
-				<module>../jts-gwt</module>
-				<module>../jts-webapp</module>
-			</modules>
-		</profile>
-
 		<profile>
 			<id>travis</id>
 
