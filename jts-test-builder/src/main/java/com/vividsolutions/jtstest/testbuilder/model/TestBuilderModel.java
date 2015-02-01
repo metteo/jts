@@ -6,6 +6,7 @@ import java.util.*;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.io.*;
 import com.vividsolutions.jts.util.Assert;
+import com.vividsolutions.jtstest.function.GeometryFactoryHolder;
 import com.vividsolutions.jtstest.test.TestCaseList;
 import com.vividsolutions.jtstest.test.Testable;
 import com.vividsolutions.jtstest.testbuilder.AppConstants;
@@ -64,9 +65,8 @@ public class TestBuilderModel
     return topologyStretchSize;
   }
   
-  private PrecisionModel precisionModel = new PrecisionModel();
-  private GeometryFactory geometryFactory = null;
-	private GeometryEditModel geomEditModel;
+  private GeometryFactoryHolder mGeomFactHolder = GeometryFactoryHolder.getInstance();
+  private GeometryEditModel geomEditModel;
   private LayerList layerList = new LayerList();
   private WKTWriter writer = new WKTWriter();
   private Object currResult = null;
@@ -81,19 +81,16 @@ public class TestBuilderModel
 	
 	public GeometryEditModel getGeometryEditModel() { return geomEditModel; }
 	
-	public PrecisionModel getPrecisionModel() { return precisionModel; }
+	public PrecisionModel getPrecisionModel() { return mGeomFactHolder.getPrecisionModel(); }
 	
   public void setPrecisionModel(PrecisionModel precisionModel)
   {
-    this.precisionModel = precisionModel;
-    geometryFactory = null;
+	  mGeomFactHolder.setPrecisionModel(precisionModel);
   }
   
   public GeometryFactory getGeometryFactory()
   {
-    if (geometryFactory == null)
-      geometryFactory = new GeometryFactory(getPrecisionModel());
-    return geometryFactory;
+    return mGeomFactHolder.getGeometryFactory();
   }
   
   
@@ -345,7 +342,7 @@ public class TestBuilderModel
     while (tcListi.hasNext()) {
       tcListi.next();
     }
-    currTestCase = new TestCaseEdit(precisionModel);
+    currTestCase = new TestCaseEdit(getPrecisionModel());
     tcListi.add(currTestCase);
   }
 

@@ -37,7 +37,6 @@ import java.util.List;
 import java.io.*;
 
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jtstest.testbuilder.AppStrings;
 import com.vividsolutions.jtstest.util.StringUtil;
 
 
@@ -164,7 +163,7 @@ public class SimpleReportWriter implements ReportWriter
       return;
     }
     reportBuf.write("\n");
-    reportBuf.write(AppStrings.LABEL_TEST_CASE + " " + testCase.getTestRun().getTestFile().getName()
+    reportBuf.write(/*AppStrings.LABEL_TEST_CASE*/"Case" + " " + testCase.getTestRun().getTestFile().getName()
                     + " - #" + testCase.getCaseIndex()
                     + " (" + testCase.getLineNumber() + ")"
         + (testCase.getDescription().length() > 0 ? ": " + testCase.getDescription() :
