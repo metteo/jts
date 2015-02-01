@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -78,7 +76,6 @@ import com.vividsolutions.jtstest.command.Option;
 import com.vividsolutions.jtstest.command.OptionSpec;
 import com.vividsolutions.jtstest.command.ParseException;
 import com.vividsolutions.jtstest.geomop.*;
-import com.vividsolutions.jtstest.function.*;
 import com.vividsolutions.jtstest.util.StringUtil;
 
 /**
@@ -114,47 +111,14 @@ import com.vividsolutions.jtstest.util.StringUtil;
  */
 public class TopologyTestApp extends JFrame {
 
+  private static final long serialVersionUID = 1037739009122358486L;
+  
   private static final String OPT_GEOMFUNC = "geomfunc";
   private static final String OPT_GEOMOP = "geomop";
   private static final String OPT_TESTCASEINDEX = "testCaseIndex";
   private static final String OPT_VERBOSE = "verbose";
 
   private static CommandLine commandLine;
-
-  private static GeometryFunctionRegistry funcRegistry 
-  	= new GeometryFunctionRegistry(TestCaseGeometryFunctions.class);
-  private static GeometryOperation defaultOp = new GeometryFunctionOperation(funcRegistry);
-  private static GeometryOperation geometryOp = defaultOp;
-
-  public static GeometryOperation getGeometryOperation()
-  {
-    return geometryOp;
-  }
-
-  /**
-   * Tests whether a GeometryOperation was specified on the command line
-   * @return true if a geometry operation was specified
-   */
-  public static boolean isGeometryOperationSpecified()
-  {
-  	return geometryOp != defaultOp;
-  }
-  
-  private static ResultMatcher defaultResultMatcher = new EqualityResultMatcher();
-  private static ResultMatcher resultMatcher = defaultResultMatcher;
-
-  public static ResultMatcher getResultMatcher()
-  {
-    return resultMatcher;
-  }
-  /**
-   * Tests whether a {@link ResultMatcher} was specified on the command line
-   * @return true if a matcher was specified
-   */
-  public static boolean isResultMatcherSpecified()
-  {
-  	return resultMatcher != defaultResultMatcher;
-  }
 
   private TestEngine engine = new TestEngine();
 
@@ -238,7 +202,8 @@ public class TopologyTestApp extends JFrame {
       
       if (commandLine.hasOption(OPT_GEOMOP)) {
         String geomOpClassname = commandLine.getOption(OPT_GEOMOP).getArg(0);
-        geometryOp = GeometryOperationLoader.createGeometryOperation(TopologyTestApp.class.getClassLoader(), geomOpClassname);
+        GeometryOperation geometryOp = GeometryOperationLoader.createGeometryOperation(TopologyTestApp.class.getClassLoader(), geomOpClassname);
+        TopologyTestAppStatics.setGeometryOperation(geometryOp);
         // loading must have failed - abort
         if (geometryOp == null) {
           System.exit(0);
@@ -249,7 +214,7 @@ public class TopologyTestApp extends JFrame {
       if (commandLine.hasOption(OPT_GEOMFUNC)) {
         String geomFuncClassname = commandLine.getOption(OPT_GEOMFUNC).getArg(0);
         System.out.println("Adding Geometry Functions from: " + geomFuncClassname);
-        funcRegistry.add(geomFuncClassname);
+        TopologyTestAppStatics.getFuncRegistry().add(geomFuncClassname);
       }
       
       if (commandLine.hasOption(OPT_TESTCASEINDEX)) 

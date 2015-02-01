@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -69,9 +67,9 @@ public class TestReader
     public GeometryOperation getGeometryOperation()
     {
     	// use the main one if it was user-specified or this run does not have an op specified
-    	if (TopologyTestApp.isGeometryOperationSpecified()
+    	if (TopologyTestAppStatics.isGeometryOperationSpecified()
     			|| geomOp == null)
-    		return TopologyTestApp.getGeometryOperation();
+    		return TopologyTestAppStatics.getGeometryOperation();
     	
     	return geomOp;
     }

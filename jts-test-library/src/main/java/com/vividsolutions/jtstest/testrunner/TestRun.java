@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -46,8 +44,8 @@ import com.vividsolutions.jtstest.geomop.*;
  */
 public class TestRun implements Runnable 
 {
-	// default is to run all cases
-	private int testCaseIndexToRun = -1;
+  // default is to run all cases
+  private int testCaseIndexToRun = -1;
   private String description;
   private List testCases = new ArrayList();
   private PrecisionModel precisionModel;
@@ -118,9 +116,9 @@ public class TestRun implements Runnable
   public GeometryOperation getGeometryOperation()
   {
   	// use the main one if it was user-specified or this run does not have an op specified
-  	if (TopologyTestApp.isGeometryOperationSpecified()
+  	if (TopologyTestAppStatics.isGeometryOperationSpecified()
   			|| geomOp == null)
-  		return TopologyTestApp.getGeometryOperation();
+  		return TopologyTestAppStatics.getGeometryOperation();
   	
   	return geomOp;
   }
@@ -128,9 +126,9 @@ public class TestRun implements Runnable
   public ResultMatcher getResultMatcher()
   {
   	// use the main one if it was user-specified or this run does not have an op specified
-  	if (TopologyTestApp.isResultMatcherSpecified()
+  	if (TopologyTestAppStatics.isResultMatcherSpecified()
   			|| resultMatcher == null)
-  		return TopologyTestApp.getResultMatcher();
+  		return TopologyTestAppStatics.getResultMatcher();
   	
   	return resultMatcher;
   }
