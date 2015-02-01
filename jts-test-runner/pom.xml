@@ -21,4 +21,52 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>com.vividsolutions.jtstest.testrunner.TopologyTestApp</argument>
+								<argument>-files</argument>
+								<argument>../jts-test-suite/src/main/resources/robust</argument>
+								<argument>../jts-test-suite/src/main/resources/failure</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jts-test-suite</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>integration-test</phase>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>com.vividsolutions.jtstest.testrunner.TopologyTestApp</argument>
+								<argument>-files</argument>
+								<argument>../jts-test-suite/src/main/resources/general</argument>
+								<argument>../jts-test-suite/src/main/resources/stmlf</argument>
+								<argument>../jts-test-suite/src/main/resources/validate</argument>
+								<argument>../jts-test-suite/src/main/resources/external</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

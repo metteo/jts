@@ -22,7 +22,7 @@ before_script:
 script: mvn install
 
 after_script:
- - cd ../jts-test-library
+ - cd ../jts-test-runner
  - mvn exec:exec
 
 after_success:
