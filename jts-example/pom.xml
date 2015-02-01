@@ -17,9 +17,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
-			<artifactId>jts-core</artifactId>
+			<artifactId>jts-jvm</artifactId>
 			<version>${project.version}</version>
-			<classifier>${core.classifier}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.vividsolutions.jts</groupId>
+			<artifactId>jts-io-ext</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

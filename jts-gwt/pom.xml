@@ -85,8 +85,6 @@
 								**/io/WKBHexFileReader.*,
 								**/io/WKTFileReader.*,
 								**/io/WKTReader.*,
-								**/gml2/*.*,
-								**/kml/*.*,
 								**/geom/impl/PackedCoordinateSequence.*,
 								**/geom/impl/PackedCoordinateSequenceFactory.*
 							</excludes>

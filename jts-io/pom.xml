@@ -17,7 +17,22 @@
 
 	<modules>
 		<module>../jts-io-ext</module>
-		<module>../jts-io-esri</module>
-		<module>../jts-io-oracle</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>esri</id>
+			
+			<modules>
+				<module>../jts-io-esri</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			
+			<modules>
+				<module>../jts-io-oracle</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>

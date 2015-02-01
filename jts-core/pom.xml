@@ -14,6 +14,24 @@
 	<name>JTS Core</name>
 	<description>Core library which contains code compatible with all supported platforms (that is the plan). Other modules depend on this one and add additional functionality (extensions, apps, testing tools), </description>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<profiles>
 		<profile>
 			<id>gwt</id>
@@ -24,7 +42,7 @@
 					<value>true</value>
 				</property>
 			</activation>
-			
+
 			<properties>
 				<jcp.directory>${project.build.directory}/generated-sources/preprocessed</jcp.directory>
 			</properties>
@@ -80,9 +98,8 @@
 						<version>2.6</version>
 						<executions>
 							<execution>
-								<!-- Sources are included in gwt jar instead of 
-								sources jar. It's not possible to attach artifact
-								to an attachment artifact -->
+								<!-- Sources are included in gwt jar instead of sources jar. It's 
+									not possible to attach artifact to an attachment artifact -->
 								<id>copy-sources</id>
 								<phase>process-sources</phase>
 								<goals>

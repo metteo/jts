@@ -56,6 +56,7 @@
 	<modules>
 		<module>../jts-core</module>
 		<module>../jts-jvm</module>
+		<module>../jts-io</module>
 		<module>../jts-android</module>
 		<module>../jts-example</module>
 		<module>../jts-lab</module>
@@ -200,14 +201,6 @@
 	<reporting></reporting>
 
 	<profiles>
-		<profile>
-			<id>io</id>
-
-			<modules>
-				<module>../jts-io</module>
-			</modules>
-		</profile>
-
 		<profile>
 			<id>gwt</id>
 
