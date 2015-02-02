@@ -27,7 +27,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<properties>
 		<sources.unpacked.dir>${project.build.directory}/generated-sources/unpacked</sources.unpacked.dir>
 		<sources.preprocessed.dir>${project.build.directory}/generated-sources/preprocessed</sources.preprocessed.dir>
@@ -46,24 +46,24 @@
 						<id>add-source</id>
 						<phase>generate-sources</phase>
 						<goals>
-						  <goal>add-source</goal>
+							<goal>add-source</goal>
 						</goals>
 						<configuration>
-						  <sources>
-						    <source>${sources.preprocessed.dir}</source>
-						  </sources>
+							<sources>
+								<source>${sources.preprocessed.dir}</source>
+							</sources>
 						</configuration>
 					</execution>
 					<execution>
 						<id>add-test-source</id>
 						<phase>generate-test-sources</phase>
 						<goals>
-						  <goal>add-test-source</goal>
+							<goal>add-test-source</goal>
 						</goals>
 						<configuration>
-						  <sources>
-						    <source>${test-sources.preprocessed.dir}</source>
-						  </sources>
+							<sources>
+								<source>${test-sources.preprocessed.dir}</source>
+							</sources>
 						</configuration>
 					</execution>
 				</executions>
@@ -94,10 +94,7 @@
 								**/*.java
 							</includes>
 							<excludes>
-								**/util/NumberFormat.*,
 								**/util/Memory.*,
-								**/util/StringUtil.*,
-								**/util/Debug.*,
 								**/io/InputStreamInStream.*,
 								**/io/OutputStreamOutStream.*,
 								**/io/WKBHexFileReader.*,
@@ -129,53 +126,134 @@
 					</execution>
 				</executions>
 			</plugin>
-					<plugin>
-						<groupId>com.igormaznitsa</groupId>
-						<artifactId>jcp</artifactId>
-						<executions>
-							<execution>
-								<id>preprocess-sources</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>preprocess</goal>
-								</goals>
-								<configuration>
-									<source>${sources.unpacked.dir}</source>
-									<destination>${sources.preprocessed.dir}</destination>
-								</configuration>
-							</execution>
-<!-- 							<execution> -->
-<!-- 								<id>preprocess-test-sources</id> -->
-<!-- 								<phase>generate-test-sources</phase> -->
-<!-- 								<goals> -->
-<!-- 									<goal>preprocess</goal> -->
-<!-- 								</goals> -->
-<!-- 								<configuration> -->
-<!-- 									<useTestSources>true</useTestSources> -->
-										
-<!-- 									<source>${test-sources.unpacked.dir}</source> -->
-<!-- 									<destination>${test-sources.preprocessed.dir}</destination> -->
-<!-- 								</configuration> -->
-<!-- 							</execution> -->
-						</executions>
+			<plugin>
+				<groupId>com.igormaznitsa</groupId>
+				<artifactId>jcp</artifactId>
+				<executions>
+					<execution>
+						<id>preprocess-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>preprocess</goal>
+						</goals>
 						<configuration>
-							<keepLines>true</keepLines>
-							<globalVars>
-								<property>
-									<name>CLONE</name>
-									<value>false</value>
-								</property>
-								<property>
-									<name>IO</name>
-									<value>false</value>
-								</property>
-								<property>
-									<name>REFLECT</name>
-									<value>false</value>
-								</property>
-							</globalVars>
+							<source>${sources.unpacked.dir}</source>
+							<destination>${sources.preprocessed.dir}</destination>
 						</configuration>
-					</plugin>
+					</execution>
+					<execution>
+						<id>preprocess-test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>preprocess</goal>
+						</goals>
+						<configuration>
+							<useTestSources>true</useTestSources>
+
+							<source>${test-sources.unpacked.dir}</source>
+							<destination>${test-sources.preprocessed.dir}</destination>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<keepLines>true</keepLines>
+					<globalVars>
+						<property>
+							<name>CLONE</name>
+							<value>false</value>
+						</property>
+						<property>
+							<name>IO</name>
+							<value>false</value>
+						</property>
+						<property>
+							<name>REFLECT</name>
+							<value>false</value>
+						</property>
+					</globalVars>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-main-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${sources.preprocessed.dir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${sources.unpacked.dir}</directory>
+									<filtering>false</filtering>
+									<excludes>
+          								<exclude>**/*.java</exclude>
+        							</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-test-resources</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${test-sources.preprocessed.dir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${test-sources.unpacked.dir}</directory>
+									<filtering>false</filtering>
+									<excludes>
+          								<exclude>**/*.java</exclude>
+        							</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-main-resources2</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${sources.preprocessed.dir}</directory>
+									<filtering>false</filtering>
+									<excludes>
+          								<exclude>**/*.java</exclude>
+        							</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-test-resources2</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${test-sources.preprocessed.dir}</directory>
+									<filtering>false</filtering>
+									<excludes>
+          								<exclude>**/*.java</exclude>
+        							</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
