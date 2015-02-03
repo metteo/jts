@@ -167,7 +167,7 @@ import com.vividsolutions.jts.util.Assert;
  *
  *@version 1.7
  */
-public abstract class Geometry implements Cloneable, Comparable, Serializable
+public abstract class Geometry implements Cloneable, Comparable<Geometry>, Serializable
 {
   private static final long serialVersionUID = 8763622679187376702L;
   
@@ -1710,8 +1710,7 @@ public abstract class Geometry implements Cloneable, Comparable, Serializable
    *      defined in "Normal Form For Geometry" in the JTS Technical
    *      Specifications
    */
-  public int compareTo(Object o) {
-    Geometry other = (Geometry) o;
+  public int compareTo(Geometry other) {
     if (getClassSortIndex() != other.getClassSortIndex()) {
       return getClassSortIndex() - other.getClassSortIndex();
     }
@@ -1724,7 +1723,7 @@ public abstract class Geometry implements Cloneable, Comparable, Serializable
     if (other.isEmpty()) {
       return 1;
     }
-    return compareToSameClass(o);
+    return compareToSameClass(other);
   }
 
   /**
@@ -1867,13 +1866,18 @@ public abstract class Geometry implements Cloneable, Comparable, Serializable
    *@return    the first non-zero <code>compareTo</code> result, if any;
    *      otherwise, zero
    */
-  protected int compare(Collection a, Collection b) {
-    Iterator i = a.iterator();
-    Iterator j = b.iterator();
+  protected <T> int compare(Collection<T> a, Collection<T> b) {
+    Iterator<T> i = a.iterator();
+    Iterator<T> j = b.iterator();
+
     while (i.hasNext() && j.hasNext()) {
-      Comparable aElement = (Comparable) i.next();
-      Comparable bElement = (Comparable) j.next();
+
+      @SuppressWarnings("unchecked")
+	  Comparable<T> aElement = (Comparable<T>) i.next();
+      T bElement = j.next();
+
       int comparison = aElement.compareTo(bElement);
+
       if (comparison != 0) {
         return comparison;
       }
@@ -1911,4 +1915,3 @@ public abstract class Geometry implements Cloneable, Comparable, Serializable
     return exemplar.getFactory().createPoint(coord);
   }
 }
-

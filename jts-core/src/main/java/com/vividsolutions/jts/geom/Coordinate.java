@@ -57,7 +57,8 @@ import com.vividsolutions.jts.util.NumberUtil;
  *
  * @version 1.14
  */
-public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
+public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializable {
+
   private static final long serialVersionUID = 6683108902428366910L;
   
   /**
@@ -279,9 +280,7 @@ public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
    *@return    -1, zero, or 1 as this <code>Coordinate</code>
    *      is less than, equal to, or greater than the specified <code>Coordinate</code>
    */
-  public int compareTo(Object o) {
-	Coordinate other = (Coordinate) o;
-	  
+  public int compareTo(Coordinate other) {
     if (x < other.x) return -1;
     if (x > other.x) return 1;
     if (y < other.y) return -1;
@@ -389,8 +388,7 @@ public class Coordinate implements Comparable<Object>, Cloneable, Serializable {
    * Compares two {@link Coordinate}s, allowing for either a 2-dimensional
    * or 3-dimensional comparison, and handling NaN values correctly.
    */
-  public static class DimensionalComparator
-      implements Comparator<Coordinate>
+  public static class DimensionalComparator implements Comparator<Coordinate>
   {
     /**
      * Compare two <code>double</code>s, allowing for NaN values.

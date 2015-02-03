@@ -1,4 +1,3 @@
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -42,7 +41,7 @@ import junit.textui.TestRunner;
 import com.vividsolutions.jts.io.WKTReader;
 
 /**
- * Test for com.vividsolutions.jts.geom.impl.PointImpl.
+ * Test for com.vividsolutions.jts.geom.impl.Point
  *
  * @version 1.7
  */
@@ -119,6 +118,11 @@ public class PointImplTest extends TestCase {
     assertTrue(p2.isSimple());
   }
 
-
+  public void testCopy() throws Exception{
+	Point p1 = (Point) reader.read("POINT(1.2324 5.678)");
+	Point p2 = p1.copy();
+	
+	assertEquals(p1, p2);
+  }
 
 }

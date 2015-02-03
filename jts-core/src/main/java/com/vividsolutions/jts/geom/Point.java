@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -35,7 +33,6 @@
 package com.vividsolutions.jts.geom;
 
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jts.operation.valid.*;
 
 /**
  * Represents a single point.
@@ -46,11 +43,9 @@ import com.vividsolutions.jts.operation.valid.*;
  * (i.e does not have an <code>NaN</code> X or Y ordinate)
  * </ul>
  * 
- *@version 1.7
+ * @version 1.7
  */
-public class Point 
-	extends Geometry
-	implements Puntal
+public class Point extends Geometry implements Puntal
 {
   private static final long serialVersionUID = 4902022702746614570L;
   /**
@@ -216,6 +211,7 @@ public class Point
    * @return a clone of this instance
    */
   public Object clone() {
+	@SuppressWarnings("deprecation")
     Point p = (Point) super.clone();
     p.coordinates = CoordinateSequences.copy(coordinates);
     return p;// return the clone
@@ -252,4 +248,3 @@ public class Point
     return coordinates;
   }
 }
-

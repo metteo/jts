@@ -1,4 +1,3 @@
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -92,7 +91,9 @@ public class GeometryCollectionImplTest extends TestCase {
     assertEquals(112, g.getLength(), 1E-15);
   }
   
-
-  
-
+  public void testCopy() throws Exception {
+    GeometryCollection g1 = (GeometryCollection) reader.read("GEOMETRYCOLLECTION (POINT (10 10), POINT (30 30), LINESTRING (15 15, 20 20))");
+    GeometryCollection g2 = g1.copy();
+    assertEquals(g1, g2);
+  }
 }

@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -44,10 +42,12 @@ import com.vividsolutions.jts.util.Assert;
  * arbitrary type and dimension.
  * 
  *
- *@version 1.7
+ * @version 1.7
  */
 public class GeometryCollection extends Geometry {
-//  With contributions from Markus Schaber [schabios@logi-track.com] 2004-03-26
+
+  // With contributions from Markus Schaber [schabios@logi-track.com] 2004-03-26
+
   private static final long serialVersionUID = -5694727726395021467L;
   /**
    *  Internal representation of this <code>GeometryCollection</code>.
@@ -246,10 +246,13 @@ public class GeometryCollection extends Geometry {
    * @return a clone of this instance
    */
   public Object clone() {
+	@SuppressWarnings("deprecation")
     GeometryCollection gc = (GeometryCollection) super.clone();
     gc.geometries = new Geometry[geometries.length];
     for (int i = 0; i < geometries.length; i++) {
-      gc.geometries[i] = (Geometry) geometries[i].clone();
+      @SuppressWarnings("deprecation")
+      Geometry g = (Geometry) geometries[i].clone();
+      gc.geometries[i] = g;
     }
     return gc;// return the clone
   }
@@ -276,8 +279,9 @@ public class GeometryCollection extends Geometry {
   }
 
   protected int compareToSameClass(Object o) {
-    TreeSet theseElements = new TreeSet(Arrays.asList(geometries));
-    TreeSet otherElements = new TreeSet(Arrays.asList(((GeometryCollection) o).geometries));
+	TreeSet<Geometry> theseElements = new TreeSet<Geometry>(Arrays.asList(geometries));
+	TreeSet<Geometry> otherElements = 
+	    new TreeSet<Geometry>(Arrays.asList(((GeometryCollection) o).geometries));
     return compare(theseElements, otherElements);
   }
 
