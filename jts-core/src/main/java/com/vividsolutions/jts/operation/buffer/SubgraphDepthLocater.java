@@ -1,4 +1,3 @@
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -63,8 +62,7 @@ class SubgraphDepthLocater
     // if no segments on stabbing line subgraph must be outside all others.
     if (stabbedSegments.size() == 0)
       return 0;
-    Collections.sort(stabbedSegments);
-    DepthSegment ds = (DepthSegment) stabbedSegments.get(0);
+    DepthSegment ds = (DepthSegment) Collections.min(stabbedSegments);
     return ds.leftDepth;
   }
 
@@ -169,7 +167,7 @@ class SubgraphDepthLocater
    * A segment from a directed edge which has been assigned a depth value
    * for its sides.
    */
-  private class DepthSegment
+  static class DepthSegment
       implements Comparable
   {
     private LineSegment upwardSeg;
@@ -183,42 +181,52 @@ class SubgraphDepthLocater
       this.leftDepth = depth;
     }
     /**
-     * Defines a comparision operation on DepthSegments
-     * which orders them left to right
+     * Defines a comparison operation on DepthSegments
+     * which orders them left to right.
+     * Assumes the segments are normalized.
+     * <p>
+     * The definition of the ordering is:
+     * <ul>
+     * <li>-1 : if DS1.seg is left of or below DS2.seg (DS1 < DS2)
+     * <li>1 : if   DS1.seg is right of or above DS2.seg (DS1 > DS2) 
+     * <li>0 : if the segments are identical 
+     * </ul>
      *
-     * <pre>
-     * DS1 < DS2   if   DS1.seg is left of DS2.seg
-     * DS1 > DS2   if   DS1.seg is right of DS2.seg
-     * </pre>
-     *
-     * @param obj
+     * KNOWN BUGS:
+     * <ul>
+     * <li>The logic does not obey the {@link Comparator.compareTo} contract. 
+     * This is acceptable for the intended usage, but may cause problems if used with some
+     * utilities in the Java standard library (e.g. {@link Collections.sort()}.
+     * </ul>
+     * 
+     * @param obj a DepthSegment
      * @return the comparison value
      */
     public int compareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
+      
+      // fast check if segments are trivially ordered along X
+      if (upwardSeg.minX() >= other.upwardSeg.maxX()) return 1;
+      if (upwardSeg.maxX() <= other.upwardSeg.minX()) return -1;
+      
       /**
        * try and compute a determinate orientation for the segments.
        * Test returns 1 if other is left of this (i.e. this > other)
        */
       int orientIndex = upwardSeg.orientationIndex(other.upwardSeg);
+      if (orientIndex != 0) return orientIndex;
 
       /**
        * If comparison between this and other is indeterminate,
        * try the opposite call order.
-       * orientationIndex value is 1 if this is left of other,
-       * so have to flip sign to get proper comparison value of
-       * -1 if this is leftmost
+       * The sign of the result needs to be flipped.
        */
-      if (orientIndex == 0)
-        orientIndex = -1 * other.upwardSeg.orientationIndex(upwardSeg);
+      orientIndex = -1 * other.upwardSeg.orientationIndex(upwardSeg);
+      if (orientIndex != 0) return orientIndex;
 
-      // if orientation is determinate, return it
-      if (orientIndex != 0)
-        return orientIndex;
-
-      // otherwise, segs must be collinear - sort based on minimum X value
-      return compareX(this.upwardSeg, other.upwardSeg);
+      // otherwise, use standard lexocographic segment ordering
+      return upwardSeg.compareTo(other.upwardSeg);
     }
 
     /**
@@ -241,5 +249,9 @@ class SubgraphDepthLocater
 
     }
 
+    public String toString()
+    {
+      return upwardSeg.toString();
+    }
   }
 }

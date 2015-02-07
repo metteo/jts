@@ -95,6 +95,38 @@ public class LineSegment
   }
 
   /**
+   * Gets the minimum X ordinate.
+   * @return the minimum X ordinate
+   */
+  public double minX() {
+    return Math.min(p0.x, p1.x);
+  }
+  
+  /**
+   * Gets the maximum X ordinate.
+   * @return the maximum X ordinate
+   */
+  public double maxX() {
+    return Math.max(p0.x, p1.x);
+  }
+
+  /**
+   * Gets the minimum Y ordinate.
+   * @return the minimum Y ordinate
+   */
+  public double minY() {
+    return Math.min(p0.y, p1.y);
+  }
+  
+  /**
+   * Gets the maximum Y ordinate.
+   * @return the maximum Y ordinate
+   */
+  public double maxY() {
+    return Math.max(p0.y, p1.y);
+  }
+  
+  /**
    * Computes the length of the line segment.
    * @return the length of the line segment
    */
