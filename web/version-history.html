@@ -28,17 +28,17 @@
 			</header>
 			<!-- ================================================================ -->
 			<hr>
-			
+
 			<h2>Version 2.0.0</h2>
 			<i>Release Date: ???</i>
-			
+
 			<h3>JTS Core</h3>
 			<h4>API Changes</h4>
 			<ul>
 				<li>Library split into several modules</li>
 				<li><code>Object.clone()</code> methods superseded with <code>copy()</code></li>
 			</ul>
-			
+
 			<!-- ================================================================ -->
 			<hr>
 
@@ -60,6 +60,7 @@
 					to handle inputs of different dimension
 				<li>Added <code>CoordinateArrays.envelope()</code> function
 				<li>Added <code>CoordinateArrays.intersection()</code> function
+				
 				<li>Added <code>Polygonizer.setCheckValidRings()</code> method
 					for optimizing performance in some situations
 				<li>Added <code>KMLWriter</code> to convert Geometry to KML
@@ -73,8 +74,10 @@
 				<li>Added <code>DD.setValue()</code> methods
 				<li>Added <code>getGeometry()</code> methods to <code>LinearComponentExtracter</code>
 					and <code>LineStringExtracter</code>
-				<li>Added <code>BufferParameters</code> <code>simplifyFactor</code> setting
-				<li>Added node counting and ability to not keep intersection points to <code>InteriorIntersectionFinder</code>
+				<li>Added <code>BufferParameters</code> <code>simplifyFactor</code>
+					setting
+				<li>Added node counting and ability to not keep intersection
+					points to <code>InteriorIntersectionFinder</code>
 			</ul>
 
 			<h4>Performance Improvements</h4>
@@ -83,9 +86,12 @@
 					by short-circuiting point input case
 				<li>Allow for memory usage optimization in <code>CascadedPolygonUnion</code>,
 					by avoiding retaining input collection
-				<li>Fix <code>Point.isEmpty()</code> to avoid allocating a coordinate
-				<li>Fix <code>Geometry.equalsExact()</code> to short-circuit when the inputs are identical objects
-				<li>Add short-circuit to <code>PointExtracter</code> to improve performance for Points
+				<li>Fix <code>Point.isEmpty()</code> to avoid allocating a
+					coordinate
+				<li>Fix <code>Geometry.equalsExact()</code> to short-circuit
+					when the inputs are identical objects
+				<li>Add short-circuit to <code>PointExtracter</code> to improve
+					performance for Points
 			</ul>
 
 			<h4>Bug Fixes</h4>
@@ -98,6 +104,7 @@
 				<li>Fixed <code>Geometry.interiorPoint()</code> to compute a
 					true interior point in certain cases
 				<li>Fixed <code>Geometry.equals</code> to handle null argument
+
 				
 				<li>Fixed <code>DistanceToPoint</code> to be thread-safe
 				<li>Fixed <code>Geometry.interiorPoint()</code> and <code>InteriorPointArea</code>
@@ -116,7 +123,10 @@
 					to handle offsets from endpoints correctly.
 				<li>Fixed <code>GeometryCollectionIterator</code> to correctly
 					handle atomic geometries
-				<li>Fixed <code>InteriorIntersectionFinder</code> to not short-circuit when finding all nodes
+				<li>Fixed <code>InteriorIntersectionFinder</code> to not
+					short-circuit when finding all nodes
+				<li>Fixed <code>SubgraphDepthLocator</code> to work with Java
+					7+ by avoiding sorting with an inconsistent ordering
 			</ul>
 
 			<h4>API Changes</h4>
@@ -175,6 +185,7 @@
 			<ul>
 				<li>Moved Options menu items to View menu
 				<li>Removed Tools menu items (they are available as functions)
+
 				
 			</ul>
 
@@ -219,11 +230,13 @@
 				<li>Improved <code>WKBReader</code> to repair
 					structurally-invalid input
 				<li>Made <code>TopologyPreservingSimplifier</code> thread-safe
+
 				
 				<li>Added <code>AbstractSTRtree.isEmpty()</code> method
 				<li>Added <code>QuadTree.isEmpty()</code> method
 				<li>Added <code>KdTree.isEmpty()</code> method
 				<li>Added decimation and duplicate point removal to <code>ShapeWriter</code>.
+
 				
 				<li><code>ScaledNoder</code> now preserves Z values of input
 				<li>Added instance methods for all <code>Triangle</code> static
@@ -284,6 +297,7 @@
 					more robust and performant
 				<li>Fixed robustness issue causing <code>Empty Stack</code>
 					failure in <code>ConvexHull</code> for some nearly collinear inputs
+
 				
 				<li><code>CGAlgorithms.signedArea()</code> uses a more accurate
 					algorithm
@@ -388,6 +402,7 @@
 				<li>Added function for selection of first N components
 				<li>Added CGAlgorithms functions
 				<li>Added ability to paste and load multiple WKBHex geometries
+
 				
 			</ul>
 
@@ -453,6 +468,7 @@
 					to <code>planargraph</code> API
 				<li><code>AffineTransformation</code> enhanced to avoid numeric
 					precision issues in case of reflection in X=Y (coordinate flipping)
+
 				
 				<li>Added <code>LineSequencer.sequence()</code> static
 					convenience method
@@ -499,6 +515,7 @@
 					return <code>true</code> for empty rings
 				<li>Fixed <code>Geometry.union()</code> to use more robust
 					union algorithm. This provides behaviour consistent with <code>union(Geometry)</code>.
+
 				
 				<li>Fixed <code>Point.isValid()</code> to validate POINT EMPTY
 					correctly
@@ -606,6 +623,7 @@
 			<ul>
 				<li>Improved performance of <code>Geometry.getArea()</code> and
 					<code>Geometry.getLength()</code> when used with custom <code>CoordinateSequence</code>s
+
 				
 			</ul>
 
@@ -662,6 +680,7 @@
 				<li>Geometry function classes can be loaded dynamically from
 					command-line
 				<li>Improved handling of very large geometry inputs and results
+
 				
 				<li>Threaded rendering allows display of very large geometries
 					without limiting usability
@@ -740,6 +759,7 @@
 				<li>Fixed <code>UnaryUnionOp</code> to correctly handle
 					heterogeneous inputs with P/L/A components
 				<li>Fixed <code>UnaryUnionOp</code> to accept <code>LINEARRING</code>s
+
 				
 				<li>Fixed <code>CentroidArea</code> to handle zero-area
 					polygons correctly
@@ -777,6 +797,7 @@
 				<li>Add display of computation time
 				<li>Added Stats panel
 				<li>Added Scalar functions panel, with extensible function list
+
 				
 				<li>Added <b>Save as PNG...</b>
 				<li>Added stream digitizing to Polygon and Line Draw tools
@@ -808,6 +829,7 @@
 				<li>Added <code>PreparedGeometry</code> classes and methods to
 					optimize some geometry functions in batch situations
 				<li>Added <code>Envelope.covers</code> methods, for preciseness
+
 				
 				<li>Added <code>OctagonalEnvelope</code> class
 				<li>Improved <code>CGAlgorithms.isPointInRing</code> method to
@@ -828,6 +850,7 @@
 				<li>Added <code>LinearLocation.isOnSameSegment</code> method
 				<li>Added <code>LinearLocation.getSegment</code> method
 				<li>Added <code>LocationIndexedLine.indexOfAfter</code> method
+
 				
 				<li>Added interpolation of Z value to linear referencing
 					methods
@@ -879,7 +902,7 @@
 			</ul>
 
 			<!------- TestRunner -------------------->
-			<hr >
+			<hr>
 			<h3>JTS TestRunner</h3>
 
 			<h4>New Features</h4>
@@ -1018,6 +1041,7 @@
 				<li>Fixed null point cloning bug in <code>TopologyValidationError</code>
 					(<i>thanks to Markus Gebhard</i>)
 				<li>Fixed bug in <code>PointLocator</code> fix for LinearRings
+
 				
 				<li>Fixed bug in <code>Geometry.isValid</code> and <code>IsValidOp</code>
 					causing some valid polygons to be reported as having a Disconnected
@@ -1096,6 +1120,7 @@
 					a leading 0 in decimal numbers
 				<li>Fixed bug in <code>CoordinateArraySequence#setOrdinate</code>
 				<li>Fixed bug when checking validity of polygon with hole (<code>IsValidOp#checkHolesInShell</code>)
+
 				
 				<li>Improved correctness of computated intersections in <code>RobustLineIntersector</code>
 				<li>Fixed bugs in <code>CoordinateList.clone</code> (thanks to
@@ -1305,6 +1330,7 @@
 				<li>Fixed infinite loop bug causing Out Of Memory errors during
 					polygon intersection
 				<li>Geometry#clone now correctly clones the Geometry's Envelope
+
 				
 				<li>LineIntersector#computeEdgeDistance now correctly computes
 					a non-zero edge distance in certain situations when a fixed
@@ -1467,8 +1493,10 @@
 				<li>added Geometry.getArea() and Geometry.getLength() methods
 				<li>added CGAlgorithms.signedArea() method
 				<li>added methods to LineSegment - closestPoint(), getLength()
+
 				
 				<li>added CoordinateArrrays and CoordinateLists utility classes
+
 				
 				<li>Added TopologyValidationError.getErrorType() method
 				<li>Added Envelope#intersects; deprecated Envelope#overlaps.
