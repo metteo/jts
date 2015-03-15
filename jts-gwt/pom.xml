@@ -169,6 +169,10 @@
 							<name>REFLECT</name>
 							<value>false</value>
 						</property>
+						<property>
+							<name>JS_INTEROP</name>
+							<value>false</value>
+						</property>
 					</globalVars>
 				</configuration>
 			</plugin>

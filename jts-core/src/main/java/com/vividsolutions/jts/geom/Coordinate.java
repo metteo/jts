@@ -35,6 +35,9 @@ package com.vividsolutions.jts.geom;
 import java.io.Serializable;
 import java.util.Comparator;
 
+//#if JS_INTEROP
+//$import com.google.gwt.core.client.js.JsType;
+//#endif
 import com.vividsolutions.jts.util.Assert;
 import com.vividsolutions.jts.util.NumberUtil;
 
@@ -57,6 +60,9 @@ import com.vividsolutions.jts.util.NumberUtil;
  *
  * @version 1.14
  */
+//#if JS_INTEROP
+//$@JsType
+//#endif
 public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializable {
 
   private static final long serialVersionUID = 6683108902428366910L;
