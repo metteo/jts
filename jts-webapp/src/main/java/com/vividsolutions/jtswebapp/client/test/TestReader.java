@@ -123,7 +123,7 @@ public class TestReader {
 			t.arguments.add(argN);
 		}
 
-		t.result = op.getChildNodes().item(0).getNodeValue();
+		t.result = op.getChildNodes().item(0).getNodeValue().trim();
 	}
 
 	private String trim(String s) {
