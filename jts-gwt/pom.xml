@@ -99,7 +99,6 @@
 								**/io/OutputStreamOutStream.*,
 								**/io/WKBHexFileReader.*,
 								**/io/WKTFileReader.*,
-								**/io/WKTReader.*,
 								**/geom/impl/PackedCoordinateSequence.*,
 								**/geom/impl/PackedCoordinateSequenceFactory.*
 							</excludes>

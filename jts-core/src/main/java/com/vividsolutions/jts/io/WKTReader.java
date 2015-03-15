@@ -41,6 +41,7 @@ import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Converts a geometry in Well-Known Text format to a {@link Geometry}.
@@ -124,7 +125,7 @@ import java.util.ArrayList;
  * </pre></blockquote>
  *
  *
- *@version 1.7
+ * @version 1.7
  * @see WKTWriter
  */
 public class WKTReader
@@ -137,7 +138,8 @@ public class WKTReader
   
   private GeometryFactory geometryFactory;
   private PrecisionModel precisionModel;
-  private StreamTokenizer tokenizer;
+  private WKTTokenizer tokenizer;
+  //private StreamTokenizer tokenizer;
 
   /**
    * Creates a reader that creates objects using the default {@link GeometryFactory}.
@@ -188,7 +190,9 @@ public class WKTReader
    *@throws  ParseException  if a parsing problem occurs
    */
   public Geometry read(Reader reader) throws ParseException {
-    tokenizer = new StreamTokenizer(reader);
+    tokenizer = new WKTTokenizer(reader);
+    //tokenizer = new StreamTokenizer(reader);
+    
     // set tokenizer to NOT parse numbers
     tokenizer.resetSyntax();
     tokenizer.wordChars('a', 'z');
@@ -226,7 +230,7 @@ public class WKTReader
 		if (nextToken.equals(EMPTY)) {
 			return new Coordinate[] {};
 		}
-		ArrayList coordinates = new ArrayList();
+		List<Coordinate> coordinates = new ArrayList<Coordinate>();
 		coordinates.add(getPreciseCoordinate());
 		nextToken = getNextCloserOrComma();
 		while (nextToken.equals(COMMA)) {
@@ -234,12 +238,12 @@ public class WKTReader
 			nextToken = getNextCloserOrComma();
 		}
 		Coordinate[] array = new Coordinate[coordinates.size()];
-		return (Coordinate[]) coordinates.toArray(array);
+		return coordinates.toArray(array);
 	}
 
 	private Coordinate[] getCoordinatesNoLeftParen() throws IOException, ParseException {
 		String nextToken = null;
-		ArrayList coordinates = new ArrayList();
+		List<Coordinate> coordinates = new ArrayList<Coordinate>();
 		coordinates.add(getPreciseCoordinate());
 		nextToken = getNextCloserOrComma();
 		while (nextToken.equals(COMMA)) {
@@ -247,7 +251,7 @@ public class WKTReader
 			nextToken = getNextCloserOrComma();
 		}
 		Coordinate[] array = new Coordinate[coordinates.size()];
-		return (Coordinate[]) coordinates.toArray(array);
+		return coordinates.toArray(array);
 	}
 
   private Coordinate getPreciseCoordinate()
@@ -583,17 +587,17 @@ public class WKTReader
   		}
   	}
   	
-    ArrayList points = new ArrayList();
+    List<Point> points = new ArrayList<Point>();
     Point point = readPointText();
     points.add(point);
     nextToken = getNextCloserOrComma();
     while (nextToken.equals(COMMA)) {
-    	point = readPointText();
+      point = readPointText();
       points.add(point);
       nextToken = getNextCloserOrComma();
     }
     Point[] array = new Point[points.size()];
-    return geometryFactory.createMultiPoint((Point[]) points.toArray(array));
+    return geometryFactory.createMultiPoint(points.toArray(array));
   }
 
   /**
@@ -606,11 +610,11 @@ public class WKTReader
    *      s <code>GeometryFactory</code>
    */
   private Point[] toPoints(Coordinate[] coordinates) {
-    ArrayList points = new ArrayList();
+    List<Point> points = new ArrayList<Point>();
     for (int i = 0; i < coordinates.length; i++) {
       points.add(geometryFactory.createPoint(coordinates[i]));
     }
-    return (Point[]) points.toArray(new Point[]{});
+    return points.toArray(new Point[points.size()]);
   }
 
   /**
@@ -631,7 +635,7 @@ public class WKTReader
         return geometryFactory.createPolygon(geometryFactory.createLinearRing(
             new Coordinate[]{}), new LinearRing[]{});
     }
-    ArrayList holes = new ArrayList();
+    List<LinearRing> holes = new ArrayList<LinearRing>();
     LinearRing shell = readLinearRingText();
     nextToken = getNextCloserOrComma();
     while (nextToken.equals(COMMA)) {
@@ -640,7 +644,7 @@ public class WKTReader
       nextToken = getNextCloserOrComma();
     }
     LinearRing[] array = new LinearRing[holes.size()];
-    return geometryFactory.createPolygon(shell, (LinearRing[]) holes.toArray(array));
+    return geometryFactory.createPolygon(shell, holes.toArray(array));
   }
 
   /**
@@ -653,12 +657,12 @@ public class WKTReader
    *@throws  IOException     if an I/O error occurs
    *@throws  ParseException  if an unexpected token was encountered
    */
-  private com.vividsolutions.jts.geom.MultiLineString readMultiLineStringText() throws IOException, ParseException {
+  private MultiLineString readMultiLineStringText() throws IOException, ParseException {
     String nextToken = getNextEmptyOrOpener();
     if (nextToken.equals(EMPTY)) {
       return geometryFactory.createMultiLineString(new LineString[]{});
     }
-    ArrayList lineStrings = new ArrayList();
+    List<LineString> lineStrings = new ArrayList<LineString>();
     LineString lineString = readLineStringText();
     lineStrings.add(lineString);
     nextToken = getNextCloserOrComma();
@@ -668,7 +672,7 @@ public class WKTReader
       nextToken = getNextCloserOrComma();
     }
     LineString[] array = new LineString[lineStrings.size()];
-    return geometryFactory.createMultiLineString((LineString[]) lineStrings.toArray(array));
+    return geometryFactory.createMultiLineString(lineStrings.toArray(array));
   }
 
   /**
@@ -687,7 +691,7 @@ public class WKTReader
     if (nextToken.equals(EMPTY)) {
       return geometryFactory.createMultiPolygon(new Polygon[]{});
     }
-    ArrayList polygons = new ArrayList();
+    List<Polygon> polygons = new ArrayList<Polygon>();
     Polygon polygon = readPolygonText();
     polygons.add(polygon);
     nextToken = getNextCloserOrComma();
@@ -697,7 +701,7 @@ public class WKTReader
       nextToken = getNextCloserOrComma();
     }
     Polygon[] array = new Polygon[polygons.size()];
-    return geometryFactory.createMultiPolygon((Polygon[]) polygons.toArray(array));
+    return geometryFactory.createMultiPolygon(polygons.toArray(array));
   }
 
   /**
@@ -718,7 +722,7 @@ public class WKTReader
     if (nextToken.equals(EMPTY)) {
       return geometryFactory.createGeometryCollection(new Geometry[]{});
     }
-    ArrayList geometries = new ArrayList();
+    List<Geometry> geometries = new ArrayList<Geometry>();
     Geometry geometry = readGeometryTaggedText();
     geometries.add(geometry);
     nextToken = getNextCloserOrComma();
@@ -728,8 +732,7 @@ public class WKTReader
       nextToken = getNextCloserOrComma();
     }
     Geometry[] array = new Geometry[geometries.size()];
-    return geometryFactory.createGeometryCollection((Geometry[]) geometries.toArray(array));
+    return geometryFactory.createGeometryCollection(geometries.toArray(array));
   }
 
 }
-

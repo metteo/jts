@@ -19,7 +19,7 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<gwt.module>com.vividsolutions.jtswebapp.JTSWebApp</gwt.module>
 		<gwt.version>2.7.0</gwt.version>
-		<appengine.version>1.9.15</appengine.version>
+		<appengine.version>1.9.18</appengine.version>
 	</properties>
 
 	<dependencies>
@@ -47,7 +47,6 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
