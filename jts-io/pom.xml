@@ -16,7 +16,6 @@
 	<description>Parent project for I/O drivers for different formats (proprietary and incompatible with all supported platforms)</description>
 
 	<modules>
-		<module>../jts-io-ext</module>
 	</modules>
 
 	<profiles>
