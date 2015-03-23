@@ -2,6 +2,7 @@
 <!DOCTYPE module PUBLIC "-//Google, Inc.//DTD GWT Module Descriptor//EN" "https://github.com/gwtproject/gwt/raw/2.6.1/distro-source/core/src/gwt-module.dtd">
 <module rename-to="JTS">
 	<inherits name="com.google.gwt.core.Core" />
+	<inherits name="com.google.web.bindery.autobean.AutoBean" />
 	
 	<entry-point class="com.vividsolutions.jts.JTSEntry" />
 

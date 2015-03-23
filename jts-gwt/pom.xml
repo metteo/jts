@@ -21,6 +21,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.vividsolutions.jts</groupId>
 			<artifactId>jts-core</artifactId>
 			<version>${project.version}</version>

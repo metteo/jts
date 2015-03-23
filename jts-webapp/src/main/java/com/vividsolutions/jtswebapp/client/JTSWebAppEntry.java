@@ -49,6 +49,9 @@ public class JTSWebAppEntry implements EntryPoint, UncaughtExceptionHandler {
 		case "test":
 			new TestRunner().run();
 			break;
+		case "geojson":
+			new GeoJson().check();
+			break;
 		default:
 			new SimpleDemo().start();
 			break;
