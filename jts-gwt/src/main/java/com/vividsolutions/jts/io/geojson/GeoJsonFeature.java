@@ -3,6 +3,8 @@ package com.vividsolutions.jts.io.geojson;
 import com.google.web.bindery.autobean.shared.Splittable;
 
 interface GeoJsonFeature extends GeoJsonObject {
+	
+	String TYPE = "Feature";
 
 	Splittable getId();
 	void setId(Splittable id);
