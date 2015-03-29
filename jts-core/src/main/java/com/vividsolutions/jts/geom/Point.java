@@ -137,6 +137,13 @@ public class Point extends Geometry implements Puntal
     }
     return getCoordinate().y;
   }
+  
+  public double getZ() {
+    if (getCoordinate() == null) {
+      throw new IllegalStateException("getZ called on empty Point");
+    }
+    return getCoordinate().z;
+  }
 
   public Coordinate getCoordinate() {
     return coordinates.size() != 0 ? coordinates.getCoordinate(0): null;
