@@ -32,34 +32,27 @@
  */
 package com.vividsolutions.jtstest.function;
 
-import java.util.*;
-import com.vividsolutions.jts.algorithm.*;
-import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.geom.util.*;
-import com.vividsolutions.jts.densify.*;
-import com.vividsolutions.jts.operation.polygonize.*;
-import com.vividsolutions.jts.operation.linemerge.*;
+import com.vividsolutions.jts.algorithm.MinimumBoundingCircle;
+import com.vividsolutions.jts.algorithm.MinimumDiameter;
+import com.vividsolutions.jts.densify.Densifier;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.OctagonalEnvelope;
 
 public class ConstructionFunctions {
-  public static Geometry octagonalEnvelope(Geometry g) 
-  {      
-    OctagonalEnvelope octEnv = new OctagonalEnvelope(g);
-    return octEnv.toGeometry(g.getFactory());
-  }
+  public static Geometry octagonalEnvelope(Geometry g) { return OctagonalEnvelope.octagonalEnvelope(g); }
   
-  public static Geometry minimumDiameterLine(Geometry g) {      return (new MinimumDiameter(g)).getDiameter();  }
-  public static double minimumDiameter(Geometry g) {      return (new MinimumDiameter(g)).getDiameter().getLength();  }
+  public static Geometry minimumDiameter(Geometry g) { return (new MinimumDiameter(g)).getDiameter();  }
+  public static double minimumDiameterLength(Geometry g) { return (new MinimumDiameter(g)).getDiameter().getLength();  }
 
-  public static Geometry minimumRectangle(Geometry g) {      return (new MinimumDiameter(g)).getMinimumRectangle();  }
-  public static Geometry minimumBoundingCircle(Geometry g) {      return (new MinimumBoundingCircle(g)).getCircle();  }
-  public static Geometry minimumBoundingCirclePoints(Geometry g) {      return 
-    g.getFactory().createLineString((new MinimumBoundingCircle(g)).getExtremalPoints());  }
-  public static double maximumDiameter(Geometry g) {      return 2 * (new MinimumBoundingCircle(g)).getRadius();  }
+  public static Geometry minimumRectangle(Geometry g) { return (new MinimumDiameter(g)).getMinimumRectangle();  }
+  public static Geometry minimumBoundingCircle(Geometry g) { return (new MinimumBoundingCircle(g)).getCircle();  }
+  public static Geometry maximumDiameter(Geometry g) { return g.getFactory().createLineString((new MinimumBoundingCircle(g)).getExtremalPoints());  }
+  public static double maximumDiameterLength(Geometry g) { return 2 * (new MinimumBoundingCircle(g)).getRadius();  }
   
-  public static Geometry boundary(Geometry g) {      return g.getBoundary();  }
-  public static Geometry convexHull(Geometry g) {      return g.convexHull();  }
-  public static Geometry centroid(Geometry g) {      return g.getCentroid();  }
-  public static Geometry interiorPoint(Geometry g) {      return g.getInteriorPoint();  }
+  public static Geometry boundary(Geometry g) { return g.getBoundary();  }
+  public static Geometry convexHull(Geometry g) { return g.convexHull();  }
+  public static Geometry centroid(Geometry g) { return g.getCentroid();  }
+  public static Geometry interiorPoint(Geometry g) { return g.getInteriorPoint();  }
 
   public static Geometry densify(Geometry g, double distance) { return Densifier.densify(g, distance); }
   
