@@ -53,16 +53,16 @@ import com.vividsolutions.jtstest.testbuilder.ui.*;
 public class SpatialFunctionPanel 
 extends JPanel 
 {
-  private static String[] capStyleItems = new String[] { "", "Round", "Flat", "Square" };
+  private static final String[] PARAM_DEFAULT = { "10", "0", "0", "0", "0" };
+  
+  private static String[] capStyleItems = new String[] { "Round", "Flat", "Square" };
   private static Object[] capStyleValues = new Object[] { 
-  		null, 
   		new Integer(BufferParameters.CAP_ROUND),
   		new Integer(BufferParameters.CAP_FLAT),
   		new Integer(BufferParameters.CAP_SQUARE)
   		};
-  private static String[] joinStyleItems = new String[] { "", "Round", "Mitre", "Bevel" };
+  private static String[] joinStyleItems = new String[] { "Round", "Mitre", "Bevel" };
   private static Object[] joinStyleValues = new Object[] { 
-  		null, 
   		new Integer(BufferParameters.JOIN_ROUND),
   		new Integer(BufferParameters.JOIN_MITRE),
   		new Integer(BufferParameters.JOIN_BEVEL)
@@ -100,7 +100,6 @@ extends JPanel
   private JTextField txtDistance = new JTextField();
   private JLabel lblQuadSegs = new JLabel();
   private JTextField txtQuadrantSegs = new JTextField();
-  
   private JLabel lblCapStyle = new JLabel();
   private JComboBox cbCapStyle = new JComboBox();
   private JLabel lblJoinStyle = new JLabel();
@@ -108,7 +107,8 @@ extends JPanel
   private JLabel lblMitreLimit = new JLabel();
   private JTextField txtMitreLimit = new JTextField();
 
-
+  private JComponent[] paramComp = { txtDistance, txtQuadrantSegs, cbCapStyle, cbJoinStyle, txtMitreLimit };
+  private JLabel[] paramLabel = { lblDistance, lblQuadSegs, lblCapStyle, lblJoinStyle, lblMitreLimit };
   
   private GeometryFunction currentFunc = null;
   private Stopwatch timer;
@@ -150,7 +150,7 @@ extends JPanel
     txtDistance.setMaximumSize(new Dimension(25, 2147483647));
     txtDistance.setMinimumSize(new Dimension(25, 21));
     txtDistance.setPreferredSize(new Dimension(25, 17));
-    txtDistance.setText("10");
+    txtDistance.setText(PARAM_DEFAULT[0]);
     txtDistance.setHorizontalAlignment(SwingConstants.RIGHT);
 
     lblQuadSegs.setText("Quadrant Segs");
@@ -203,7 +203,7 @@ extends JPanel
       }
     });
     
-    execToNewButton.setText("Compute To New");
+    execToNewButton.setText("Compute New");
     execToNewButton.addActionListener(new java.awt.event.ActionListener() {
 
       public void actionPerformed(ActionEvent e) {
@@ -213,7 +213,7 @@ extends JPanel
     
     panelExec.add(execButton);
     // disabled until behaviour is worked out
-    //panelExec.add(execToNewButton);
+    panelExec.add(execToNewButton);
     
     panelExecParam.add(panelExec, BorderLayout.NORTH);
     panelExecParam.add(panelParam, BorderLayout.CENTER);
@@ -227,7 +227,7 @@ extends JPanel
       	functionChanged(e.getFunction());
       }
       public void functionInvoked(GeometryFunctionEvent e) {
-        execFunction(e.getFunction());
+        execFunction(e.getFunction(), false);
       }
     };
     geomFuncPanel.addGeometryFunctionListener(gfListener);
@@ -243,11 +243,11 @@ extends JPanel
   }
 
   void execButton_actionPerformed(ActionEvent e) {
-    execFunction(geomFuncPanel.getFunction());
+    execFunction(geomFuncPanel.getFunction(), false);
   }
 
   void execToNewButton_actionPerformed(ActionEvent e) {
-    execFunction(geomFuncPanel.getFunction());
+    execFunction(geomFuncPanel.getFunction(), true);
   }
 
   void displayAAndBCheckBox_actionPerformed(ActionEvent e) {
@@ -259,17 +259,17 @@ extends JPanel
     fireFunctionExecuted(new SpatialFunctionPanelEvent(this));
   }
 
-  public void execFunction(GeometryFunction func) {
+  public void execFunction(GeometryFunction func, boolean createNew) {
     currentFunc = func;
     if (currentFunc == null)
       return;
-    fireFunctionExecuted(new SpatialFunctionPanelEvent(this));
+    fireFunctionExecuted(new SpatialFunctionPanelEvent(this, createNew));
   }
 
   private void functionChanged(GeometryFunction func)
   {
     currentFunc = func;
-    updateParameterControls();
+    updateParameters(func);
     execButton.setToolTipText(functionDescription(func));
   }
   
@@ -283,17 +283,25 @@ extends JPanel
   	return "<html>" + txt + "</html>";
   }
   
-  private void updateParameterControls()
+  private void updateParameters(GeometryFunction func)
   {
-    int numNonGeomParams = numNonGeomParams(currentFunc);
-    // TODO: this is a bit of a hack, and should be made smarter
-    SwingUtil.setEnabledWithBackground(txtDistance, numNonGeomParams >= 1);
-    SwingUtil.setEnabledWithBackground(txtQuadrantSegs, numNonGeomParams >= 2);
-    SwingUtil.setEnabledWithBackground(cbCapStyle, numNonGeomParams >= 3);
-    SwingUtil.setEnabledWithBackground(cbJoinStyle, numNonGeomParams >= 4);
-    SwingUtil.setEnabledWithBackground(txtMitreLimit, numNonGeomParams >= 5);
+    int numNonGeomParams = numNonGeomParams(func);
+    for (int i = 0; i < paramComp.length; i++) {
+      boolean isUsed = numNonGeomParams > i;
+      //SwingUtil.setEnabledWithBackground(paramComp[i], isUsed);
+      paramComp[i].setVisible(isUsed);
+      paramLabel[i].setVisible(isUsed);
+      setToolTipText(paramComp[i], func, i + 1);      
+    }
   }
   
+  private static void setToolTipText(JComponent control, GeometryFunction func, int i) {
+    String txt = null;
+    if (func.getParameterTypes().length > i) {
+      txt = "Enter " + func.getParameterTypes()[i].getSimpleName();
+    }
+    control.setToolTipText(txt);
+  }
   private static int numNonGeomParams(GeometryFunction func)
   {
     int count = 0;
@@ -303,6 +311,10 @@ extends JPanel
         count++;
     }
     return count;
+  }
+  
+  private int attributeParamOffset(GeometryFunction func) {
+    return func.isBinary() ? 1 : 0;
   }
   
   public boolean shouldShowGeometryA() {
@@ -319,89 +331,50 @@ extends JPanel
 
   public Object[] getFunctionParams()
   {
-  	// TODO: improve this, it is cheesy
-  	
     Class[] paramTypes = currentFunc.getParameterTypes();
+    Object[] paramVal = new Object[paramTypes.length];
     
-    if (paramTypes.length == 1 
-        && paramTypes[0] == Geometry.class)
-      return new Object[] { JTSTestBuilderController.getGeometryB() };
-    
-    if (paramTypes.length == 1 
-        && (paramTypes[0] == Double.class || paramTypes[0] == double.class))
-      return new Object[] { SwingUtil.getDouble(txtDistance, null) };
-    
-    if (paramTypes.length == 1 
-        && (paramTypes[0] == Integer.class || paramTypes[0] == int.class))
-      return new Object[] { SwingUtil.getInteger(txtDistance, null) };
-    
-    if (paramTypes.length == 1 
-        && (paramTypes[0] == String.class))
-      return new Object[] { txtDistance.getText() };
-    
-    if (paramTypes.length == 2 
-        && paramTypes[0] == Geometry.class
-      && (paramTypes[1] == Double.class || paramTypes[1] == double.class))
-      return new Object[] { JTSTestBuilderController.getGeometryB(), SwingUtil.getDouble(txtDistance, null) };
-    
-    if (paramTypes.length == 2 
-        && paramTypes[0] == Geometry.class
-      && (paramTypes[1] == Integer.class || paramTypes[1] == int.class))
-      return new Object[] { JTSTestBuilderController.getGeometryB(), SwingUtil.getDouble(txtDistance, null) };
-    
-    if (paramTypes.length == 2 
-        && (paramTypes[0] == Integer.class || paramTypes[0] == int.class)
-        && (paramTypes[1] == Double.class || paramTypes[1] == double.class))
-      return new Object[] {  
-        SwingUtil.getInteger(txtDistance, new Integer(100)), 
-        SwingUtil.getDouble(txtQuadrantSegs, new Double(0.0)) };
-    
-    if (paramTypes.length == 2 
-        && (paramTypes[0] == Double.class || paramTypes[0] == double.class)
-        && (paramTypes[1] == Integer.class || paramTypes[1] == int.class)
-    )
-      return new Object[] {  
-        SwingUtil.getDouble(txtDistance, new Double(10)), 
-        SwingUtil.getInteger(txtQuadrantSegs, new Integer(0)) 
-        };
-    
-    if (paramTypes.length == 2 
-        && (paramTypes[0] == Double.class || paramTypes[0] == double.class)
-        && (paramTypes[1] == Double.class || paramTypes[1] == double.class)
-    )
-      return new Object[] {  
-        SwingUtil.getDouble(txtDistance, new Double(10)), 
-        SwingUtil.getDouble(txtQuadrantSegs, new Double(0)) 
-        };
-    
-    if (paramTypes.length >= 2)
-      return new Object[] { 
-        SwingUtil.getDouble(txtDistance, null),
-        SwingUtil.getInteger(txtQuadrantSegs, null),
-        SwingUtil.getSelectedValue(cbCapStyle, capStyleValues),
-        SwingUtil.getSelectedValue(cbJoinStyle, joinStyleValues),
-        SwingUtil.getDouble(txtMitreLimit, null),
-        };
-    
-    return null; 
+    for (int i = 0; i < paramVal.length; i++) {
+      Object valRaw = getParamValue(i);
+      paramVal[i] = SwingUtil.coerce(valRaw, paramTypes[i]);
+    }
+    return paramVal;
   }
-  
+
+  private Object getParamValue(int index) {
+    if (currentFunc.isBinary() && index == 0)
+      return JTSTestBuilderController.getGeometryB();
+    
+    int attrIndex = index - attributeParamOffset(currentFunc);
+    
+    switch (attrIndex) {
+    case 0: return valOrDefault(SwingUtil.value(txtDistance), PARAM_DEFAULT[0]);
+    case 1: return valOrDefault(SwingUtil.value(txtQuadrantSegs), PARAM_DEFAULT[1]);
+    case 2: return SwingUtil.value(cbCapStyle, capStyleValues);
+    case 3: return SwingUtil.value(cbJoinStyle, joinStyleValues);
+    case 4: return valOrDefault(SwingUtil.value(txtMitreLimit), PARAM_DEFAULT[4]);
+    }
+    return null;
+  }
+
+  private static String valOrDefault(String s, String defaultVal) {
+    if (s.length() > 0) return s;
+    return defaultVal;
+  }
+    
   public boolean isFunctionSelected()
   {
   	return currentFunc != null;
-  }
-  
-  public String getFunctionCall() {
-    if (currentFunc == null)
-      return null;
-    return currentFunc.getCategory() + "." + currentFunc.getName()
-    + "(" + FunctionParameters.toString(getFunctionParams()) + ")";
   }
 
   public GeometryFunction getFunction() {
     return currentFunc;
   }
 
+  //=================================================
+  // Events
+  //=================================================
+  
   public synchronized void removeSpatialFunctionPanelListener(SpatialFunctionPanelListener l) {
     if (spatialFunctionPanelListeners != null && spatialFunctionPanelListeners.contains(l)) {
       Vector v = (Vector) spatialFunctionPanelListeners.clone();

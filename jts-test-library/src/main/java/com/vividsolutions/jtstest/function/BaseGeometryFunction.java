@@ -127,6 +127,12 @@ implements GeometryFunction, Comparable
 		return returnType;
 	}
 	
+  //@Override
+  public boolean isBinary() {
+    return parameterTypes.length > 0 && parameterTypes[0] == Geometry.class;
+  }
+
+  //@Override
 	public String getSignature()
 	{
 		StringBuffer paramTypes = new StringBuffer();
@@ -181,7 +187,7 @@ implements GeometryFunction, Comparable
 
 	public int compareTo(Object o)
 	{
-		BaseGeometryFunction func = (BaseGeometryFunction) o;
+		GeometryFunction func = (GeometryFunction) o;
 		int cmp = name.compareTo(func.getName());
     if (cmp != 0)
       return cmp;

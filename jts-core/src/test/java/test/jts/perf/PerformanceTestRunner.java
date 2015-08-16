@@ -43,7 +43,6 @@ public class PerformanceTestRunner
       test.setUp();
       for (int runNum = 0; runNum < runSize.length; runNum++)
       {
-        
         int size = runSize[runNum];
         test.startRun(size);
         for (int i = 0; i < runMethod.length; i++) {
@@ -51,15 +50,19 @@ public class PerformanceTestRunner
           for (int iter = 0; iter < runIter; iter++) {
             runMethod[i].invoke(test);
           }
+          long time = sw.getTime();
           System.out.println(runMethod[i].getName()
               + " : " + sw.getTimeString());
+          test.setTime(runNum, time);
         }
         test.endRun();
       }
       test.tearDown();
     }
+    catch (InvocationTargetException e) {
+      e.getTargetException().printStackTrace();
+    }
     catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

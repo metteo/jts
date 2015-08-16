@@ -12,14 +12,24 @@ import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
 public class PolygonizeFunctions {
 
-  public static Geometry polygonize(Geometry g)
-  {
+  private static Geometry polygonize(Geometry g, boolean extractOnlyPolygonal) {
     List lines = LineStringExtracter.getLines(g);
-    Polygonizer polygonizer = new Polygonizer();
+    Polygonizer polygonizer = new Polygonizer(extractOnlyPolygonal);
     polygonizer.add(lines);
+    return polygonizer.getGeometry();
+    /*
     Collection polys = polygonizer.getPolygons();
     Polygon[] polyArray = GeometryFactory.toPolygonArray(polys);
     return g.getFactory().createGeometryCollection(polyArray);
+    */
+  }
+  public static Geometry polygonize(Geometry g)
+  {
+    return polygonize(g, false);
+  }
+  public static Geometry polygonizePolygonal(Geometry g)
+  {
+    return polygonize(g, true);
   }
   public static Geometry polygonizeDangles(Geometry g)
   {

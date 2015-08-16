@@ -11,7 +11,6 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateArrays;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.geom.util.LinearComponentExtracter;
 import com.vividsolutions.jts.noding.BasicSegmentString;
@@ -21,7 +20,6 @@ import com.vividsolutions.jts.noding.IntersectionAdder;
 import com.vividsolutions.jts.noding.MCIndexNoder;
 import com.vividsolutions.jts.noding.Noder;
 import com.vividsolutions.jts.noding.ScaledNoder;
-import com.vividsolutions.jts.noding.SegmentString;
 import com.vividsolutions.jts.noding.SegmentStringUtil;
 import com.vividsolutions.jts.noding.snapround.GeometryNoder;
 import com.vividsolutions.jts.noding.snapround.MCIndexSnapRounder;
@@ -68,7 +66,7 @@ public class NodingFunctions
     nv.isValid();
     List intPts = nv.getIntersections();
     if (intPts.size() == 0) return null;
-    return FunctionsUtil.getFactoryOrDefault(null).createPoint((Coordinate) intPts.get(0));
+    return FunctionsUtil.getFactoryOrDefault(geom).createPoint((Coordinate) intPts.get(0));
   }
   
   public static Geometry findNodePoints(Geometry geom)
@@ -87,26 +85,6 @@ public class NodingFunctions
     noder.computeNodes( SegmentStringUtil.extractNodedSegmentStrings(geom) );
     return intCounter.count();
   }
-  
-  /**
-   * Converts a collection of SegmentStrings into a Geometry.
-   * The geometry will be either a {@link LineString} or a {@link MultiLineString} (possibly empty).
-   *
-   * @param segStrings a collection of SegmentStrings
-   * @return a LineString or MultiLineString
-   */
-  private static Geometry toGeometry(Collection segStrings)
-  {
-    LineString[] lines = new LineString[segStrings.size()];
-    int index = 0;
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
-      LineString line = FunctionsUtil.getFactoryOrDefault(null).createLineString(ss.getCoordinates());
-      lines[index++] = line;
-    }
-    if (lines.length == 1) return lines[0];
-    return FunctionsUtil.getFactoryOrDefault(null).createMultiLineString(lines);
-  }
 
   public static Geometry MCIndexNodingWithPrecision(Geometry geom, double scaleFactor)
   {
@@ -117,14 +95,14 @@ public class NodingFunctions
 
     Noder noder = new MCIndexNoder(new IntersectionAdder(li));
     noder.computeNodes( SegmentStringUtil.extractNodedSegmentStrings(geom) );
-    return /*SegmentStringUtil.*/toGeometry( noder.getNodedSubstrings() );
+    return SegmentStringUtil.toGeometry( noder.getNodedSubstrings(), FunctionsUtil.getFactoryOrDefault(geom) );
   }
 
   public static Geometry MCIndexNoding(Geometry geom)
   {
     Noder noder = new MCIndexNoder(new IntersectionAdder(new RobustLineIntersector()));
     noder.computeNodes( SegmentStringUtil.extractNodedSegmentStrings(geom) );
-    return /*SegmentStringUtil.*/toGeometry(noder.getNodedSubstrings());
+    return SegmentStringUtil.toGeometry(noder.getNodedSubstrings(), FunctionsUtil.getFactoryOrDefault(geom));
   }
 
   /**
@@ -143,7 +121,7 @@ public class NodingFunctions
         fixedPM.getScale());
     noder.computeNodes(segs);
     Collection nodedSegStrings = noder.getNodedSubstrings();
-    return /*SegmentStringUtil.*/toGeometry(nodedSegStrings);
+    return SegmentStringUtil.toGeometry(nodedSegStrings, FunctionsUtil.getFactoryOrDefault(geom));
   }
 
   private static List createSegmentStrings(Geometry geom)

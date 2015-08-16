@@ -9,6 +9,7 @@ public class GeometryVertexMover
   public static Geometry move(Geometry geom, Coordinate fromLoc, Coordinate toLoc)
   {
     GeometryEditor editor = new GeometryEditor();
+    editor.setCopyUserData(true);
     return editor.edit(geom, new MoveVertexOperation(fromLoc, toLoc));
   }
   
@@ -31,8 +32,8 @@ public class GeometryVertexMover
       for (int i = 0; i < coords.length; i++) {
         newPts[i] = 
           (coords[i].equals2D(fromLoc)) 
-            ? (Coordinate) toLoc.copy()
-                : (Coordinate) coords[i].copy();
+            ? (Coordinate) toLoc.clone()
+                : (Coordinate) coords[i].clone();
                    
       }
       return newPts;

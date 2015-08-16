@@ -70,10 +70,10 @@ import com.vividsolutions.jts.util.*;
  */
 public class MinimumBoundingCircle 
 {
-	/*
+  /*
    * The algorithm used is based on the one by Jon Rokne in 
    * the article "An Easy Bounding Circle" in <i>Graphic Gems II</i>.
-	 */
+   */
 	
 	private Geometry input;
 	private Coordinate[] extremalPts = null;
@@ -115,7 +115,53 @@ public class MinimumBoundingCircle
 			return centrePoint;
 		return centrePoint.buffer(radius);
 	}
-	
+
+  /**
+   * Gets a geometry representing a line between the two farthest points
+   * in the input.
+   * These points will be two of the extremal points of the Minimum Bounding Circle.
+   * They also lie on the convex hull of the input.
+   * 
+   * @return a LineString between the two farthest points of the input
+   * @return a empty LineString if the input is empty
+   * @return a Point if the input is a point
+   */
+  public Geometry getFarthestPoints() {
+    compute();
+    switch (extremalPts.length) {
+    case 0:
+      return input.getFactory().createLineString((CoordinateSequence) null);
+    case 1:
+      return input.getFactory().createPoint(centre);
+    }
+    Coordinate p0 = extremalPts[0];
+    Coordinate p1 = extremalPts[extremalPts.length - 1];
+    return input.getFactory().createLineString(new Coordinate[] { p0, p1 });
+  }
+
+  /**
+   * Gets a geometry representing the diameter of the computed Minimum Bounding
+   * Circle.
+   * 
+   * @return the diameter LineString of the Minimum Bounding Circle
+   * @return a empty LineString if the input is empty
+   * @return a Point if the input is a point
+   */
+  public Geometry getDiameter() {
+    compute();
+    switch (extremalPts.length) {
+    case 0:
+      return input.getFactory().createLineString((CoordinateSequence) null);
+    case 1:
+      return input.getFactory().createPoint(centre);
+    }
+    // TODO: handle case of 3 extremal points, by computing a line from one of
+    // them through the centre point with len = 2*radius
+    Coordinate p0 = extremalPts[0];
+    Coordinate p1 = extremalPts[1];
+    return input.getFactory().createLineString(new Coordinate[] { p0, p1 });
+  }
+
 	/**
 	 * Gets the extremal points which define the computed Minimum Bounding Circle.
 	 * There may be zero, one, two or three of these points,
@@ -130,18 +176,18 @@ public class MinimumBoundingCircle
 		return extremalPts;
 	}
 	
-	/**
-	 * Gets the centre point of the computed Minimum Bounding Circle.
-	 * 
-	 * @return the centre point of the Minimum Bounding Circle
-	 * @return null if the input is empty
-	 */
-	public Coordinate getCentre() 
-	{
-		compute();
-		return centre;
-	}
-	
+        /**
+         * Gets the centre point of the computed Minimum Bounding Circle.
+         * 
+         * @return the centre point of the Minimum Bounding Circle
+         * @return null if the input is empty
+         */
+        public Coordinate getCentre() 
+        {
+                compute();
+                return centre;
+        }
+                
 	/**
 	 * Gets the radius of the computed Minimum Bounding Circle.
 	 * 

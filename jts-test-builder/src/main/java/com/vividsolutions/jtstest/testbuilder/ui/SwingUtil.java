@@ -12,9 +12,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.text.JTextComponent;
 
 import com.vividsolutions.jts.geom.*;
-
 import com.vividsolutions.jtstest.testbuilder.model.GeometryTransferable;
 import com.vividsolutions.jtstest.util.StringUtil;
 
@@ -93,6 +93,34 @@ public class SwingUtil {
       comp.setBackground(SystemColor.control);
   }
   
+  public static Object coerce(Object val, Class clz) {
+    if (val == null) return val;
+    if (val.getClass() == clz) return val;
+    if (val instanceof String && (clz == Double.class || clz == double.class))
+      return convertDouble((String) val);
+    if (val instanceof String && (clz == Integer.class || clz == int.class))
+      return convertInteger((String) val);
+    return val;
+  }
+  
+  public static Integer convertInteger(String str) {
+    int val = 0;
+    try {
+      val = Integer.parseInt(str);
+    } catch (NumberFormatException ex) {
+    }
+    return new Integer(val);
+  }
+  
+  public static Double convertDouble(String str) {
+    double val = 0;
+    try {
+      val = Double.parseDouble(str);
+    } catch (NumberFormatException ex) {
+    }
+    return new Double(val);
+  }
+  
   public static Integer getInteger(JTextField txt, Integer defaultVal) {
     String str = txt.getText();
     if (str.trim().length() <= 0)
@@ -119,7 +147,11 @@ public class SwingUtil {
     return new Double(val);
   }
   
-  public static Object getSelectedValue(JComboBox cb, Object[] val)
+  public static String value(JTextComponent txt) {
+    return txt.getText();
+  }
+  
+  public static Object value(JComboBox cb, Object[] val)
   {
   	int selIndex = cb.getSelectedIndex();
   	if (selIndex == -1) 
