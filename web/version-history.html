@@ -52,6 +52,7 @@
 			<h3>JTS Core</h3>
 			<h4>Functionality Improvements</h4>
 			<ul>
+				<li>Added <code>Envelope.compareTo</code> method
 				<li>Fixed <code>SegmentSetMutualIntersector</code> classes to
 					be thread-safe
 				</li>
@@ -83,6 +84,10 @@
 					setting
 				<li>Added node counting and ability to not keep intersection
 					points to <code>InteriorIntersectionFinder</code>
+				<li>Added <code>Polygonizer</code> functionality to extract 
+					only polygons forming a valid polygonal geometry
+				<li>Added <code>KdTree.toCoordinates</code>
+				<li>Added <code>MinimumBoundingCircle.getFarthestPoints</code> method
 			</ul>
 
 			<h4>Performance Improvements</h4>
@@ -132,6 +137,10 @@
 					short-circuit when finding all nodes
 				<li>Fixed <code>SubgraphDepthLocator</code> to work with Java
 					7+ by avoiding sorting with an inconsistent ordering
+				<li>Fixed <code>FontGlyphReader</code> to use correct Java font value of "SansSerif", and added new constant to match.
+				<li>Fixed <code>KdTree</code> to correctly implement distance tolerance-based coordinate matching
+				<li>Fixed <code>LineString.normalize()</code> to correctly handle CoordinateSequences
+				<li>Fixed <code>CommonBitsRemover</code> to correctly handle CoordinateSequences
 			</ul>
 
 			<h4>API Changes</h4>
@@ -184,6 +193,9 @@
 				<li>Improved zooming logic
 				<li>Added mouse wheel zooming
 				<li>Improved UI for editing A/B geometries
+				<li>Added <b>Compute New</b> button to Geometry Functions panel
+				<li>Added SpatialIndex functions
+				<li>Added User Data labelling
 			</ul>
 
 			<h4>UI Changes</h4>
