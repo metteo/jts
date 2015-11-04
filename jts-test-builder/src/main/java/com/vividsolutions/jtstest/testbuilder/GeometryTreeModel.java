@@ -28,9 +28,9 @@ public class GeometryTreeModel implements TreeModel
 
   private GeometricObjectNode rootGeom;
 
-  public GeometryTreeModel(Geometry geom)
+  public GeometryTreeModel(Geometry geom, int source)
   {
-    rootGeom = GeometryNode.create(geom);
+    rootGeom = GeometryNode.create(geom, new GeometryContext(source));
   }
 
   // ////////////// TreeModel interface implementation ///////////////////////
@@ -140,10 +140,7 @@ abstract class GeometricObjectNode
     return text;
   }
   
-  public ImageIcon getIcon()
-  {
-    return AppConstants.drawPolygonIcon;
-  }
+  public abstract ImageIcon getIcon();
   
   public abstract Geometry getGeometry();
 
@@ -157,34 +154,44 @@ abstract class GeometricObjectNode
 
 }
 
+class GeometryContext {
+  int source = 0;
+  
+  GeometryContext(int source) {
+    this.source = source;
+  }
+}
+
 abstract class GeometryNode extends GeometricObjectNode
 {
-  public static GeometryNode create(Geometry geom)
+  public static GeometryNode create(Geometry geom, GeometryContext context)
   {
     if (geom instanceof GeometryCollection)
-      return new GeometryCollectionNode((GeometryCollection) geom);
+      return new GeometryCollectionNode((GeometryCollection) geom, context);
     if (geom instanceof Polygon)
-      return new PolygonNode((Polygon) geom);
+      return new PolygonNode((Polygon) geom, context);
     if (geom instanceof LineString)
-      return new LineStringNode((LineString) geom);
+      return new LineStringNode((LineString) geom, context);
     if (geom instanceof LinearRing)
-      return new LinearRingNode((LinearRing) geom);
+      return new LinearRingNode((LinearRing) geom, context);
     if (geom instanceof Point)
-      return new PointNode((Point) geom);
+      return new PointNode((Point) geom, context);
     return null;
   }
 
+  protected GeometryContext context;
   private boolean isLeaf;
   protected List<GeometricObjectNode> children = null;
 
-  public GeometryNode(Geometry geom)
+  public GeometryNode(Geometry geom, GeometryContext context)
   {
-    this(geom, 0, null);
+    this(geom, 0, null, context);
   }
 
-  public GeometryNode(Geometry geom, int size, String tag)
+  public GeometryNode(Geometry geom, int size, String tag, GeometryContext context)
   {
     super(geometryText(geom, size, tag));
+    this.context = context;
     if (geom.isEmpty()) {
       isLeaf = true;
     }
@@ -206,9 +213,12 @@ abstract class GeometryNode extends GeometricObjectNode
       }
     }
     
-    buf.append(" --     Len: " + geom.getLength());
-    if (hasArea(geom)) 
+    if (hasLength(geom)) {
+    	buf.append("   --     Len: " + geom.getLength());
+    }
+    if (hasArea(geom)) { 
       buf.append("      Area: " + area(geom));
+    }
     
     return buf.toString();
   }
@@ -225,14 +235,24 @@ abstract class GeometryNode extends GeometricObjectNode
   }
 
   private static boolean hasArea(Geometry geom) {
-    if (geom.getDimension() >= 2) return true;
-    if (geom instanceof LinearRing) return true;
-    return false;
-  }
-  
+	    if (geom.getDimension() >= 2) return true;
+	    if (geom instanceof LinearRing) return true;
+	    return false;
+	  }
+	  
+  private static boolean hasLength(Geometry geom) {
+	    if (geom.getDimension() >= 1) return true;
+	    return false;
+	  }
+	  
   public boolean isLeaf()
   {
     return isLeaf;
+  }
+  
+  public ImageIcon getIcon()
+  {
+    return context.source == 0 ? AppConstants.ICON_POLYGON : AppConstants.ICON_POLYGON_B;
   }
 
   public GeometricObjectNode getChildAt(int index)
@@ -280,9 +300,9 @@ class PolygonNode extends GeometryNode
 {
   Polygon poly;
 
-  PolygonNode(Polygon poly)
+  PolygonNode(Polygon poly, GeometryContext context)
   {
-    super(poly, poly.getNumPoints(), null);
+    super(poly, poly.getNumPoints(), null, context);
     this.poly = poly;
   }
 
@@ -293,16 +313,16 @@ class PolygonNode extends GeometryNode
 
   public ImageIcon getIcon()
   {
-    return AppConstants.drawPolygonIcon;
+    return context.source == 0 ? AppConstants.ICON_POLYGON : AppConstants.ICON_POLYGON_B;
   }
 
   protected void fillChildren()
   {
     children.add(new LinearRingNode((LinearRing) poly.getExteriorRing(),
-        "Shell"));
+        "Shell", context));
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       children.add(new LinearRingNode((LinearRing) poly.getInteriorRingN(i),
-          "Hole " + i));
+          "Hole " + i, context));
     }
   }
 
@@ -312,20 +332,21 @@ class LineStringNode extends GeometryNode
 {
   private LineString line;
 
-  public LineStringNode(LineString line)
+  public LineStringNode(LineString line, GeometryContext context)
   {
-    this(line, null);
+    super(line, line.getNumPoints(), null, context);
+    this.line = line;
   }
 
-  public LineStringNode(LineString line, String tag)
+  public LineStringNode(LineString line, String tag, GeometryContext context)
   {
-    super(line, line.getNumPoints(), tag);
+    super(line, line.getNumPoints(), tag, context);
     this.line = line;
   }
 
   public ImageIcon getIcon()
   {
-    return AppConstants.drawLineStringIcon;
+    return context.source == 0 ? AppConstants.ICON_LINESTRING : AppConstants.ICON_LINESTRING_B;
   }
 
   public Geometry getGeometry()
@@ -354,18 +375,17 @@ class LineStringNode extends GeometryNode
 
 class LinearRingNode extends LineStringNode
 {
-  public LinearRingNode(LinearRing ring)
+  public LinearRingNode(LinearRing ring, GeometryContext context)
   {
-    super(ring);
+    super(ring, context);
   }
-
-  public LinearRingNode(LinearRing ring, String tag)
-  {
-    super(ring, tag);
+  public LinearRingNode(LinearRing ring, String tag,
+      GeometryContext context) {
+    super(ring, tag, context);
   }
   public ImageIcon getIcon()
   {
-    return AppConstants.drawLinearRingIcon;
+    return context.source == 0 ? AppConstants.ICON_LINEARRING : AppConstants.ICON_LINEARRING_B;
   }
 }
 
@@ -373,15 +393,15 @@ class PointNode extends GeometryNode
 {
   Point pt;
 
-  public PointNode(Point p)
+  public PointNode(Point p, GeometryContext context)
   {
-    super(p);
+    super(p, context);
     pt = p;
   }
 
   public ImageIcon getIcon()
   {
-    return AppConstants.drawPointIcon;
+    return context.source == 0 ? AppConstants.ICON_POINT : AppConstants.ICON_POINT_B;
   }
 
   public Geometry getGeometry()
@@ -399,9 +419,9 @@ class GeometryCollectionNode extends GeometryNode
 {
   GeometryCollection coll;
 
-  GeometryCollectionNode(GeometryCollection coll)
+  GeometryCollectionNode(GeometryCollection coll, GeometryContext context)
   {
-    super(coll, coll.getNumGeometries(), null);
+    super(coll, coll.getNumGeometries(), null, context);
     this.coll = coll;
   }
 
@@ -413,11 +433,18 @@ class GeometryCollectionNode extends GeometryNode
   protected void fillChildren()
   {
     for (int i = 0; i < coll.getNumGeometries(); i++) {
-      GeometryNode node = create(coll.getGeometryN(i));
+      GeometryNode node = create(coll.getGeometryN(i), context);
       node.setIndex(i);
       children.add(node);
     }
   }
+  
+  public ImageIcon getIcon()
+  {
+    return context.source == 0 ? AppConstants.ICON_COLLECTION : AppConstants.ICON_COLLECTION_B;
+  }
+
+
 }
 
 /**
@@ -466,7 +493,7 @@ class CoordinateNode extends GeometricObjectNode
   }
   public ImageIcon getIcon()
   {
-    return AppConstants.drawPointIcon;
+    return AppConstants.ICON_POINT;
   }
 
   public Geometry getGeometry()

@@ -77,6 +77,9 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 	}
 
 	public GeometryTreePanel() {
+	  // default empty model
+	  tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("No geometry shown")));
+	  //((DefaultMutableTreeNode)  (tree.getRoot())).removeAllChildren();
 		try {
 			initUI();
 		} catch (Exception ex) {
@@ -106,11 +109,12 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 			  Geometry geom = getSelectedGeometry();
 			  if (geom == null) return;
 			  
+        if (e.getClickCount() == 2) {
+          JTSTestBuilderFrame.getGeometryEditPanel().zoom(geom.getEnvelopeInternal());
+        }
+        // would be nice to flash as well as zoom, but zooming drawing is too slow
         if (e.getClickCount() == 1) {
           JTSTestBuilderFrame.getGeometryEditPanel().flash(geom);
-        }
-        else if (e.getClickCount() == 2) {
-          JTSTestBuilderFrame.getGeometryEditPanel().zoom(geom.getEnvelopeInternal());
         }
 			}
 		});
@@ -125,6 +129,33 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
   public Geometry getSelectedGeometry() {
     return getGeometryFromNode(tree.getLastSelectedPathComponent());
   }
+  public void moveToNextNode(int direction) {
+    direction = (int) Math.signum(direction);
+    TreePath path = tree.getSelectionPath();
+    
+    TreePath nextPath2 = nextPath(path, 2 * direction);
+    tree.scrollPathToVisible(nextPath2);
+    
+    TreePath nextPath = nextPath(path, direction);
+    tree.setSelectionPath(nextPath);
+  }
+
+  private TreePath nextPath(TreePath path, int offset) {
+    GeometricObjectNode node = (GeometricObjectNode) path.getLastPathComponent();
+    TreePath parentPath = path.getParentPath();
+    GeometricObjectNode parent = (GeometricObjectNode) parentPath.getLastPathComponent();
+    int index = parent.getIndexOfChild(node);
+    int nextIndex = index + offset;
+    if (nextIndex < 0) {
+      nextIndex = 0;
+    }
+    else if (nextIndex >= parent.getChildCount() ) {
+      nextIndex = parent.getChildCount() - 1;
+    }
+    GeometricObjectNode nextNode = parent.getChildAt(nextIndex);
+    TreePath nextPath = parentPath.pathByAddingChild(nextNode);
+    return nextPath;
+  }
 
   private static Geometry getGeometryFromNode(Object value) {
     if (value == null) 
@@ -132,8 +163,8 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
     return ((GeometricObjectNode) value).getGeometry();
   }
 
-	public void populate(Geometry geom) {
-		tree.setModel(new GeometryTreeModel(geom));
+	public void populate(Geometry geom, int source) {
+		tree.setModel(new GeometryTreeModel(geom, source));
 	}
 
   //Required by TreeWillExpandListener interface.

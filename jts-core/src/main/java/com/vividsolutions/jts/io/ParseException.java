@@ -57,7 +57,18 @@ public class ParseException extends Exception {
    *      parsing a Well-known Text string
    */
   public ParseException(Exception e) {
-    this(e.toString());
+    this(e.toString(), e);
+  }
+  
+  /**
+   *  Creates a <code>ParseException</code> with <code>e</code>s detail message.
+   *  
+   *@param  message  a description of this <code>ParseException</code>
+   *@param  e  a throwable that occurred while a com.vividsolutions.jts.io reader was
+   *      parsing a string representation
+   */
+  public ParseException(String message, Throwable e) {
+          super(message, e);
   }
 }
 

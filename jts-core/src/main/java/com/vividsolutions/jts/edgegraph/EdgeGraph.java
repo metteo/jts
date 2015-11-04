@@ -52,15 +52,17 @@ public class EdgeGraph
   /**
    * Adds an edge between the coordinates orig and dest
    * to this graph.
+   * Only valid edges can be added (in particular, zero-length segments cannot be added)
    * 
    * @param orig the edge origin location
    * @param dest the edge destination location.
    * @return the created edge
+   * @return null if the edge was invalid and not added
+   * 
+   * @see {@link #isValidEdge(Coordinate, Coordinate)}
    */
   public HalfEdge addEdge(Coordinate orig, Coordinate dest) {
-    int cmp = dest.compareTo(orig);
-    // ignore zero-length edges
-    if (cmp == 0) return null;
+    if (! isValidEdge(orig, dest)) return null;
     
     /**
      * Attempt to find the edge already in the graph.
@@ -78,6 +80,18 @@ public class EdgeGraph
     
     HalfEdge e = insert(orig, dest, eAdj);
     return e;
+  }
+
+  /**
+   * Tests if the given coordinates form a valid edge (with non-zero length).
+   * 
+   * @param orig the start coordinate
+   * @param dest the end coordinate
+   * @return true if the edge formed is valid
+   */
+  public static boolean isValidEdge(Coordinate orig, Coordinate dest) {
+    int cmp = dest.compareTo(orig);
+    return cmp != 0;
   }
 
   /**

@@ -34,10 +34,12 @@ package com.vividsolutions.jtstest.testbuilder;
 
 import java.text.NumberFormat;
 import java.util.List;
+
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
@@ -57,6 +59,8 @@ import com.vividsolutions.jtstest.testbuilder.ui.*;
 import com.vividsolutions.jtstest.testbuilder.ui.style.AWTUtil;
 import com.vividsolutions.jtstest.testbuilder.ui.tools.*;
 import com.vividsolutions.jtstest.testbuilder.ui.render.*;
+
+import com.vividsolutions.jtstest.testbuilder.ui.render.GeometryPainter;
 /**
  * Panel which displays rendered geometries.
  * 
@@ -510,7 +514,7 @@ public class GeometryEditPanel extends JPanel
     // fix to allow zooming to points
     if (averageExtent == 0.0)
       averageExtent = 1.0;
-    double buffer = averageExtent * 0.03;
+    double buffer = averageExtent * 0.1;
     zoomEnv.expandBy(buffer);
     viewport.zoom(zoomEnv);
   }
@@ -692,17 +696,6 @@ public class GeometryEditPanel extends JPanel
   			currentRenderer.cancel();
   	}
 
-  }
-  
-  public static void showIndicator(Geometry geom)
-  {
-    GeometryEditPanel panel = JTSTestBuilderFrame
-    .instance().getTestCasePanel()
-    .getGeometryEditPanel();
-    Graphics2D gr = (Graphics2D) panel.getGraphics();
-    GeometryPainter.paint(geom, panel.getViewport(), gr, 
-        AppConstants.INDICATOR_LINE_CLR, 
-        AppConstants.INDICATOR_FILL_CLR);
   }
 }
 

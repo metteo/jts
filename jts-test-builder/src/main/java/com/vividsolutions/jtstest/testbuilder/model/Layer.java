@@ -39,6 +39,12 @@ public class Layer
     }
   };
     
+  private StyleList.StyleFilter labelFilter = new StyleList.StyleFilter() {
+    public boolean isFiltered(Style style) {
+      return ! TestBuilderModel.isShowingLabel();
+    }
+  };
+    
   public Layer(String name) {
     this.name = name;
   }
@@ -73,8 +79,8 @@ public class Layer
     this.style = style;
     VertexStyle vertexStyle = new VertexStyle(style.getLineColor());
     ArrowLineStyle segArrowStyle = new ArrowLineStyle(ColorUtil.lighter(style.getLineColor(), 0.8));
-    ArrowEndpointStyle lineArrowStyle = new ArrowEndpointStyle(ColorUtil.lighter(style.getLineColor()), false, true);
-    CircleEndpointStyle lineCircleStyle = new CircleEndpointStyle(style.getLineColor(), true, false);
+    ArrowEndpointStyle lineArrowStyle = new ArrowEndpointStyle(ColorUtil.lighter(style.getLineColor(),0.2), false, true);
+    CircleEndpointStyle lineCircleStyle = new CircleEndpointStyle(style.getLineColor(), 6, true, true);
     PolygonStructureStyle polyStyle = new PolygonStructureStyle(ColorUtil.opaque(style.getLineColor()));
     SegmentIndexStyle indexStyle = new SegmentIndexStyle(ColorUtil.opaque(style.getLineColor().darker()));
     DataLabelStyle dataLabelStyle = new DataLabelStyle(ColorUtil.opaque(style.getLineColor().darker()));
@@ -88,7 +94,7 @@ public class Layer
     styleList.add(style);
     styleList.add(polyStyle, structureFilter);
     styleList.add(indexStyle, structureFilter);
-    styleList.add(dataLabelStyle);
+    styleList.add(dataLabelStyle, labelFilter);
   }
   
   public Geometry getGeometry()

@@ -23,7 +23,7 @@ Java IDEs support Maven projects out of the box. Just import them, the rest shou
 
 Build JTS
 ---------
-The JTS library is intended to be Java 1.5 compatible (to permit deployment on mobile platforms and some primitive databases). The tools are not subject to this limitation, so you can target Java 1.6 or higher.
+The JTS library is intended to be Java 1.6 compatible (to permit deployment on Android 2.3+). The tools are not subject to this limitation, so you can target higher Java versions.
 
 * In the root directory execute
 

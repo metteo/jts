@@ -24,7 +24,8 @@ public class ConcaveHull {
   }
 
   private List extractTriangles(QuadEdgeSubdivision subdiv) {
-    return QuadEdgeTriangle.createOn(subdiv);
+    List qeTris = QuadEdgeTriangle.createOn(subdiv);
+    return qeTris;
   }
 
   private Geometry computeHull(List tris) {

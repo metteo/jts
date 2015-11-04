@@ -6,7 +6,6 @@ import java.util.*;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.io.*;
 import com.vividsolutions.jts.util.Assert;
-import com.vividsolutions.jtstest.function.GeometryFactoryHolder;
 import com.vividsolutions.jtstest.test.TestCaseList;
 import com.vividsolutions.jtstest.test.Testable;
 import com.vividsolutions.jtstest.testbuilder.AppConstants;
@@ -24,9 +23,11 @@ public class TestBuilderModel
   protected static boolean showingStructure = false;
   protected static boolean showingOrientation = false;
   protected static boolean showingVertices = true;
-  protected static boolean showingCoordinates = true;
+  protected static boolean showingLabel = true;
+ protected static boolean showingCoordinates = true;
   protected static boolean isMagnifyingTopology = false;
   protected static double topologyStretchSize = AppConstants.TOPO_STRETCH_VIEW_DIST;
+
   
   public static boolean isShowingStructure() {
     return showingStructure;
@@ -52,6 +53,12 @@ public class TestBuilderModel
   public static void setShowingVertices(boolean show) {
     showingVertices = show;
   }
+  public static void setShowingLabel(boolean show) {
+    showingLabel = show;
+  }
+  public static boolean isShowingLabel() {
+    return showingLabel;
+  }
   public boolean isMagnifyingTopology() {
     return isMagnifyingTopology;
   }
@@ -65,8 +72,9 @@ public class TestBuilderModel
     return topologyStretchSize;
   }
   
-  private GeometryFactoryHolder mGeomFactHolder = GeometryFactoryHolder.getInstance();
-  private GeometryEditModel geomEditModel;
+  private PrecisionModel precisionModel = new PrecisionModel();
+  private GeometryFactory geometryFactory = null;
+	private GeometryEditModel geomEditModel;
   private LayerList layerList = new LayerList();
   private WKTWriter writer = new WKTWriter();
   private Object currResult = null;
@@ -81,16 +89,19 @@ public class TestBuilderModel
 	
 	public GeometryEditModel getGeometryEditModel() { return geomEditModel; }
 	
-	public PrecisionModel getPrecisionModel() { return mGeomFactHolder.getPrecisionModel(); }
+	public PrecisionModel getPrecisionModel() { return precisionModel; }
 	
   public void setPrecisionModel(PrecisionModel precisionModel)
   {
-	  mGeomFactHolder.setPrecisionModel(precisionModel);
+    this.precisionModel = precisionModel;
+    geometryFactory = null;
   }
   
   public GeometryFactory getGeometryFactory()
   {
-    return mGeomFactHolder.getGeometryFactory();
+    if (geometryFactory == null)
+      geometryFactory = new GeometryFactory(getPrecisionModel());
+    return geometryFactory;
   }
   
   
@@ -342,7 +353,7 @@ public class TestBuilderModel
     while (tcListi.hasNext()) {
       tcListi.next();
     }
-    currTestCase = new TestCaseEdit(getPrecisionModel());
+    currTestCase = new TestCaseEdit(precisionModel);
     tcListi.add(currTestCase);
   }
 

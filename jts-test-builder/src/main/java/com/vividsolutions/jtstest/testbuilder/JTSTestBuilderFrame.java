@@ -118,6 +118,7 @@ public class JTSTestBuilderFrame extends JFrame
   BorderLayout borderLayout3 = new BorderLayout();
   JPanel testPanel = new JPanel();
   WKTPanel wktPanel = new WKTPanel(this);
+  InspectorPanel inspectPanel = new InspectorPanel();
   TestListPanel testListPanel = new TestListPanel(this);
   //LayerListPanel layerListPanel = new LayerListPanel();
   LayerListPanel layerListPanel = new LayerListPanel();
@@ -137,7 +138,6 @@ public class JTSTestBuilderFrame extends JFrame
   
   TestBuilderModel tbModel;
   
-  private TextViewDialog textViewDlg = new TextViewDialog(this, "", true);
   private TestCaseTextDialog testCaseTextDlg = new TestCaseTextDialog(this,
       "", true);
   private GeometryInspectorDialog geomInspectorDlg = new GeometryInspectorDialog(this);
@@ -180,13 +180,16 @@ public class JTSTestBuilderFrame extends JFrame
               precisionModelMenuItem_actionPerformed(e);
             }
           });
-      testCasePanel.editCtlPanel.cbMagnifyTopo.addActionListener(
+      //testCasePanel.editCtlPanel.cbMagnifyTopo.addActionListener(
+      testCasePanel.cbMagnifyTopo.addActionListener(
           new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
               revealTopo_actionPerformed();
             }
           });
-      testCasePanel.editCtlPanel.stretchDist.addChangeListener(new javax.swing.event.ChangeListener() {
+      //testCasePanel.editCtlPanel.stretchDist
+      testCasePanel.spStretchDist
+      .addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent e) {
           revealTopo_actionPerformed();
         }
@@ -244,6 +247,7 @@ public class JTSTestBuilderFrame extends JFrame
   	tbModel = model;
     testCasePanel.setModel(tbModel);
     wktPanel.setModel(model);
+    inspectPanel.setModel(model);
     resultWKTPanel.setModel(model);
     resultValuePanel.setModel(model);
     statsPanel.setModel(model);
@@ -304,23 +308,28 @@ public class JTSTestBuilderFrame extends JFrame
     dlg.setVisible(true);
   }
 
+  public void showTab(String name)
+  {
+    inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab(name));
+  }
+  
   public void showGeomsTab()
   {
-    inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab("Input"));
+    showTab(AppStrings.TAB_LABEL_INPUT);
   }
   
   public void showResultWKTTab()
   {
-    inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab("Result"));
+    showTab(AppStrings.TAB_LABEL_RESULT);
   }
   public void showResultValueTab()
   {
-    inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab("Value"));
+    showTab(AppStrings.TAB_LABEL_VALUE);
   }
   
   public void showInfoTab()
   {
-    inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab(AppStrings.LOG_TAB_LABEL));
+    showTab(AppStrings.TAB_LABEL_LOG);
   }
   
   public void openXmlFilesAndDirectories(File[] files) throws Exception {
@@ -433,11 +442,25 @@ public class JTSTestBuilderFrame extends JFrame
     testCaseTextDlg.setVisible(true);
   }
 
-  void actionInspectGeometry() {
+  public void actionInspectGeometry() {
     int geomIndex = tbModel.getGeometryEditModel().getGeomIndex();
+    String tag = geomIndex == 0 ? AppStrings.GEOM_LABEL_A : AppStrings.GEOM_LABEL_B;
+    Geometry geometry = tbModel.getCurrentTestCaseEdit().getGeometry(geomIndex);
+    inspectPanel.setGeometry( tag, geometry, geomIndex);
+    showTab(AppStrings.TAB_LABEL_INSPECT);
+    /*
     geomInspectorDlg.setGeometry(
         geomIndex == 0 ? AppStrings.GEOM_LABEL_A : AppStrings.GEOM_LABEL_B,
         tbModel.getCurrentTestCaseEdit().getGeometry(geomIndex));
+        */
+    //geomInspectorDlg.setVisible(true);
+  }
+
+  public void actionInspectGeometryDialog() {
+    int geomIndex = tbModel.getGeometryEditModel().getGeomIndex();
+    String tag = geomIndex == 0 ? AppStrings.GEOM_LABEL_A : AppStrings.GEOM_LABEL_B;
+    Geometry geometry = tbModel.getCurrentTestCaseEdit().getGeometry(geomIndex);
+    geomInspectorDlg.setGeometry(tag, geometry);
     geomInspectorDlg.setVisible(true);
   }
 
@@ -586,7 +609,7 @@ public class JTSTestBuilderFrame extends JFrame
     testCasePanel.getGeometryEditPanel().setCurrentTool(PointTool.getInstance());
   }
 
-  void infoButton_actionPerformed(ActionEvent e) {
+  void infoButton_actionPerformed() {
     testCasePanel.getGeometryEditPanel().setCurrentTool(InfoTool.getInstance());
   }
 
@@ -661,6 +684,11 @@ public class JTSTestBuilderFrame extends JFrame
     JTSTestBuilderController.geometryViewChanged();
   }
 
+  public void setShowingLabel(boolean showLabel) {
+    TestBuilderModel.setShowingLabel(showLabel);
+    JTSTestBuilderController.geometryViewChanged();
+  }
+
   void showVertexIndicesMenuItem_actionPerformed(ActionEvent e) {
 //    testCasePanel.editPanel.setShowVertexIndices(showVertexIndicesMenuItem.isSelected());
   }
@@ -699,8 +727,10 @@ public class JTSTestBuilderFrame extends JFrame
     }
   }
   void revealTopo_actionPerformed() {
-  	tbModel.setMagnifyingTopology(testCasePanel.editCtlPanel.cbMagnifyTopo.isSelected());
-    tbModel.setTopologyStretchSize(testCasePanel.editCtlPanel.getStretchSize());
+    tbModel.setMagnifyingTopology(testCasePanel.cbMagnifyTopo.isSelected());
+    tbModel.setTopologyStretchSize(testCasePanel.getStretchSize());
+    //tbModel.setMagnifyingTopology(testCasePanel.editCtlPanel.cbMagnifyTopo.isSelected());
+    //tbModel.setTopologyStretchSize(testCasePanel.editCtlPanel.getStretchSize());
     JTSTestBuilderController.geometryViewChanged();
   }
 
@@ -717,19 +747,6 @@ public class JTSTestBuilderFrame extends JFrame
     directoryChooser.setMultiSelectionEnabled(false);
     //Center the window
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    Dimension frameSize = textViewDlg.getSize();
-    if (frameSize.height > screenSize.height) {
-      frameSize.height = screenSize.height;
-    }
-    if (frameSize.width > screenSize.width) {
-      frameSize.width = screenSize.width;
-    }
-    textViewDlg.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height
-         - frameSize.height) / 2);
-    /*
-    loadTestCasesDlg.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height
-         - frameSize.height) / 2);
-         */
     
     //---------------------------------------------------
     contentPane = (JPanel) this.getContentPane();
@@ -770,13 +787,14 @@ public class JTSTestBuilderFrame extends JFrame
     jPanel2.add(inputTabbedPane, BorderLayout.CENTER);
     jSplitPane1.setBorder(new EmptyBorder(2,2,2,2));
     jSplitPane1.setResizeWeight(0.5);
-    inputTabbedPane.add(testListPanel, "Cases");
-    inputTabbedPane.add(wktPanel,  "Input");
-    inputTabbedPane.add(resultWKTPanel, "Result");
-    inputTabbedPane.add(resultValuePanel, "Value");
-    inputTabbedPane.add(statsPanel, "Stats");
-    inputTabbedPane.add(logPanel, AppStrings.LOG_TAB_LABEL);
-    inputTabbedPane.add(layerListPanel, "Layers");
+    inputTabbedPane.add(testListPanel, AppStrings.TAB_LABEL_CASES);
+    inputTabbedPane.add(wktPanel,  AppStrings.TAB_LABEL_INPUT);
+    inputTabbedPane.add(resultWKTPanel, AppStrings.TAB_LABEL_RESULT);
+    inputTabbedPane.add(resultValuePanel, AppStrings.TAB_LABEL_VALUE);
+    inputTabbedPane.add(inspectPanel,  AppStrings.TAB_LABEL_INSPECT);
+    inputTabbedPane.add(statsPanel, AppStrings.TAB_LABEL_STATS);
+    inputTabbedPane.add(logPanel, AppStrings.TAB_LABEL_LOG);
+    inputTabbedPane.add(layerListPanel, AppStrings.TAB_LABEL_LAYERS);
     inputTabbedPane.setSelectedIndex(1);
     inputTabbedPane.addChangeListener(new ChangeListener() {
       public void stateChanged(ChangeEvent e)

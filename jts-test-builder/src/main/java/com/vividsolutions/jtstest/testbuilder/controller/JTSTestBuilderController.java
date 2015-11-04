@@ -96,5 +96,12 @@ public class JTSTestBuilderController
     JTSTestBuilderFrame.instance().getModel().getGeometryEditModel().setEditGeomIndex(index);
     JTSTestBuilderFrame.instance().getToolbar().setFocusGeometry(index);    
   }
-
+  public static void inspectGeometry()
+  {
+    JTSTestBuilderFrame.instance().actionInspectGeometry();
+  }
+  public static void inspectGeometryDialog()
+  {
+    JTSTestBuilderFrame.instance().actionInspectGeometryDialog();
+  }
 }

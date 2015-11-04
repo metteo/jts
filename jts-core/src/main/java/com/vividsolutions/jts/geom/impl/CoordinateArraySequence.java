@@ -232,7 +232,7 @@ public class CoordinateArraySequence implements CoordinateSequence, Serializable
     for (int i = 0; i < coordinates.length; i++) {
       cloneCoordinates[i] = (Coordinate) coordinates[i].copy();
     }
-    return new CoordinateArraySequence(cloneCoordinates);
+    return new CoordinateArraySequence(cloneCoordinates, dimension);
   }
 
 //#endif
