@@ -34,12 +34,10 @@ package com.vividsolutions.jtstest.testbuilder;
 
 import java.text.NumberFormat;
 import java.util.List;
-
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
@@ -59,8 +57,6 @@ import com.vividsolutions.jtstest.testbuilder.ui.*;
 import com.vividsolutions.jtstest.testbuilder.ui.style.AWTUtil;
 import com.vividsolutions.jtstest.testbuilder.ui.tools.*;
 import com.vividsolutions.jtstest.testbuilder.ui.render.*;
-
-import com.vividsolutions.jtstest.testbuilder.ui.render.GeometryPainter;
 /**
  * Panel which displays rendered geometries.
  * 

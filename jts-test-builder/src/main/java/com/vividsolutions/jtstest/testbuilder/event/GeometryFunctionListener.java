@@ -30,19 +30,14 @@
  *     (250)385-6040
  *     www.vividsolutions.com
  */
-package com.vividsolutions.jtstest.testbuilder;
+package com.vividsolutions.jtstest.testbuilder.event;
 
 import java.util.EventListener;
 
 /**
- * Title:
- * Description:
- * Copyright:    Copyright (c) 2001
- * Company:
- * @author
- * @version 1.7
  */
-public interface SpatialFunctionPanelListener extends EventListener {
+public interface GeometryFunctionListener extends EventListener {
 
-    public void functionExecuted(SpatialFunctionPanelEvent e);
+  public void functionSelected(GeometryFunctionEvent e);
+  public void functionInvoked(GeometryFunctionEvent e);
 }

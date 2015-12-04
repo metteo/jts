@@ -1,9 +1,10 @@
-package com.vividsolutions.jtstest.util;
+package com.vividsolutions.jtstest.util.io;
 
 import java.io.IOException;
-
 import org.jdom.Element;
 import org.jdom.Namespace;
+//Original JTS uses jdom-1.0-beta8-dev which has those two factories in 'input'
+//subpackage.
 import org.jdom.DefaultJDOMFactory;
 import org.jdom.JDOMFactory;
 import org.jdom.input.SAXBuilder;

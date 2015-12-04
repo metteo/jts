@@ -13,6 +13,8 @@ import com.vividsolutions.jtstest.testbuilder.ui.style.BasicStyle;
 import com.vividsolutions.jtstest.testrunner.TestReader;
 import com.vividsolutions.jtstest.testrunner.TestRun;
 import com.vividsolutions.jtstest.util.*;
+import com.vividsolutions.jtstest.util.io.IOUtil;
+import com.vividsolutions.jtstest.util.io.MultiFormatReader;
 import com.vividsolutions.jtstest.testbuilder.ui.*;
 
 public class TestBuilderModel 
@@ -178,7 +180,7 @@ public class TestBuilderModel
   public void loadMultipleGeometriesFromFile(int geomIndex, String filename)
   throws Exception 
   {
-    Geometry g = IOUtil.readGeometriesFromFile(filename, getGeometryFactory());
+    Geometry g = IOUtil.readFile(filename, getGeometryFactory());
     TestCaseEdit testCaseEdit = (TestCaseEdit) getCurrentTestCaseEdit();
     testCaseEdit.setGeometry(geomIndex, g);
     testCaseEdit.setName(filename);

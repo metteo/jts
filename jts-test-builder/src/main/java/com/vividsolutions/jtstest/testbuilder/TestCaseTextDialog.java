@@ -67,6 +67,7 @@ public class TestCaseTextDialog extends JDialog {
     BoxLayout boxLayout1 = new BoxLayout(functionsPanel, BoxLayout.Y_AXIS);
     ButtonGroup textFormatGroup = new ButtonGroup();
     
+    JRadioButton rbSVG = new JRadioButton();
     JRadioButton rbXML = new JRadioButton();
     JRadioButton rbXMLWKB = new JRadioButton();
     JRadioButton rbTestCaseJava = new JRadioButton();
@@ -129,6 +130,13 @@ public class TestCaseTextDialog extends JDialog {
                 rbXMLWKB_actionPerformed(e);
             }
         });
+        rbSVG.setText("SVG");
+        rbSVG.setToolTipText("");
+        rbSVG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                rbSVG_actionPerformed(e);
+            }
+        });
         
         rbTestCaseJava.setText("TestCase Java");
         rbTestCaseJava.setToolTipText("");
@@ -176,13 +184,12 @@ public class TestCaseTextDialog extends JDialog {
         textFormatPanel.add(rbWKTFormatted, null);
         textFormatPanel.add(rbWKB, null);
         textFormatPanel.add(rbGML, null);
+        textFormatPanel.add(rbSVG, null);
         textFormatPanel.add(rbTestCaseJava, null);
         textFormatPanel.add(rbXML, null);
         textFormatPanel.add(rbXMLWKB, null);
         textFormatPanel.add(rbJTSJava, null);
         jScrollPane1.getViewport().add(txtGeomView, null);
-        
-//        functionsPanel.add(intersectsCB);
         
         allOptionsPanel.setLayout(borderLayout3);
         allOptionsPanel.add(textFormatPanel, BorderLayout.NORTH);
@@ -198,6 +205,7 @@ public class TestCaseTextDialog extends JDialog {
         textFormatGroup.add(rbWKTFormatted);
         textFormatGroup.add(rbWKB);
         textFormatGroup.add(rbGML);
+        textFormatGroup.add(rbSVG);
     }
 
     public void setTestCase(TestCaseEdit test) {
@@ -220,6 +228,10 @@ public class TestCaseTextDialog extends JDialog {
         txtGeomView.setText((new JavaTestWriter()).write(test));
     }
 
+    void rbSVG_actionPerformed(ActionEvent e) {
+        txtGeomView.setText(SVGTestWriter.getTestSVG(test));
+    }
+    
     void rbXML_actionPerformed(ActionEvent e) {
       txtGeomView.setText((new XMLTestWriter()).getTestXML(test));
   }

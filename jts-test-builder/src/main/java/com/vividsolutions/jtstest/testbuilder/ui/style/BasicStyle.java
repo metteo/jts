@@ -1,9 +1,10 @@
 package com.vividsolutions.jtstest.testbuilder.ui.style;
 
 import java.awt.*;
+
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jtstest.*;
-import com.vividsolutions.jtstest.testbuilder.Viewport;
+import com.vividsolutions.jtstest.testbuilder.ui.Viewport;
 import com.vividsolutions.jtstest.testbuilder.ui.render.GeometryPainter;
 
 public class BasicStyle implements Style

@@ -45,6 +45,31 @@ public class AffineTransformationFunctions
     return new Coordinate(env.getMinX(), env.getMinY());
   }
   
+  public static Geometry viewport(Geometry g, Geometry gViewport)
+  {
+    Envelope viewEnv = gViewport.getEnvelopeInternal();
+    Envelope env = g.getEnvelopeInternal();
+    AffineTransformation trans = viewportTrans(env, viewEnv);
+    return trans.transform(g);
+  }
+
+  private static AffineTransformation viewportTrans(Envelope srcEnv, Envelope viewEnv) {
+    // works even if W or H are zero, thanks to Java infinity value.
+    double scaleW = viewEnv.getWidth() / srcEnv.getWidth();
+    double scaleH = viewEnv.getHeight() / srcEnv.getHeight();
+    // choose minimum scale to ensure source fits viewport
+    double scale = Math.min(scaleW,  scaleH);
+    
+    Coordinate centre = srcEnv.centre();
+    Coordinate viewCentre = viewEnv.centre();
+    
+    // isotropic scaling
+    AffineTransformation trans = AffineTransformation.scaleInstance(scale, scale, centre.x, centre.y);
+    // translate using envelope centres
+    trans.translate(viewCentre.x - centre.x, viewCentre.y - centre.y);
+    return trans;
+  }
+  
   public static Geometry scale(Geometry g, double scale)
   {
     Coordinate centre = envelopeCentre(g);

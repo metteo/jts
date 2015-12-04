@@ -31,9 +31,9 @@
  *     (250)385-6040
  *     www.vividsolutions.com
  */
-package com.vividsolutions.jtstest.testbuilder;
+package com.vividsolutions.jtstest.testbuilder.event;
 
-import java.util.EventObject;
+import java.util.EventListener;
 
 /**
  * Title:
@@ -43,9 +43,6 @@ import java.util.EventObject;
  * @author
  * @version 1.7
  */
-public class ValidPanelEvent extends EventObject {
-
-  public ValidPanelEvent(Object source) {
-    super(source);
-  }
+public interface ValidPanelListener extends EventListener {
+  public void setHighlightPerformed(ValidPanelEvent e);
 }
