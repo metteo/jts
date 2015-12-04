@@ -24,7 +24,7 @@ after_script:
 
 after_success:
  - cd ../jts
- - mvn cobertura:cobertura coveralls:report -P coverage
+ - mvn clean cobertura:cobertura coveralls:report -P coverage
 
 notifications:
   email: false
