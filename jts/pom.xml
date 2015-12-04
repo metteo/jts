@@ -84,7 +84,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt.version>2.7.0</gwt.version>
+		<gwt.version>2.8.0-beta1</gwt.version>
 
 		<github.url>https://github.com/metteo/jts</github.url>
 		<temp.repo>${project.build.directory}/repo</temp.repo>
@@ -178,10 +178,10 @@
 					<artifactId>jcp</artifactId>
 					<version>6.0.0</version>
 				</plugin>
-				  <plugin>
-            		<artifactId>maven-project-info-reports-plugin</artifactId>
-           			<version>2.8</version>
-        		</plugin>
+				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.8</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -214,7 +214,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.3</version>
-				
+
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.doxia</groupId>
@@ -249,15 +249,15 @@
 							<!-- git commit message -->
 							<message>Maven artifacts for ${project.groupId}:${project.artifactId}:${project.version} ~${maven.build.timestamp}</message>
 							<!-- disable webpage processing -->
-							<noJekyll>true</noJekyll>							
+							<noJekyll>true</noJekyll>
 							<outputDirectory>${temp.repo}</outputDirectory>
 							<!-- This isn't perfect, because every old SNAPSHOT is kept.. -->
 							<merge>true</merge>
 
 							<!-- <dryRun>true</dryRun> -->
-							<repositoryOwner>metteo</repositoryOwner>			<!-- github username -->
-							<repositoryName>jts</repositoryName>	<!-- github repo name -->
-							<branch>refs/heads/gh-pages</branch>				<!-- remote branch name -->
+							<repositoryOwner>metteo</repositoryOwner>	<!-- github username -->
+							<repositoryName>jts</repositoryName>		<!-- github repo name -->
+							<branch>refs/heads/gh-pages</branch>		<!-- remote branch name -->
 							<path>maven/snapshots</path>
 
 							<!-- This token, obtained from https://github.com/settings/applications, 
@@ -283,7 +283,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>coverage</id>
 
