@@ -23,7 +23,7 @@ after_script:
  - mvn exec:exec
 
 after_success:
- - cd ../jts
+ - cd ../jts-core
  - mvn clean cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report -P coverage
 
 notifications:
