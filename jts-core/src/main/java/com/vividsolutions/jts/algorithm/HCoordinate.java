@@ -98,30 +98,26 @@ public class HCoordinate
   }
   */
 
-  public double x,y,w;
+  public double x;
+  public double y;
+  public double w;
 
   public HCoordinate() {
-    x = 0.0;
-    y = 0.0;
-    w = 1.0;
+    this(0.0, 0.0);
   }
 
-  public HCoordinate(double _x, double _y, double _w) {
-    x = _x;
-    y = _y;
-    w = _w;
+  public HCoordinate(double x, double y, double w) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
   }
 
-  public HCoordinate(double _x, double _y) {
-    x = _x;
-    y = _y;
-    w = 1.0;
+  public HCoordinate(double x, double y) {
+    this(x, y, 1.0);
   }
 
   public HCoordinate(Coordinate p) {
-    x = p.x;
-    y = p.y;
-    w = 1.0;
+    this(p.x, p.y);
   }
 
   public HCoordinate(HCoordinate p1, HCoordinate p2) 
