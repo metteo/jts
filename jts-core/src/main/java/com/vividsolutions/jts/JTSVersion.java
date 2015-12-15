@@ -33,6 +33,10 @@
 
 package com.vividsolutions.jts;
 
+//#if JS_INTEROP
+//$import jsinterop.annotations.*;
+//#endif
+
 /**
  * JTS API version information.
  * <p>
@@ -40,6 +44,10 @@ package com.vividsolutions.jts;
  * An optional release status string may be present in the string version of
  * the version.
  */
+
+//#if JS_INTEROP
+//$@JsType
+//#endif
 public class JTSVersion {
 
   /**

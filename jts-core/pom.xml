@@ -14,6 +14,14 @@
 	<name>JTS Core</name>
 	<description>Core library which contains code compatible with all supported platforms (that is the plan). Other modules depend on this one and add additional functionality (extensions, apps, testing tools), </description>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

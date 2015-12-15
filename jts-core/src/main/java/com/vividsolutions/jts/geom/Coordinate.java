@@ -36,7 +36,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 //#if JS_INTEROP
-//$import com.google.gwt.core.client.js.JsType;
+//$import jsinterop.annotations.*;
 //#endif
 import com.vividsolutions.jts.util.Assert;
 import com.vividsolutions.jts.util.NumberUtil;
@@ -101,6 +101,9 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@param  y  the y-value
    *@param  z  the z-value
    */
+//#if JS_INTEROP
+//$@JsConstructor
+//#endif
   public Coordinate(double x, double y, double z) {
     this.x = x;
     this.y = y;
@@ -110,8 +113,11 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
   /**
    *  Constructs a <code>Coordinate</code> at (0,0,NaN).
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public Coordinate() {
-    this(0.0, 0.0);
+    this(0.0, 0.0, NULL_ORDINATE);
   }
 
   /**
@@ -120,6 +126,9 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *
    *@param  c  the <code>Coordinate</code> to copy.
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public Coordinate(Coordinate c) {
     this(c.x, c.y, c.z);
   }
@@ -130,6 +139,9 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@param  x  the x-value
    *@param  y  the y-value
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public Coordinate(double x, double y) {
     this(x, y, NULL_ORDINATE);
   }
@@ -199,6 +211,9 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@return        <code>true</code> if the x- and y-coordinates are equal; the
    *      z-coordinates do not have to be equal.
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public boolean equals2D(Coordinate other) {
     if (x != other.x) {
       return false;

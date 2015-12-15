@@ -1,5 +1,3 @@
-
-
 /*
  * The JTS Topology Suite is a collection of Java classes that
  * implement the fundamental operations required to validate a given
@@ -34,6 +32,9 @@
  */
 package com.vividsolutions.jts.geom;
 
+//#if JS_INTEROP
+//$import jsinterop.annotations.*;
+//#endif
 import java.io.Serializable;
 
 /**
@@ -48,10 +49,12 @@ import java.io.Serializable;
  *  When Envelope objects are created or initialized,
  *  the supplies extent values are automatically sorted into the correct order.
  *
- *@version 1.7
+ *  @version 1.7
  */
-public class Envelope
-    implements Comparable, Serializable
+//#if JS_INTEROP
+//$@JsType
+//#endif
+public class Envelope implements Comparable<Envelope>, Serializable
 {
     private static final long serialVersionUID = 5873921885273102420L;
 
@@ -72,6 +75,9 @@ public class Envelope
    * @param q the point to test for intersection
    * @return <code>true</code> if q intersects the envelope p1-p2
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "intersectsCoordinate")
+//#endif
   public static boolean intersects(Coordinate p1, Coordinate p2, Coordinate q)
   {
 	//OptimizeIt shows that Math#min and Math#max here are a bottleneck.
@@ -94,6 +100,9 @@ public class Envelope
    * @param q2 another extremal point of the envelope Q
    * @return <code>true</code> if Q intersects P
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "intersectsCoordinates")
+//#endif
   public static boolean intersects(Coordinate p1, Coordinate p2, Coordinate q1, Coordinate q2)
   {
     double minq = Math.min(q1.x, q2.x);
@@ -138,6 +147,8 @@ public class Envelope
    */
   private double maxy;
 
+//Hide overloaded constructors from JS
+//#if !JS_INTEROP
   /**
    *  Creates a null <code>Envelope</code>.
    */
@@ -188,6 +199,35 @@ public class Envelope
   {
     init(env);
   }
+//#endif
+
+  /**
+   * JS specific constructor which works with different kinds of parameters
+   * Not recommended when library is used in JVM or GWT
+   * @param params
+   * @deprecated indefinitely
+   */
+//#if JS_INTEROP
+//$@JsConstructor
+//$@SuppressWarnings("unusable-by-js")
+//#endif
+  public Envelope(Object... params) {
+    if (params.length == 4 && params[0] instanceof Number) {
+      this.init(
+        ((Number) params[0]).doubleValue(),
+    	((Number) params[1]).doubleValue(),
+        ((Number) params[2]).doubleValue(),
+    	((Number) params[3]).doubleValue());
+    } else if (params.length == 1 && params[0] instanceof Coordinate) {
+      this.init((Coordinate) params[0]);
+    } else if (params.length == 2 && params[0] instanceof Coordinate ) {
+      this.init((Coordinate) params[0], (Coordinate) params[1]);
+    } else if (params.length == 1 && params[0] instanceof Envelope) {
+      this.init((Envelope) params[0]);
+    } else {
+      this.setToNull();
+    }
+  }
 
   /**
    *  Initialize to a null <code>Envelope</code>.
@@ -205,6 +245,9 @@ public class Envelope
    *@param  y1  the first y-value
    *@param  y2  the second y-value
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "initFromValues")
+//#endif
   public void init(double x1, double x2, double y1, double y2)
   {
     if (x1 < x2) {
@@ -231,6 +274,9 @@ public class Envelope
    *@param  p1  the first Coordinate
    *@param  p2  the second Coordinate
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "initFromCoordinates")
+//#endif
   public void init(Coordinate p1, Coordinate p2)
   {
     init(p1.x, p2.x, p1.y, p2.y);
@@ -241,6 +287,9 @@ public class Envelope
    *
    *@param  p  the coordinate
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "initFromCoordinate")
+//#endif
   public void init(Coordinate p)
   {
     init(p.x, p.x, p.y, p.y);
@@ -251,6 +300,9 @@ public class Envelope
    *
    *@param  env  the Envelope to initialize from
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "initFromEnvelope")
+//#endif
   public void init(Envelope env)
   {
     this.minx = env.minx;
@@ -403,6 +455,9 @@ public class Envelope
    *
    * @param distance the distance to expand the envelope
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "expandByDistance")
+//#endif
   public void expandBy(double distance)
   {
     expandBy(distance, distance);
@@ -415,6 +470,9 @@ public class Envelope
    * @param deltaX the distance to expand the envelope along the the X axis
    * @param deltaY the distance to expand the envelope along the the Y axis
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "expandByDistances")
+//#endif
   public void expandBy(double deltaX, double deltaY)
   {
     if (isNull()) return;
@@ -437,6 +495,9 @@ public class Envelope
    *@param  x  the value to lower the minimum x to or to raise the maximum x to
    *@param  y  the value to lower the minimum y to or to raise the maximum y to
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "expandToIncludeValues")
+//#endif
   public void expandToInclude(double x, double y) {
     if (isNull()) {
       minx = x;
@@ -468,6 +529,9 @@ public class Envelope
    *
    *@param  other  the <code>Envelope</code> to expand to include
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "expandToIncludeEnvelope")
+//#endif
   public void expandToInclude(Envelope other) {
     if (other.isNull()) {
       return;
@@ -549,6 +613,9 @@ public class Envelope
    *          being checked for overlapping
    *@return        <code>true</code> if the <code>Envelope</code>s overlap
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "intersectsEnvelope")
+//#endif
   public boolean intersects(Envelope other) {
       if (isNull() || other.isNull()) { return false; }
     return !(other.minx > maxx ||
@@ -561,6 +628,9 @@ public class Envelope
    * changed to be a true overlap check; that is, whether the intersection is
    * two-dimensional.
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public boolean overlaps(Envelope other) {
     return intersects(other);
   }
@@ -572,12 +642,18 @@ public class Envelope
    *@param  p  the <code>Coordinate</code> to be tested
    *@return        <code>true</code> if the point overlaps this <code>Envelope</code>
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "intersectsCoordinate")
+//#endif
   public boolean intersects(Coordinate p) {
     return intersects(p.x, p.y);
   }
   /**
    * @deprecated Use #intersects instead.
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public boolean overlaps(Coordinate p) {
     return intersects(p);
   }
@@ -589,6 +665,9 @@ public class Envelope
    *@param  y  the y-ordinate of the point
    *@return        <code>true</code> if the point overlaps this <code>Envelope</code>
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "intersectsValues")
+//#endif
   public boolean intersects(double x, double y) {
   	if (isNull()) return false;
     return ! (x > maxx ||
@@ -599,6 +678,9 @@ public class Envelope
   /**
    * @deprecated Use #intersects instead.
    */
+//#if JS_INTEROP
+//$@JsIgnore
+//#endif
   public boolean overlaps(double x, double y) {
     return intersects(x, y);
   }
@@ -615,6 +697,9 @@ public class Envelope
    *
    *@see #covers(Envelope)
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "containsEnvelope")
+//#endif
   public boolean contains(Envelope other) {
   	return covers(other);
   }
@@ -632,6 +717,9 @@ public class Envelope
    *      
    *@see #covers(Coordinate)
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "containsCoordinate")
+//#endif
   public boolean contains(Coordinate p) {
     return covers(p);
   }
@@ -651,6 +739,9 @@ public class Envelope
    *      
    *@see #covers(double, double)
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "containsValues")
+//#endif
   public boolean contains(double x, double y) {
   	return covers(x, y);
   }
@@ -665,6 +756,9 @@ public class Envelope
    *@return    <code>true</code> if <code>(x, y)</code> lies in the interior or
    *      on the boundary of this <code>Envelope</code>.
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "coversValues")
+//#endif
   public boolean covers(double x, double y) {
   	if (isNull()) return false;
     return x >= minx &&
@@ -681,6 +775,9 @@ public class Envelope
    *@return    <code>true</code> if the point lies in the interior or
    *      on the boundary of this <code>Envelope</code>.
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "coversCoordinate")
+//#endif
   public boolean covers(Coordinate p) {
     return covers(p.x, p.y);
   }
@@ -692,6 +789,9 @@ public class Envelope
    *@param  other the <code>Envelope</code> to check
    *@return true if this <code>Envelope</code> covers the <code>other</code> 
    */
+//#if JS_INTEROP
+//$@JsMethod(name = "coversEnvelope")
+//#endif
   public boolean covers(Envelope other) {
     if (isNull() || other.isNull()) { return false; }
     return other.getMinX() >= minx &&
@@ -758,8 +858,7 @@ public class Envelope
    * 
    * @param o an Envelope object
    */
-  public int compareTo(Object o) {
-    Envelope env = (Envelope) o;
+  public int compareTo(Envelope env) {
     // compare nulls if present
     if (isNull()) {
       if (env.isNull()) return 0;

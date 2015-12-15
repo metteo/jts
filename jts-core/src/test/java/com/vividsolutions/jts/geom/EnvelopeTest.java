@@ -261,4 +261,38 @@ public class EnvelopeTest extends TestCase {
           assertTrue(expected == env1.compareTo(env2));
           assertTrue(-expected == env2.compareTo(env1));
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void testConstructorWithObjects() {
+		Envelope e = new Envelope(new Object[] {1.0, 2, (short)-3, (long)4 });
+		assertEquals(1.0, e.getMinX(), 1E-5);
+		assertEquals(2.0, e.getMaxX(), 1E-5);
+		assertEquals(-3.0, e.getMinY(), 1E-5);
+		assertEquals(4.0, e.getMaxY(), 1E-5);
+		
+		e = new Envelope((Object)new Coordinate(1.0, 2));
+		assertEquals(1.0, e.getMinX(), 1E-5);
+		assertEquals(1.0, e.getMaxX(), 1E-5);
+		assertEquals(2.0, e.getMinY(), 1E-5);
+		assertEquals(2.0, e.getMaxY(), 1E-5);
+		
+		e = new Envelope((Object)new Coordinate(1.0, (short)-3), 
+				(Object)new Coordinate(2, (long)4));
+		assertEquals(1.0, e.getMinX(), 1E-5);
+		assertEquals(2.0, e.getMaxX(), 1E-5);
+		assertEquals(-3.0, e.getMinY(), 1E-5);
+		assertEquals(4.0, e.getMaxY(), 1E-5);
+		
+		Envelope e2 = new Envelope((Object)e);
+		assertEquals(1.0, e2.getMinX(), 1E-5);
+		assertEquals(2.0, e2.getMaxX(), 1E-5);
+		assertEquals(-3.0, e2.getMinY(), 1E-5);
+		assertEquals(4.0, e2.getMaxY(), 1E-5);
+		
+		e = new Envelope(new Object[0]);
+		assertEquals(0, e.getMinX(), 1E-5);
+		assertEquals(-1, e.getMaxX(), 1E-5);
+		assertEquals(0, e.getMinY(), 1E-5);
+		assertEquals(-1, e.getMaxY(), 1E-5);
+	}
 }
