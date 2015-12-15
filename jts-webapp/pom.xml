@@ -17,7 +17,6 @@
 
 	<properties>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-		<gwt.module>com.vividsolutions.jtswebapp.JTSWebApp</gwt.module>
 		<gwt.version>2.8.0-beta1</gwt.version>
 		<appengine.version>1.9.30</appengine.version>
 	</properties>
@@ -96,11 +95,46 @@
 				<version>2.8.0-SNAPSHOT</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>compile-webapp</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<configuration>
+							<runTarget>index.html</runTarget>
+							<hostedWebapp>${webappDirectory}</hostedWebapp>
+							<extra>${webappDirectory}/WEB-INF/deploy</extra>
+							<extraParam>true</extraParam>
+							<module>com.vividsolutions.jtswebapp.JTSWebApp</module>
+							<draftCompile>true</draftCompile>
+							<!-- <compileReport>true</compileReport> -->
+							<style>PRETTY</style>
+							<!-- <logLevel>DEBUG</logLevel> -->
+							<!-- <localWorkers>1</localWorkers> -->
+							<strict>true</strict>
+							<generateJsInteropExports>true</generateJsInteropExports>
+						</configuration>
+					</execution>
+					<execution>
+						<id>compile-export</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<runTarget>export.html</runTarget>
+							<hostedWebapp>${webappDirectory}</hostedWebapp>
+							<extra>${webappDirectory}/WEB-INF/deploy</extra>
+							<extraParam>true</extraParam>
+							<module>com.vividsolutions.jtswebapp.JTSExport</module>
+							<draftCompile>true</draftCompile>
+							<!-- <compileReport>true</compileReport> -->
+							<style>PRETTY</style>
+							<!-- <logLevel>DEBUG</logLevel> -->
+							<!-- <localWorkers>1</localWorkers> -->
+							<strict>true</strict>
+							<generateJsInteropExports>true</generateJsInteropExports>
+						</configuration>
 					</execution>
 				</executions>
 				<dependencies>
@@ -115,20 +149,6 @@
 						<version>${gwt.version}</version>
 					</dependency>
 				</dependencies>
-				<configuration>
-					<runTarget>index.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<extra>${webappDirectory}/WEB-INF/deploy</extra>
-					<extraParam>true</extraParam>
-					<module>${gwt.module}</module>
-					<draftCompile>true</draftCompile>
-					<!-- <compileReport>true</compileReport> -->
-					<style>PRETTY</style>
-					<!-- <logLevel>DEBUG</logLevel> -->
-					<!-- <localWorkers>1</localWorkers> -->
-					<strict>true</strict>
-				    <generateJsInteropExports>true</generateJsInteropExports>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>

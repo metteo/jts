@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google, Inc.//DTD GWT Module Descriptor//EN" "https://github.com/gwtproject/gwt/raw/2.6.1/distro-source/core/src/gwt-module.dtd">
-<module rename-to="JTSWebApp">
+<module rename-to="JTSExport">
 	<inherits name="com.vividsolutions.jtswebapp.JTSWebAppBase" />
+	<set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED" />
 	
-	<entry-point class="com.vividsolutions.jtswebapp.client.JTSWebAppEntry" />
+	<entry-point class="com.vividsolutions.jtswebapp.client.JTSExportEntry" />
+	
+	<collapse-all-properties/>
+	<add-linker name="sso"/>
 </module>
